@@ -4,9 +4,16 @@
     <title>org-page</title>
     <link>https://latpaw.github.io</link>
     <description>static site generator</description>
-    <pubDate>二, 07 2月 2017 17:28:40 CST</pubDate>
-    <lastBuildDate>二, 07 2月 2017 17:28:40 CST</lastBuildDate>
+    <pubDate>二, 07 2月 2017 17:34:24 CST</pubDate>
+    <lastBuildDate>二, 07 2月 2017 17:34:24 CST</lastBuildDate>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>Org-page static site generator (https://github.com/kelvinh/org-page)</generator>
+    <item>
+      <title>2017 first blog</title>
+      <link>https://latpaw.github.io/blog/2017/02/07/2017-first-blog</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2017/02/07/2017-first-blog</guid>
+    </item>
   </channel>
 </rss>
