@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>Diary 2015-8 - org-page</title>
+  <meta charset="utf-8" />
+  <meta name="author" content="latpaw" />
+  <meta name="description" content="&lt;TODO: insert your description here&gt;" />
+  <meta name="keywords" content="&lt;TODO: insert your keywords here&gt;" />
+
+  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/media/css/posts.css" type="text/css">
+</head>
+
+  <body class="container">
+<header id="header">
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+        <div class="container-fluid">
+<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">org-page</a>
+        </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Blog</a></li>
+          <li><a href="https://github.com/latpaw">GitHub</a></li>
+        </ul>
+</div>
+</div>
+    </nav>
+</body>
+</header>
+
+<section id="content" role="main">
+    <div id="outline-container-sec-" class="row" style="padding-top: 70px">
+        <div class="col-md-2"></div>
+            <h1>Diary 2015-8</h1>
+            <div id="outline-container-org6b37a14" class="outline-2">
+<h2 id="org6b37a14">Mon Aug  3 10:39:30 2015</h2>
+</div>
+<div id="outline-container-org9fd468f" class="outline-2">
+<h2 id="org9fd468f">Tue Aug 11 09:34:12 2015</h2>
+<div class="outline-text-2" id="text-org9fd468f">
+</div><div id="outline-container-orgdeb0169" class="outline-3">
+<h3 id="orgdeb0169">long time no see</h3>
+</div>
+<div id="outline-container-org6045311" class="outline-3">
+<h3 id="org6045311">mysql</h3>
+<div class="outline-text-3" id="text-org6045311">
+<p>
+alter table hello rename hello2;
+alter table hello add column world char(40);
+alter table hello drop column wolrd;
+alter table hello modify world char(40);
+alter table hello change column world world2 char(50);
+</p>
+
+<p>
+show privilges\G
+show grant for userxxx;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orge6f1f79" class="outline-2">
+<h2 id="orge6f1f79">Tue Aug 18 10:18:54 2015</h2>
+<div class="outline-text-2" id="text-orge6f1f79">
+</div><div id="outline-container-orgd92fb91" class="outline-3">
+<h3 id="orgd92fb91">断点续传</h3>
+<div class="outline-text-3" id="text-orgd92fb91">
+<p>
+在请求的 header 里边添加 RANGE: bytes=2000102-
+这样可以获取这个位置之后的字节.
+返回的 header 会把状态码改为206,并添加 Content-Range=bytes 200080-1092839999349/1092839999349
+</p>
+</div>
+</div>
+<div id="outline-container-orgededdbb" class="outline-3">
+<h3 id="orgededdbb">lsof</h3>
+<div class="outline-text-3" id="text-orgededdbb">
+<p>
+lsof /file
+lsof -u latpaw
+lsof -c mysql
+lsof -i tcp
+lsof -i :3306
+lsof -i tcp:80
+lsof -i -stcp:listen
+lsof -i -stcp:established
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org70cccaf" class="outline-2">
+<h2 id="org70cccaf">Wed Aug 19 17:51:48 2015</h2>
+<div class="outline-text-2" id="text-org70cccaf">
+</div><div id="outline-container-org03c22da" class="outline-3">
+<h3 id="org03c22da">riak</h3>
+<div class="outline-text-3" id="text-org03c22da">
+</div><div id="outline-container-org4944f2e" class="outline-4">
+<h4 id="org4944f2e">erlexec: HOME not set</h4>
+<div class="outline-text-4" id="text-org4944f2e">
+<p>
+在启动脚本里边 export HOME=/var/lib/riak
+</p>
+</div>
+</div>
+<div id="outline-container-org4290f4a" class="outline-4">
+<h4 id="org4290f4a">riak-admin diag 检查内容</h4>
+</div>
+</div>
+<div id="outline-container-org738fb73" class="outline-3">
+<h3 id="org738fb73">vulcand</h3>
+<div class="outline-text-3" id="text-org738fb73">
+</div><div id="outline-container-org59830b4" class="outline-4">
+<h4 id="org59830b4">vulcand</h4>
+<div class="outline-text-4" id="text-org59830b4">
+<p>
+vulcand 做负载均衡,需要手动添加域名到配置中
+ vulcanctl host  add --name xxx
+vulcanctl host ls
+详见 man vulcanctl
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8779e28" class="outline-3">
+<h3 id="org8779e28">git</h3>
+<div class="outline-text-3" id="text-org8779e28">
+<p>
+git describe --tags // 查看当前 tag
+git tag //查看所有 tag
+git checkout xxx <i>/检出 tag
+git tag hello /</i> 添加 tag
+</p>
+</div>
+</div>
+</div>
+
+    </div>
+</section>
+
+
+<footer id="footer">
+    <br />
+</footer>
+
+  </body>
+</html>

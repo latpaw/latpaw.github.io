@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>Diary 2016-4 - org-page</title>
+  <meta charset="utf-8" />
+  <meta name="author" content="latpaw" />
+  <meta name="description" content="&lt;TODO: insert your description here&gt;" />
+  <meta name="keywords" content="&lt;TODO: insert your keywords here&gt;" />
+
+  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/media/css/posts.css" type="text/css">
+</head>
+
+  <body class="container">
+<header id="header">
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+        <div class="container-fluid">
+<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">org-page</a>
+        </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Blog</a></li>
+          <li><a href="https://github.com/latpaw">GitHub</a></li>
+        </ul>
+</div>
+</div>
+    </nav>
+</body>
+</header>
+
+<section id="content" role="main">
+    <div id="outline-container-sec-" class="row" style="padding-top: 70px">
+        <div class="col-md-2"></div>
+            <h1>Diary 2016-4</h1>
+            <div id="outline-container-orgae1842d" class="outline-2">
+<h2 id="orgae1842d">主要的 IPC 方法</h2>
+<div class="outline-text-2" id="text-orgae1842d">
+<ul class="org-ul">
+<li>文件, filesystem</li>
+<li>信号, signal</li>
+<li>berkely sockets</li>
+<li>消息队列, queue</li>
+</ul>
+<p>
+-- rabbitmq, zeromq, beanstalk, iron
+</p>
+<ul class="org-ul">
+<li>管道, pipe</li>
+<li>信号量, Semaphore, mutex</li>
+<li>共享内存 shared memory</li>
+<li>消息传递，message passing, 在运行时确定</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8f95b0d" class="outline-2">
+<h2 id="org8f95b0d">future and promise</h2>
+<div class="outline-text-2" id="text-org8f95b0d">
+</div><div id="outline-container-org954dff1" class="outline-3">
+<h3 id="org954dff1">future: 一般是promise的值，不可变</h3>
+</div>
+<div id="outline-container-orgf181243" class="outline-3">
+<h3 id="orgf181243">promise: 一般是个过程，函数，可变</h3>
+</div>
+<div id="outline-container-org3277fee" class="outline-3">
+<h3 id="org3277fee">SSA: 静态单赋值</h3>
+</div>
+</div>
+<div id="outline-container-org7c6fcb7" class="outline-2">
+<h2 id="org7c6fcb7">异常</h2>
+<div class="outline-text-2" id="text-org7c6fcb7">
+<p>
+异常是控制流中的突变，用来相应处理器状态中的某些变化
+</p>
+</div>
+<div id="outline-container-org72d6a3f" class="outline-3">
+<h3 id="org72d6a3f">中断</h3>
+</div>
+<div id="outline-container-orga50fd24" class="outline-3">
+<h3 id="orga50fd24">陷阱</h3>
+</div>
+<div id="outline-container-org9aa004b" class="outline-3">
+<h3 id="org9aa004b">故障</h3>
+</div>
+<div id="outline-container-org7f1fad8" class="outline-3">
+<h3 id="org7f1fad8">终止</h3>
+</div>
+</div>
+<div id="outline-container-org2aadf5b" class="outline-2">
+<h2 id="org2aadf5b">mysql</h2>
+<div class="outline-text-2" id="text-org2aadf5b">
+<p>
+purge master logs before date_sub(current_date, interval 10 day);
+show master logs;
+</p>
+</div>
+</div>
+<div id="outline-container-org37eb6bb" class="outline-2">
+<h2 id="org37eb6bb">lvresize</h2>
+<div class="outline-text-2" id="text-org37eb6bb">
+<p>
+lvresize will not work. you need to resize2fs before use df to make it affect the disk.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org746f509" class="outline-2">
+<h2 id="org746f509">emacs</h2>
+<div class="outline-text-2" id="text-org746f509">
+</div><div id="outline-container-org1d51e42" class="outline-3">
+<h3 id="org1d51e42">diary appt agenda</h3>
+<div class="outline-text-3" id="text-org1d51e42">
+</div>
+</div>
+<div id="outline-container-org06cbdc1" class="outline-3">
+<h3 id="org06cbdc1">ffap</h3>
+</div>
+</div>
+<div id="outline-container-orgb8cb787" class="outline-2">
+<h2 id="orgb8cb787">偏函数， currying</h2>
+</div>
+<div id="outline-container-org48019a2" class="outline-2">
+<h2 id="org48019a2">scala，cqrs</h2>
+</div>
+<div id="outline-container-orgf693c13" class="outline-2">
+<h2 id="orgf693c13">如果org-mode 表格无法对齐，可以尝试buffer-face-set</h2>
+</div>
+<div id="outline-container-orgd69d361" class="outline-2">
+<h2 id="orgd69d361">使用emacs作为cide，jump，需要开启semantic mode</h2>
+<div class="outline-text-2" id="text-orgd69d361">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(semantic-add-system-include "/usr/local/include")
+</pre>
+</div>
+<p>
+通过semantic-ia-fast-jump跳转目标
+</p>
+</div>
+</div>
+<div id="outline-container-org9b7221e" class="outline-2">
+<h2 id="org9b7221e">golang</h2>
+<div class="outline-text-2" id="text-org9b7221e">
+<ol class="org-ol">
+<li>gocode, complete</li>
+<li>godef, jump跳转目标</li>
+<li>godoc</li>
+<li>gorename</li>
+<li>go oracle</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org4fe1f5a" class="outline-2">
+<h2 id="org4fe1f5a">js browser dom api?</h2>
+</div>
+
+<div id="outline-container-orge42cdd8" class="outline-2">
+<h2 id="orge42cdd8">ali</h2>
+<div class="outline-text-2" id="text-orge42cdd8">
+<p>
+nodejs 中间件类型
+angular 简介
+inline－block
+js 继承，多态
+jsonp等
+</p>
+</div>
+</div>
+
+    </div>
+</section>
+
+
+<footer id="footer">
+    <br />
+</footer>
+
+  </body>
+</html>

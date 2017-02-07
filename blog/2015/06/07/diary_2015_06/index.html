@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>Diary 2015-6 - org-page</title>
+  <meta charset="utf-8" />
+  <meta name="author" content="latpaw" />
+  <meta name="description" content="&lt;TODO: insert your description here&gt;" />
+  <meta name="keywords" content="&lt;TODO: insert your keywords here&gt;" />
+
+  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/media/css/posts.css" type="text/css">
+</head>
+
+  <body class="container">
+<header id="header">
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+        <div class="container-fluid">
+<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">org-page</a>
+        </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Blog</a></li>
+          <li><a href="https://github.com/latpaw">GitHub</a></li>
+        </ul>
+</div>
+</div>
+    </nav>
+</body>
+</header>
+
+<section id="content" role="main">
+    <div id="outline-container-sec-" class="row" style="padding-top: 70px">
+        <div class="col-md-2"></div>
+            <h1>Diary 2015-6</h1>
+            <div id="outline-container-orgfdb89cf" class="outline-2">
+<h2 id="orgfdb89cf">2015-06-01</h2>
+<div class="outline-text-2" id="text-orgfdb89cf">
+</div><div id="outline-container-org4e880ec" class="outline-3">
+<h3 id="org4e880ec">tcpdump 数据格式</h3>
+<div class="outline-text-3" id="text-org4e880ec">
+<p>
+src &gt; dst: flags data-seqno ack window urgent options
+src 和 dst 是源和目的IP地址以及相应的端口. flags 标志由S(SYN), F(FIN), P(PUSH, R(RST), W(ECN CWT(nt | rep:未知, 需补充))或者 E(ECN-Echo(nt | rep:未知,　需补充))组成,单独一个'.'表示没有flags标识.
+数据段顺序号(Data-seqno)描述了此包中数据所对应序列号空间中的一个位置(nt:整个数据被分段,每段有一个顺序号, 所有的顺序号构成一个序列号空间)(可参考以下例子).
+Ack 描述的是同一个连接,同一个方向,下一个本端应该接收的(对方应该发送的)数据片段的顺序号.
+Window是本端可用的数据接收缓冲区的大小(也是对方发送数据时需根据这个大小来组织数据).
+Urg(urgent) 表示数据包中有紧急的数据. options 描述了tcp的一些选项, 这些选项都用尖括号来表示(如 &lt;mss 1024&gt;).
+</p>
+
+<p>
+src, dst 和 flags 这三个域总是会被显示. 其他域的显示与否依赖于tcp协议头里的信息.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org510bd57" class="outline-2">
+<h2 id="org510bd57">2015-06-02</h2>
+<div class="outline-text-2" id="text-org510bd57">
+</div><div id="outline-container-org841fb40" class="outline-3">
+<h3 id="org841fb40">zabbix triggers functions</h3>
+<div class="outline-text-3" id="text-org841fb40">
+<p>
+abschange  两者绝对差值
+avg avg(#5) avg(3600) avg(3600,86400) 后面可以加次数和时间
+band -&gt; bitwise and, 按位与
+change 带符号的差值
+count (sec|#num,&lt;pattern&gt;,&lt;operator&gt;,&lt;time_shift&gt;)
+date
+dayofmonth
+dayofweek
+delta(sec|#num,&lt;time_shift&gt;)
+diff
+fuzzytime(sec) 检查时间是否一致
+iregexp 不区分大小写的匹配
+last (sec|#num,&lt;time_shift&gt;)
+max
+min
+nodata
+now
+prev
+regexp
+str
+strlen
+sum
+time
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org907376e" class="outline-2">
+<h2 id="org907376e">2015-06- 3 05:58 Wed PM</h2>
+<div class="outline-text-2" id="text-org907376e">
+</div><div id="outline-container-org6389497" class="outline-3">
+<h3 id="org6389497">分区工具</h3>
+<div class="outline-text-3" id="text-org6389497">
+<p>
+fdisk -l
+fdisk /dev/sdb
+</p>
+
+<p>
+df -lh
+</p>
+
+<p>
+cfdisk -Ps
+cfdisk /dev/sdb
+</p>
+
+<p>
+parted
+</p>
+
+<p>
+sfdisk -l
+</p>
+</div>
+</div>
+<div id="outline-container-org5fb23bc" class="outline-3">
+<h3 id="org5fb23bc">dmsetup</h3>
+<div class="outline-text-3" id="text-org5fb23bc">
+<p>
+dmsetup create xxxname --table '0 1000 linear /dev/sdb 0'
+把0-1000这一段映射到 /dev/sdb 的0处,相当于是个连接
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccfd16f" class="outline-2">
+<h2 id="orgccfd16f">2015-06- 5 01:06 Fri PM</h2>
+<div class="outline-text-2" id="text-orgccfd16f">
+<p>
+安装的库文件,都会在 /usr/lib/pkgconfig 里边生成 一个 .pc 的文件, 表示版本号
+</p>
+</div>
+
+<div id="outline-container-orgb568d2d" class="outline-3">
+<h3 id="orgb568d2d">安装 pacemaker</h3>
+<div class="outline-text-3" id="text-orgb568d2d">
+<p>
+apt-get install build-essential automake autoconf libtool pkg-config
+安装 libqb from github, 如果版本号是未知, 需要修改/usr/lib/pkgconfig/libqb.pc 里边的版本
+缺少 libcpg, 需要安装 corosync, corosync-dev corosync-dbg
+apt-get install uuid-dev libglib2.0-dev libxml2-dev libxslt1-dev libbz2-dev libncurses5-dev
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5ffb06f" class="outline-3">
+<h3 id="org5ffb06f">改变时区</h3>
+<div class="outline-text-3" id="text-org5ffb06f">
+<p>
+tzselect
+或者修改 /etc/timezone
+但是这样并不能改变终端的显示信息
+需要修改.profile, 加入
+TZ='Asia/Shanghai';export TZ
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0e91550" class="outline-2">
+<h2 id="org0e91550">2015-06- 8 03:23 Mon PM</h2>
+<div class="outline-text-2" id="text-org0e91550">
+</div><div id="outline-container-orge7630bf" class="outline-3">
+<h3 id="orge7630bf">linux 添加虚拟网卡</h3>
+<div class="outline-text-3" id="text-orge7630bf">
+<ol class="org-ol">
+<li>ifconfig eth0:0 x.x.x.x up</li>
+</ol>
+<p>
+2.通过其他方法
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8ac94bb" class="outline-3">
+<h3 id="org8ac94bb">sql 导出导入数据</h3>
+<div class="outline-text-3" id="text-org8ac94bb">
+<p>
+mysqldump &gt; 导出
+mysql &lt; 导入
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgce7dce3" class="outline-3">
+<h3 id="orgce7dce3">linux shell</h3>
+<div class="outline-text-3" id="text-orgce7dce3">
+<p>
+#!/bin/less
+#!/bin/more etc.
+</p>
+
+<p>
+$UID 当前用户的 uid
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbf78060" class="outline-2">
+<h2 id="orgbf78060">2015-06-11 11:04 Thu AM</h2>
+<div class="outline-text-2" id="text-orgbf78060">
+<p>
+查看 imap 证书
+openssl s_client -connect imap.sample.com:imaps
+查看 smtp 证书
+openssl s_client -connect smtp.sample.com:smtps
+</p>
+</div>
+
+<div id="outline-container-orgb5a77bc" class="outline-3">
+<h3 id="orgb5a77bc">linux bash builtin</h3>
+<div class="outline-text-3" id="text-orgb5a77bc">
+<p>
+set 设置变量
+enable 激活 bash 的内置函数
+enable -n 使内置函数失效,如果有外部的同名函数,将使用
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org629cd9c" class="outline-2">
+<h2 id="org629cd9c">2015-06-15 01:44 Mon PM</h2>
+<div class="outline-text-2" id="text-org629cd9c">
+</div><div id="outline-container-org55026bc" class="outline-3">
+<h3 id="org55026bc">启动一个服务</h3>
+<div class="outline-text-3" id="text-org55026bc">
+<p>
+start-stop-daemon --start --oknodo --user root --name whatisthename --pidfile /run/ok.pid --startas /root/a --chuid root -- --daemon
+start-stop-daemon --stop  --oknodo --user root --name whatisthename --pidfile /run/ok.pid --retry 5
+man start-stop-daemon
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaa75f99" class="outline-3">
+<h3 id="orgaa75f99">getopts</h3>
+<div class="outline-text-3" id="text-orgaa75f99">
+<p>
+getopts 后边跟需要解析的参数,以-为准, 比如
+ getopts h,  如果 h 需要参数,后边加:,如果后边的参数紧跟,不能有空格,需要::,双冒号, 参数会赋给 option 变量, 参数的值会赋给 OPTARG
+参数可以紧跟,这样,参数就不需要值
+循环的时候,参数的值会赋给, OPTARG, 参数的位置, OPTIND, 初始为1,每次 getopts 都会+1.
+</p>
+<p class="verse">
+#!/bin/bash
+while getopts h:ms option
+do
+&#xa0;&#xa0;&#xa0;&#xa0;case "$option" in
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;h)
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "option:h, value $OPTARG"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "next arg index:$OPTIND";;
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;m)
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "option:m, value $OPTARG"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "next arg index:$OPTIND";;
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;s)
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "option:s, value $OPTARG"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "next arg index:$OPTIND";;
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;\?)
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "Usage: args [-h n] [-m] [-s]"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "-h means hours"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "-m means minutes"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;echo "-s means seconds"
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;exit 1;;
+&#xa0;&#xa0;&#xa0;&#xa0;esac
+done
+echo "done done"
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab6a5db" class="outline-2">
+<h2 id="orgab6a5db">2015-06-18 04:46 Thu PM</h2>
+<div class="outline-text-2" id="text-orgab6a5db">
+</div><div id="outline-container-org1388597" class="outline-3">
+<h3 id="org1388597">ack</h3>
+<div class="outline-text-3" id="text-org1388597">
+<p>
+ack -l --print0 foo | xargs -r0 rm --
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c88406" class="outline-2">
+<h2 id="org9c88406">2015-06-19 02:58 Fri PM</h2>
+<div class="outline-text-2" id="text-org9c88406">
+</div><div id="outline-container-org8fab341" class="outline-3">
+<h3 id="org8fab341">四层 七层 负载均衡</h3>
+<div class="outline-text-3" id="text-org8fab341">
+<p>
+四层的负载均衡,直接转发请求到后端服务器,相当于是路由器.
+七层的会自己和客户端建立连接,然后发给后端, 相当于是个代理, 更加智能化,一定程度上防 DDOS
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7342bbf" class="outline-3">
+<h3 id="org7342bbf">sshd_config</h3>
+<div class="outline-text-3" id="text-org7342bbf">
+<p>
+useDNS no 可以禁止反向解析 ip, 导致的缓慢
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd8aec36" class="outline-3">
+<h3 id="orgd8aec36">just mark</h3>
+<div class="outline-text-3" id="text-orgd8aec36">
+<p class="verse">
+sbin/iptables -t nat -A POSTROUTING -o tun0  -j MASQUERADE
+端口转发:
+iptables -t nat -A PREROUTING -d 192.81.131.180/32 -p tcp -m tcp --dport 993 -j DNAT --to-destination 122.144.134.217:993
+
+SNAT，DNAT，MASQUERADE都是NAT
+MASQUERADE是SNAT的一个特例
+SNAT是指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP，这样，接收方就认为数据包的来源是被替换的那个IP的主机
+MASQUERADE是用发送数据的网卡上的IP来替换源IP，因此，对于那些IP不固定的场合，比如拨号网络或者通过dhcp分配IP的情况下，就得用MASQUERADE
+DNAT，就是指数据包从网卡发送出去的时候，修改数据包中的目的IP，表现为如果你想访问A，可是因为网关做了DNAT，把所有访问A的数据包的目的IP全部修改为B，那么，你实际上访问的是B
+
+因为，路由是按照目的地址来选择的，因此，DNAT是在PREROUTING链上来进行的，而SNAT是在数据包发送出去的时候才进行，因此是在POSTROUTING链上进行的
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org864d89a" class="outline-2">
+<h2 id="org864d89a">2015-06-23 03:12 Tue PM</h2>
+<div class="outline-text-2" id="text-org864d89a">
+</div><div id="outline-container-org6ad5fb6" class="outline-3">
+<h3 id="org6ad5fb6">access and trunk</h3>
+<div class="outline-text-3" id="text-org6ad5fb6">
+<p>
+以太网端口有 3种链路类型:access、trunk、hybird
+Access类型端口只能属于1个VLAN 般用于连接计算机 端口；
+</p>
+
+<p>
+Trunk类型端口可以允许多个VLAN通过,可以接收和发送多个VLAN 报文,一般用于交换机之间的连接；
+</p>
+
+<p>
+Hybrid类型端口可以允许多个VLAN通过，可以接收和发送多个VLAN 报文，可以用于交换机的间连接也可以用于连接用户计算机。
+</p>
+
+<p>
+Hybrid端口和Trunk端口在接收数据时处理思路方法是一样的，唯一区别的处在于发送数据时:Hybrid端口可以允许多个VLAN报文发送时不打标签，而Trunk端口只允许缺省VLAN报文发送时不打标签。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c0f082" class="outline-2">
+<h2 id="org9c0f082">2015-06-24 12:10 Wed PM</h2>
+<div class="outline-text-2" id="text-org9c0f082">
+</div><div id="outline-container-orgfea904d" class="outline-3">
+<h3 id="orgfea904d">networksetup</h3>
+<div class="outline-text-3" id="text-orgfea904d">
+<p>
+mac的 networksetup 可以设置所有网络配置
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb2b422d" class="outline-3">
+<h3 id="orgb2b422d">vpn</h3>
+<div class="outline-text-3" id="text-orgb2b422d">
+<p>
+TAP 等同于一个以太网设备，它操作第二层数据包如以太网数据帧。TUN模拟了网络层设备，操作第三层数据包比如IP数据封包.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga187d86" class="outline-3">
+<h3 id="orga187d86">dhcping 可以查看这个是否为 dhcp</h3>
+<div class="outline-text-3" id="text-orga187d86">
+<p>
+dhcping -s 192.168.82.13 -r -v
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf282d3c" class="outline-3">
+<h3 id="orgf282d3c">route</h3>
+<div class="outline-text-3" id="text-orgf282d3c">
+<p>
+192.168.80.0/22 dev eth0  proto kernel  scope link  src 192.168.81.191
+</p>
+
+<p>
+protocol:
+redirect - the route was installed due to an ICMP redirect.
+</p>
+
+<p>
+kernel - the route was installed by the kernel during autoconfiguration.
+</p>
+
+<p>
+boot - the route was installed during the bootup sequence. If a routing daemon starts, it will purge all of them.
+</p>
+
+<p>
+static - the route was installed by the administrator to override dynamic routing. Routing daemon will
+respect them and, probably, even advertise them to its peers.
+</p>
+
+<p>
+ra - the route was installed by Router Discovery protocol.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6b02c70" class="outline-3">
+<h3 id="org6b02c70">arp</h3>
+<div class="outline-text-3" id="text-org6b02c70">
+<p>
+arp -a -n
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9134a56" class="outline-2">
+<h2 id="org9134a56">2015-06-29 04:24 Mon PM</h2>
+<div class="outline-text-2" id="text-org9134a56">
+</div><div id="outline-container-org9129ed3" class="outline-3">
+<h3 id="org9129ed3">kvm</h3>
+<div class="outline-text-3" id="text-org9129ed3">
+<p>
+通过 virsh 可以管理 kvm .
+</p>
+</div>
+</div>
+<div id="outline-container-orgcf56677" class="outline-3">
+<h3 id="orgcf56677">安装一个 kvm</h3>
+<div class="outline-text-3" id="text-orgcf56677">
+<p>
+ 首先创建一个 img, truncate --size=20000M /var/lib/libvirt/images/test.img ,  这样创建好了一个 img.
+第一种方法: 可以通过 virt-install ,命令来自 virt-inst 包.
+virt-install --virt-type kvm --name ubuntu --ram 1024 \
+ --cdrom=/data/xxx/.iso --disk path=/var/lib/libvirt/images/test.img,size=10 --graphics vnc,listen=0.0.0.0 --noautoconsole\
+ --os-type=linux
+ 设置好之后通过 vnc 连接,然后安装.
+</p>
+
+<p>
+第二种方法: 可以通过写好配置文件, 在 /etc/libvirt/qemu/xx.xml,
+然后 virsh create xxx
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1806f11" class="outline-3">
+<h3 id="org1806f11">vnc 闪退</h3>
+<div class="outline-text-3" id="text-org1806f11">
+<p>
+把高级里边的 ColorLevel 从 pal8 改成 rgb222 或者 full.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb0a937c" class="outline-2">
+<h2 id="orgb0a937c">2015-06-30 11:02 Tue AM</h2>
+<div class="outline-text-2" id="text-orgb0a937c">
+</div><div id="outline-container-orge6b2986" class="outline-3">
+<h3 id="orge6b2986">改变 debian 的默认编辑器</h3>
+<div class="outline-text-3" id="text-orge6b2986">
+<p>
+update-alternatives --config editor
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7dbe46c" class="outline-3">
+<h3 id="org7dbe46c">修改用户密码, mysql</h3>
+<div class="outline-text-3" id="text-org7dbe46c">
+<p>
+mysql&gt; update mysql.user set password=PASSWORD(‘新密码’) where User=’root’;
+mysql&gt; flush privileges;
+mysql&gt; quit
+</p>
+</div>
+</div>
+
+<div id="outline-container-org74e5199" class="outline-3">
+<h3 id="org74e5199">网桥工具</h3>
+<div class="outline-text-3" id="text-org74e5199">
+<p>
+<a href="http://tianhao936.blog.51cto.com/1043670/1343767">http://tianhao936.blog.51cto.com/1043670/1343767</a>
+ apt-get install bridge-utils
+ 修改/etc/network/interfaces
+</p>
+<p class="verse">
+iface br0 inet static
+&#xa0;&#xa0;address x.xx.x.x
+&#xa0;&#xa0;netmask x.x.x.x
+&#xa0;&#xa0;gateway x.x.x.x
+&#xa0;&#xa0;bridge_ports eth0
+&#xa0;&#xa0;bridge_stp off
+&#xa0;&#xa0;bridge_fd 0
+
+</p>
+<p>
+sysctl -p 确保以下三项为0
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+</p>
+</div>
+</div>
+
+<div id="outline-container-org37a0a90" class="outline-3">
+<h3 id="org37a0a90">sql</h3>
+<div class="outline-text-3" id="text-org37a0a90">
+<p>
+id, orderid, name, period, city, area, tel, type, addr, payed, sent, completed
+create table orders (
+   id int(10) not null auto_increment,
+   name varchar(20) not null,
+   order_id varchar(32) not null,
+   order_period varchar(3) not null,
+   city varchar(20),
+   area varchar(20),
+   tel varchar(20) not null,
+   type varchar(3) not null,
+   addr varchar(100) not null,
+   payed varchar(3),
+   sent varchar(3),
+   completed varchar(3),
+   primary key (id)
+);
+</p>
+
+<p>
+create table products (
+ product_id int(10) not null auto_increment,
+ name varchar(50) not null,
+ price int(10) ,
+ one_month int(10),
+ three_month int(10),
+ six_month int(10),
+ one_year int(10),
+ primary key (id)
+);
+</p>
+</div>
+</div>
+</div>
+
+    </div>
+</section>
+
+
+<footer id="footer">
+    <br />
+</footer>
+
+  </body>
+</html>

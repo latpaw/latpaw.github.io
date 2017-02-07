@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>Diary 2016-3 - org-page</title>
+  <meta charset="utf-8" />
+  <meta name="author" content="latpaw" />
+  <meta name="description" content="&lt;TODO: insert your description here&gt;" />
+  <meta name="keywords" content="&lt;TODO: insert your keywords here&gt;" />
+
+  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/media/css/posts.css" type="text/css">
+</head>
+
+  <body class="container">
+<header id="header">
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+        <div class="container-fluid">
+<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">org-page</a>
+        </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Blog</a></li>
+          <li><a href="https://github.com/latpaw">GitHub</a></li>
+        </ul>
+</div>
+</div>
+    </nav>
+</body>
+</header>
+
+<section id="content" role="main">
+    <div id="outline-container-sec-" class="row" style="padding-top: 70px">
+        <div class="col-md-2"></div>
+            <h1>Diary 2016-3</h1>
+            <div id="outline-container-orga835d78" class="outline-2">
+<h2 id="orga835d78">Tue Mar  1 14:34:37 2016</h2>
+</div>
+
+<div id="outline-container-org7d2b914" class="outline-2">
+<h2 id="org7d2b914">perl</h2>
+<div class="outline-text-2" id="text-org7d2b914">
+</div><div id="outline-container-org78a9d5b" class="outline-3">
+<h3 id="org78a9d5b">变量</h3>
+<div class="outline-text-3" id="text-org78a9d5b">
+<p>
+不同的类型有不同的变量空间，不冲突
+变量使用$, $a = 13
+数组使用@, @a = (1,2,3), 使用的时候要用 $
+关联数组使用%, %a =(key1,"value1",key2,"value2"), $b = %a{key1}
+组合字符使用 点号
+</p>
+
+<p>
+@int1 = (1,2,3,4,5)
+$#，取数组最后一个元素的index,4
+$c = @int1, 最后一个元素,5
+($c)＝ @int1, 第一个元素,1
+$int1[0] = 3, 赋值第一个元素,3
+delete $fred{one}, 移除一个元素
+</p>
+</div>
+</div>
+<div id="outline-container-orgfcab4e4" class="outline-3">
+<h3 id="orgfcab4e4">循环</h3>
+<div class="outline-text-3" id="text-orgfcab4e4">
+<p>
+if(xx){ }elsif(oo){ }else{ }
+while(xx){}
+do{}while(xx)
+unless(xx){}
+until(xx){}
+for(i=0;i&lt;10;i++){}
+for $int(@int_array){ $int }
+foreach $int(@int_array){ $int }
+如果省略$int,默认为$_
+last , 相当于break
+next , 相当于continue
+</p>
+</div>
+</div>
+<div id="outline-container-orgb777143" class="outline-3">
+<h3 id="orgb777143">正则</h3>
+<div class="outline-text-3" id="text-orgb777143">
+<p>
+$string =~ s/:/;/g
+</p>
+
+<p>
+前置: s替换 tr转换
+后置: e执行表达式 g全局
+</p>
+</div>
+</div>
+<div id="outline-container-org43f19fa" class="outline-3">
+<h3 id="org43f19fa">函数</h3>
+<div class="outline-text-3" id="text-org43f19fa">
+<p>
+sub hello{
+}
+执行的时候使用&amp;hello(a,b)
+第一个参数为$_[0],第二个$_[1]
+参数的数组@_
+</p>
+
+<p>
+our:   定义或者声明一个全局变量，在当前的包环境下。
+my:    定义一个新的、局部范围（块或者文件）有效的变量。推荐!!!
+local: 重新定义局部范围有效的变量，主要用于屏蔽同名的全局变量。局部的全局变量调用时也会被覆盖
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb67735" class="outline-2">
+<h2 id="orgdb67735">force apt-get reinstall config files</h2>
+<div class="outline-text-2" id="text-orgdb67735">
+<p>
+apt-get -o DPkg::options::=--force-confmiss --reinstall install xxx
+</p>
+</div>
+</div>
+
+<div id="outline-container-org385023e" class="outline-2">
+<h2 id="org385023e">SPF</h2>
+</div>
+
+<div id="outline-container-org06fb3ab" class="outline-2">
+<h2 id="org06fb3ab">rootkit</h2>
+</div>
+<div id="outline-container-org16f9b47" class="outline-2">
+<h2 id="org16f9b47">rkhunter</h2>
+</div>
+<div id="outline-container-orgee034b8" class="outline-2">
+<h2 id="orgee034b8">CLI</h2>
+<div class="outline-text-2" id="text-orgee034b8">
+<p>
+node nesh
+php boris
+python bpython
+ruby pry
+</p>
+</div>
+</div>
+<div id="outline-container-org2867f44" class="outline-2">
+<h2 id="org2867f44">Hack TOOLS</h2>
+<div class="outline-text-2" id="text-org2867f44">
+<p>
+ccat
+fdupes   find the duplicated files
+sqlmap
+medusa
+hydra
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0075a63" class="outline-2">
+<h2 id="org0075a63">About Mails</h2>
+<div class="outline-text-2" id="text-org0075a63">
+<p>
+dovecot  =&gt; MUA , mail user agent
+postfix =&gt; MTA, mail transfer agent
+MDA , mail deliver agent
+DKIM , DomainKeys Identified Mail
+</p>
+</div>
+</div>
+
+    </div>
+</section>
+
+
+<footer id="footer">
+    <br />
+</footer>
+
+  </body>
+</html>

@@ -4,16 +4,79 @@
     <title>org-page</title>
     <link>https://latpaw.github.io</link>
     <description>static site generator</description>
-    <pubDate>二, 07 2月 2017 17:55:15 CST</pubDate>
-    <lastBuildDate>二, 07 2月 2017 17:55:15 CST</lastBuildDate>
+    <pubDate>Wed, 08 Feb 2017 00:43:32 CST</pubDate>
+    <lastBuildDate>Wed, 08 Feb 2017 00:43:32 CST</lastBuildDate>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>Org-page static site generator (https://github.com/kelvinh/org-page)</generator>
     <item>
-      <title>2017 first blog</title>
-      <link>https://latpaw.github.io/blog/2017/02/07/2017-first-blog</link>
+      <title>Best Tools</title>
+      <link>https://latpaw.github.io/blog/2017/02/07/best_tools</link>
       <description><![CDATA[<TODO: insert your description here>]]></description>
       <pubDate>2017-02-07</pubDate>
-      <guid>https://latpaw.github.io/blog/2017/02/07/2017-first-blog</guid>
+      <guid>https://latpaw.github.io/blog/2017/02/07/best_tools</guid>
+    </item>
+    <item>
+      <title>Diary 2015-5</title>
+      <link>https://latpaw.github.io/blog/2015/05/07/diary_2015_05</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2015/05/07/diary_2015_05</guid>
+    </item>
+    <item>
+      <title>Diary 2015-6</title>
+      <link>https://latpaw.github.io/blog/2015/06/07/diary_2015_06</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2015/06/07/diary_2015_06</guid>
+    </item>
+    <item>
+      <title>Diary 2015-7</title>
+      <link>https://latpaw.github.io/blog/2015/07/07/diary_2015_07</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2015/07/07/diary_2015_07</guid>
+    </item>
+    <item>
+      <title>Diary 2015-8</title>
+      <link>https://latpaw.github.io/blog/2015/08/07/diary_2015_08</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2015/08/07/diary_2015_08</guid>
+    </item>
+    <item>
+      <title>Diary 2015-12</title>
+      <link>https://latpaw.github.io/blog/2015/12/07/diary_2015_12</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2015/12/07/diary_2015_12</guid>
+    </item>
+    <item>
+      <title>Diary 2016-3</title>
+      <link>https://latpaw.github.io/blog/2016/03/07/diary_2016_03</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2016/03/07/diary_2016_03</guid>
+    </item>
+    <item>
+      <title>Diary 2016-4</title>
+      <link>https://latpaw.github.io/blog/2016/04/07/diary_2016_04</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2016/04/07/diary_2016_04</guid>
+    </item>
+    <item>
+      <title>Diary 2016-7</title>
+      <link>https://latpaw.github.io/blog/2016/07/07/diary_2016_07</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2016/07/07/diary_2016_07</guid>
+    </item>
+    <item>
+      <title>Diary 2016-9</title>
+      <link>https://latpaw.github.io/blog/2016/09/07/diary_2016_09</link>
+      <description><![CDATA[<TODO: insert your description here>]]></description>
+      <pubDate>2017-02-07</pubDate>
+      <guid>https://latpaw.github.io/blog/2016/09/07/diary_2016_09</guid>
     </item>
   </channel>
 </rss>
