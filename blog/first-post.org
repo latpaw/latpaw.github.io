@@ -1,0 +1,17 @@
+#+TITLE:       2017 first blog
+#+AUTHOR:      latpaw
+#+EMAIL:       latpaw@latpaw-VirtualBox
+#+DATE:        2017-02-07 二
+#+URI:         /blog/%y/%m/%d/2017-first-blog
+#+KEYWORDS:    <TODO: insert your keywords here>
+#+TAGS:        <TODO: insert your tags here>
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* 五年来第一篇
+#+BEGIN_SRC c
+int main(){
+println("long time no see");
+return 0;
+}
+#+END_SRC
