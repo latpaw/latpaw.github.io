@@ -1,0 +1,80 @@
+#+TITLE:       Scala
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-10-07 Tue
+#+URI:         /blog/%y/%m/%d/scala
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        scala
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* Scala
+** Actor sender
+#+BEGIN_SRC scala
+package hello.latpaw.shapes
+
+object Messages {
+  object Exit
+  object Finished
+  case class Response(message: String)
+}
+
+import akka.actor.Actor
+
+class Shapes extends Actor {
+  import Messages._
+
+  def recieve = {
+    case s: Shape =>
+      println(s" println shape")
+      sender ! Response(s"res for shape")
+    case Exit =>
+      println(s"exiting")
+      sender ! Finished
+    case unexpected =>
+      val response = Response(s"unkown message")
+      println(s"unexpected println")
+      sender ! response
+  }
+}
+
+sender.!( Response("asd") )
+! 是个方法
+#+END_SRC
+** case
+   case 会创建 object，class，等伴函数
+** object 相当于单例类，和module的结合体
+** 偏函数
+   偏函数是指输入一个参数，返回固定的类型或者其他类型，一般来说是空值，比如 x/y，当y为0的时候不能正常返回
+** range
+#+BEGIN_SRC scala
+1 to 10 // include 10
+1 until 10 // not include 10
+1 to 10 by 3 //
+1.1f to 10.1f by 3.1f
+'a' to 'g' by 2
+BigInt(8) to BigInt(100) by 9
+#+END_SRC
+** apply
+   apply()语法糖，让你调用一个对象时就像你在调用一个函数。
+** function1 function2 .. function22
+分别带1-22个参数的trait
+The only distinction between Function1 and PartialFunction is that the latter can specify inputs which it will not handle.
+*** 必须实现 apply 函数
+*** function1 有apply， andThen: g(f(x))，compose: f(g(x))，toString 方法
+*** function2-22 有apply，curried，tupled， toString方法
+http://blog.csdn.net/bdmh/article/details/50216589
+** 数据类型
+*** List
+*** Set
+*** Tuple  t._1 t._2
+    1 -> 2 创建一个元组
+*** Map
+    Map(1->"one", 2->"two")
+    val bb = Map("hello"->Map("a"->"b"))
+    bb.get("hello").getOrElse
+*** Option
+    是一个trait
+*** 函数组合子 functional combinator
+    map foreach filter zip partition find drop dropWhile
+    foldLeft foldRight flatten flatMap

@@ -1,0 +1,98 @@
+#+TITLE:       vim
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2017-02-07 Tue
+#+URI:         /blog/%y/%m/%d/vim
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        vim
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* VIM
+*** toyamarinyon/vim-swift
+*** Valloric/YouCompleteMe
+*** airblade/vim-gitgutter
+*** ternjs/tern_for_vim
+*** mattn/webapi-vim
+*** mattn/gist-vim
+*** vim-scripts/comments.vim
+*** kien/ctrlp.vim
+*** sass/sass
+*** sickill/vim-monokai
+
+*** mileszs/ack.vim
+*** a.vim
+*** easymotion/vim-easymotion
+*** Vundle.vim
+
+*** confluencewiki.vim
+*** othree/html5.vim
+*** JavaScript-syntax
+*** mako.vim
+*** moin.vim
+*** python.vim--Vasiliev
+*** xml.vim
+*** less
+*** hallison/vim-markdown
+*** tpope/vim-markdown
+*** wikipedia.vim
+*** derekwyatt/vim-scala
+*** alswl/play2vim
+*** tpope/vim-haml
+*** kchmck/vim-coffee-script
+*** vim-ruby/vim-ruby
+*** django.vim
+*** nginx.vim
+
+*** Impact
+*** matrix.vim
+*** vividchalk.vim
+*** ego.vim
+*** tomasr/molokai
+*** altercation/vim-colors-solarized
+
+*** html.vim
+*** IndentAnything
+*** Javascript-Indentation
+*** mako.vim--Torborg
+*** gg/python.vim
+*** -NERD-tree
+*** AutoClose--Alves
+*** auto_mkdir
+
+*** fcitx.vim
+*** FencView.vim
+*** FuzzyFinder
+*** jsbeautify
+*** L9
+*** Mark
+*** matrix.vim
+*** mru.vim
+*** The-NERD-Commenter
+*** restart.vim
+*** taglist.vim
+*** templates.vim
+*** vimim.vim
+*** ZenCoding.vim
+*** mattn/emmet-vim
+*** css_color.vim
+*** hallettj/jslint.vim
+*** vcscommand.vim
+*** snipMate
+*** sirver/ultisnips
+*** TaskList.vim
+
+*** git://github.com/kevinw/pyflakes-vim.git
+*** project.tar.gz
+*** minibufexplorerpp
+*** bufexplorer.zip
+*** Align.vim
+*** SQLUtilities
+*** matchit.zip
+*** xmledit
+*** on github
+*** tpope/vim-fugitive
+*** rstacruz/sparkup, {rtp: vim/}
+*** tpope/vim-rails.git
+*** repos
+*** git://git.wincent.com/command-t.git

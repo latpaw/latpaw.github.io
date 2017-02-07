@@ -1,0 +1,228 @@
+#+TITLE:       Best Tools
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2017-02-07 Tue
+#+URI:         /blog/%y/%m/%d/best_tools
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        tools,emacs
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* MAC
+** alfred                                                                                      :tools:
+** [[file:vim.org][vim/mvim]]                                                                                   :editor:
+** [[file:emacs.org][emacs]]                                                                                      :editor:
+** atom                                                                                       :editor:
+** xcode                                                             :editor:
+*** cocoapod
+**** canvas
+** vs code                                                                                    :editor:
+** sublime                                                                                    :editor:
+** homebrew                                                                                  :manager:
+*** Brewfile
+    tap 'caskroom/cask'
+    tap 'homebrew/bundle'
+    tap 'homebrew/core'
+    tap 'homebrew/games'
+    tap 'homebrew/nginx'
+    tap 'homebrew/php'
+    tap 'homebrew/science'
+    tap 'homebrew/services'
+    tap 'homebrew/x11'
+    tap 'neovim/neovim'
+    cask 'xquartz'
+    brew 'ack'
+    brew 'libyaml'
+    brew 'openssl'
+    brew 'ansible'
+    brew 'apg'
+    brew 'go'
+    brew 'asciinema'
+    brew 'autoconf'
+    brew 'xz'
+    brew 'automake'
+    brew 'icu4c'
+    brew 'boost'
+    brew 'cmake'
+    brew 'geoipupdate'
+    brew 'geoip'
+    brew 'bro'
+    brew 'pkg-config'
+    brew 'libpng'
+    brew 'freetype'
+    brew 'fontconfig'
+    brew 'pixman'
+    brew 'gettext'
+    brew 'libffi'
+    brew 'glib'
+    brew 'cairo'
+    brew 'ccat'
+    brew 'cheat'
+    brew 'cmatrix'
+    brew 'ctags'
+    brew 'dateutils'
+    brew 'libgpg-error'
+    brew 'libassuan'
+    brew 'libgcrypt'
+    brew 'libksba'
+    brew 'pth'
+    brew 'dirmngr'
+    brew 'docker'
+    brew 'docker-machine'
+    brew 'libtasn1'
+    brew 'gmp'
+    brew 'nettle'
+    brew 'gnutls'
+    brew 'jpeg'
+    brew 'libtiff'
+    brew 'gobject-introspection'
+    brew 'gdk-pixbuf'
+    brew 'libcroco'
+    brew 'harfbuzz'
+    brew 'pango'
+    brew 'librsvg'
+    brew 'emacs'
+    brew 'libtool'
+    brew 'wxmac'
+    brew 'erlang'
+    brew 'etcd'
+    brew 'fasd'
+    brew 'fdupes'
+    brew 'readline'
+    brew 'sqlite'
+    brew 'gdbm'
+    brew 'python'
+    brew 'yasm'
+    brew 'x264'
+    brew 'lame'
+    brew 'xvid'
+    brew 'ffmpeg'
+    brew 'fish'
+    brew 'fpp'
+    brew 'mpfr'
+    brew 'libmpc'
+    brew 'isl'
+    brew 'gcc'
+    brew 'gd'
+    brew 'git-flow'
+    brew 'global'
+    brew 'pinentry'
+    brew 'gpg-agent'
+    brew 'libusb'
+    brew 'libusb-compat'
+    brew 'gnupg2'
+    brew 'lua'
+    brew 'gnuplot'
+    brew 'goaccess'
+    brew 'grc'
+    brew 'htop-osx'
+    brew 'httpie'
+    brew 'hub'
+    brew 'iftop'
+    brew 'iproute2mac'
+    brew 'irssi'
+    brew 'jansson'
+    brew 'libev'
+    brew 'libevent'
+    brew 'libressl'
+    brew 'libvo-aacenc'
+    brew 'libxml2'
+    brew 'links'
+    brew 'pcre'
+    brew 'lnav'
+    brew 'lynis'
+    brew 'mackup'
+    brew 'protobuf'
+    brew 'mobile-shell'
+    brew 'scons'
+    brew 'mongodb'
+    brew 's-lang'
+    brew 'most'
+    brew 'mtr'
+    brew 'mysql'
+    brew 'ncdu'
+    brew 'netcat'
+    brew 'spdylay'
+    brew 'python3'
+    brew 'nghttp2'
+    brew 'ngrep'
+    brew 'nmap'
+    brew 'node'
+    brew 'peco'
+    brew 'proxychains-ng'
+    brew 'pstree'
+    brew 'rabbitmq'
+    brew 'shellcheck'
+    brew 'spark'
+    brew 'the_platinum_searcher'
+    brew 'the_silver_searcher'
+    brew 'thrift'
+    brew 'tig'
+    brew 'tmux'
+    brew 'tmux-cssh'
+    brew 'tree'
+    brew 'unixodbc'
+    brew 'vim'
+    brew 'weechat'
+    brew 'wget'
+    brew 'youtube-dl'
+    brew 'caskroom/cask/brew-cask'
+    brew 'homebrew/nginx/openresty'
+    brew 'homebrew/php/php70'
+    brew 'homebrew/php/boris'
+    brew 'homebrew/science/r'
+    brew 'homebrew/x11/mit-scheme'
+    brew 'neovim/neovim/neovim'
+    cask 'electron'
+    cask 'facter'
+    cask 'haskell-platform'
+    cask 'karabiner'
+    cask 'keycastr'
+    cask 'madruby'
+    cask 'mesasqlite'
+    cask 'puppet'
+    cask 'rubymine'
+    cask 'seil'
+    cask 'sequel-pro'
+    cask 'sketch'
+    cask 'sketch-toolbox'
+    cask 'techstoreclub-simple-comic'
+    cask 'virtualbox'
+    cask 'wireshark'
+
+** sketch                                                                                   :tools:
+*** content generator
+*** cssketch
+*** icon font
+** sketch toolbox
+** keycastr
+** karabiner
+** seil
+** mesasqlite
+** sequel pro
+** electron
+** mongohub
+** postman
+** slack
+** manico
+** appcleaner
+** dash
+** bartender
+** moom
+** go2shell
+** shuttle
+** unclutter
+** bettertouchtool
+** gif keyboard
+** charles
+** flux
+** infinit
+** amphetamine
+** handbrake
+** hype3
+** paw
+** 1password
+** lastpass
+** bittorrent
+** bittorrent sync
+** thor

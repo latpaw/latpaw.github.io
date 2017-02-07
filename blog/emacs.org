@@ -1,0 +1,144 @@
+#+TITLE:       Emacs Package
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-10-07 Tue
+#+URI:         /blog/%y/%m/%d/emacs_packages
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        emacs
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* 如果要是用emacs，首先要了解emacs有哪些功能，能实现什么，不能实现什么（极少）
+一般emacs的教程都非常的长，很难理解
+下面就emacs的功能分解下
+** C-h用来查询帮助，比如C-h m，查询当前模式的描述，一般包括快捷键等
+* Markdown
+** Markdown-mode
+*** markdown-mode
+    -- install marked or some other package can parse markdown
+    #+BEGIN_SRC  shell
+    npm install marked
+    #+END_SRC
+** Setting
+   -- set markdown-command to "marked" by
+   #+begin_src emacs-lisp
+   (set markdown-command "marked")
+   #+end_src
+   -- you can use C-c C-c l , live preview the markdown in emacs
+   可以使用帮助查询更多的快捷键和功能
+* GO LANG
+** Mode
+   -- go-mode
+   先正确设置GOPATH，GOROOT
+** Package
+   使用go get 安装外部工具
+   - godef
+   - gocode
+   - imports
+** Setting
+   #+begin_src emacs-lisp
+(add-hook 'go-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (setq gofmt-command "goimports")
+                          (add-hook 'before-save-hook 'gofmt-before-save)
+                          (local-set-key (kbd "M-.") 'godef-jump)
+                          (company-mode)))
+   #+end_src
+有时候godef，gocode失效，那就是需要更新了，一般与go-mode同步更新
+* RUBY
+** Mode
+*** ruby-mode
+*** ruby end
+    自动添加end
+*** robe
+    代码分析，补全等
+*** inf-ruby
+*** guard-mode
+    可以高亮显示注释中的代码
+** Setting
+开启ruby end和robe mode
+* JAVASCRIPT
+** Mode
+*** js2-mode
+*** tern-mode
+    js的语法分析补全工具，需要安装外部工具ternjs
+    npm install tern
+    必须配置.tern-project
+*** jsfmt
+*** web-beautify
+    npm install -g js-beautify
+    (setq jsfmt-command "js-beautify")
+*** swank-js slime-js skewer (有待解决)
+*** js-comint
+*** js-refactor
+*** js-highlight-vars
+** Setting
+* WEB
+** Mode
+*** web-mode
+*** emmet-mode
+** Setting
+* CPP
+** Mode
+*** c++-mode
+*** helm-gtags(optional)
+** Setting
+相当复杂
+* LISP
+** Mode
+*** emacs-lisp-mode
+*** elisp-slime-nav-mode
+* PHP
+* PYTHON
+* Elixir
+** elixir-mode
+** alchemist
+* Swift
+** swift-mode
+** company-sourcekit
+** sourcekittendaemon
+* MOSTLY USED PACKAGES
+** which key，在按下快捷键的prefix的时候显示按键帮助
+** helm, 更好的命令支持
+** helm-mini
+** yas-snippets, 提供多语言的代码片段功能
+** flycheck，即时检查语法问题
+** flyspell，即时检查拼写问题
+可能需要安装ispell外部工具
+** flymake，与flycheck二选一即可
+** projectitle， 项目管理工具
+可以用来切换项目，切换文件等
+** company，补全功能
+各种语言支持的程度不一样，如果需要添加补齐功能，使用类似下面的方法，加到company的补齐后端中
+#+begin_src emacs-lisp
+(add-to-list 'company-backends 'company-c-headers)
+#+end_src
+** auto-complete,与company二选一
+** auto-pair自动添加对称的括号等(smartparens)
+** hide-show，origami，二选一，可以折叠代码
+** winner, emacs的窗口管理工具
+** electric-indent, 更好的代码格式化、对齐工具
+** hungry-delete,删除前方所有的空行，空格等
+** gnus, 首发邮件，新闻组等
+** irc，irc聊天
+** magit, git管理工具
+** helm-github-stars, 列出github上自己star过的项目，可以搜索
+** gist工具，可以新建，查看，删除，fork等
+** diminish, 提供mode line的缩写
+** undo tree，历史修改记录
+** keyfreq
+** keychord
+** diff-hl-mode, git gutter 可以标示出当前文档做了那些改动，可以跳转，回到过去等
+** work group2 ,设定工作组，可以切换，类似project
+** slime
+需要设置inferior-lisp-program 为相应的lisp程序，一般为sbcl或者scheme
+** multi-cursor
+** org-reveal
+   #+BEGIN_SRC emacs-lisp
+   (require 'ox-reveal)
+   (setq org-reveal-root "file:///Users/latpaw/test/js/reveal.js")
+   ;;C-c C-e R R to export to html ppt
+   #+END_SRC
+** hlinum
+https://github-cloud.s3.amazonaws.com/releases/46151567/506f560a-9ba3-11e5-8373-24bc7ad65393.pkg
+** bookmark+

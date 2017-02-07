@@ -1,0 +1,175 @@
+#+TITLE:       Diary 2015-5
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2015-05-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2015_05
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* diary 2015 05
+** 2015-05-18
+*** mysql 替换成 percona mysql
+需要先删除旧版的 oracle mysql
+apt-get remove mysql-server mysql-common mysql-client
+
+apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
+在/etc/apt/source.list 添加
+deb http://repo.percona.com/apt VERSION main
+deb-src http://repo.percona.com/apt VERSION main
+
+apt-get update
+apt-get install percona-server-server-5.6 percona-server-common percona-server-client-5.6
+
+如果出现 service mysql start stop 异常的情况,想着查看 sock 文件路径是否正确.
+*** apt-cacher-ng
+apt-cacher 分为服务端和客户端, 服务端配置:
+/etc/apt-cacher-ng/acng.conf
+ 客户端配置:
+1. vim /etc/apt/apt.conf.d/02proxy
+   Acquire::http::proxy "http://CacheServerlp:3142";
+2.或者替换成 :
+deb http://x.x.x.x:3142/web-domain/ version main
+
+** 2015-05-19
+***  如果出现W: There is no public key available for the following key IDs: 4D270D06F42584E6 类似的情况
+解决办法:
+apt-get install debian-keyring debian-archive-keyring
+apt-key update
+*** sudo: unable to resolve host
+问题在于安装服务器的时候的主机名被改动
+解决办法:
+在 hosts 里边把 127.0.0.1 指向当前主机名
+***  设置静态 ip
+debian: /etc/networks/interfaces
+iface eth0 inet static
+      address x.x.x.x
+      netmask x.x.x.x
+      gateway x.x.x.x
+centos: /etc/sysconfig/network-scripts/ifcfg-en.xxx
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=x.x.x.x
+GATEWAY=x.x.x.x
+NETMASK=x.x.x.x
+*** debian phpize
+apt-get install php5-dev
+
+** 2015-05-20
+*** csapp 深入理解计算机系统
+*** 尾递归优化,计算机用迭代的形式解释递归
+*** <suffix> invalid DN 21 openldap
+需要在配置文件中添加 core cosine inetorgperson nis.schema
+slaptest -f slapd.conf -v 生成配置文件
+
+** 2015-05-21
+*** too many connections failed ssh
+just add MaxAuthTries=100 to the sshd_config
+
+*** debian ldap server
+ldap 可以通过网络获取账号密码 sudo 权限等
+apt-get install python-dev python-pip libmysqlclient-dev libldap2-dev(lber.h)
+apt-get install slapd sudo-ldap ldap-utils
+
+server 设置过程中可能的错误
+/etc/ldap/slapd.d/目录的权限
+/var/lib/ldap 目录的权限
+装好 ldap-server 的配置之后.
+
+sudo cp /usr/share/doc/sudo-ldap/schema.OpenLDAP /etc/ldap/schema/sudo.schema
+在/etc/ldap/slapd.conf 中添加 sudo.schema
+
+
+**** 安装 client
+apt-get install libnss-ldap libpam-ldap sudo-ldap
+
+  安装 libnss-ldap 的时候设置 ldap 的服务器,和账号密码等
+
+需要修改是
+/etc/libnss-ldap.conf /etc/libnss-ldap.secret
+/etc/pam_ldap.conf /etc/pam_ldap.secret
+
+**** nsswitch.conf  添加
+passwd: compat ldap
+group: compat ldap
+shadow: compat ldap
+netgroup: ldap
+
+**** /etc/pam.d/common-session
+session optional pam_mkhomedir.so skel=/etc/skel umask=022
+
+**** /etc/pam.d/common-password ( remove 'use_authtok' )
+password     [success=1 user_unknown=ignore default=die]     pam_ldap.so try_first_pass
+
+
+**** sudo 支持
+    sudo -V 查看 sudo 是否支持 ldap, 需要--with-ldap, 如果支持, 查看 ldap 的配置文件
+    一般是 /etc/sudo-ldap.conf /etc/ldap.secret
+
+**** sudo-ldap.conf, 一般为 ldap.conf连接
+    URI ldap://192.168.81.191
+    BASE dc=jumpserver,dc=org
+    Sudoers_base ou=Sudoers,dc=jumpserver,dc=org
+
+**** ldap.secret
+     为密码
+
+
+*** 2015-05-25 apache 加密
+ htpasswd -nbs username password
+
+**** linux 添加用户默认 shell 设置
+/etc/default/useradd 中, 可以设置默认的 shell, 默认的 skel,home 目录等.
+
+*** 2015-05-26
+
+**** haproxy 添加 ip 限制
+默认情况下, haproxy 会转发 请求到 nginx,首先要在 haproxy 上添加配置:
+--  option forwardfor
+在 nginx 中,被转发的请求的 remote_addr, 会被识别为 haproxy 的地址,一般是内网地址,如果要恢复为原来的真实 ip 地址,需要 realip 模块
+编译的时候添加 --with-http_realip_module
+ 然后可以在 server 中添加配置
+ set_real_ip_from x.x.x.x;
+ real_ip_header X-Forwarded-For;
+这样 remote_addr 就是真实的 ip 了,可以做 allow 和 deny 的限制了.
+http://blog.pengqi.me/2013/04/20/remote-addr-and-x-forwarded-for/
+
+****  刷新 dns 缓存
+windows: ipconfig /flushdns
+linux: service nscd restart
+mac: type dscacheutil -flushcache
+    或者 killall -HUP mDNSResponder
+
+**** inittab
+id : runlevel : action : process
+
+actions:
+respawn
+  启动并监视第4项指定的process，若process终止则重启它
+wait
+  执行第4项指定的process，并等待它执行完毕
+once
+  执行第4项指定的process
+boot
+  不论在哪个执行等级，系统启动时都会运行第4项指定的process
+bootwait
+  不论在哪个执行等级，系统启动时都会运行第4项指定的process，且一直等它执行完备
+off
+  关闭任何动作，相当于忽略该配置行
+ondemand
+  进入ondemand执行等级时，执行第4项指定的process
+initdefault
+  系统启动后进入的执行等级，该行不需要指定process
+sysinit
+  不论在哪个执行等级，系统会在执行boot 及bootwait之前执行第4项指定的process
+powerwait
+  当系统的供电不足时执行第4项指定的 process，且一直等它执行完毕
+powerokwait
+  当系统的供电恢复正常时执行第4项指定的process，且一直等它执行完毕
+powerfailnow
+  当系统的供电严重不足时执行第4项指定的process
+ctrlaltdel
+  当用户按下【Ctrl+Alt+Del】时执行的操作
+kbrequest
+  当用户按下特殊的组合键时执行第4项指定的process，此组合键需在keymaps文件定义

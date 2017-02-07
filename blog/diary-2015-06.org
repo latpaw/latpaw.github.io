@@ -1,0 +1,283 @@
+#+TITLE:       Diary 2015-6
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2015-06-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2015_06
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* 2015-06-01
+** tcpdump 数据格式
+   src > dst: flags data-seqno ack window urgent options
+   src 和 dst 是源和目的IP地址以及相应的端口. flags 标志由S(SYN), F(FIN), P(PUSH, R(RST), W(ECN CWT(nt | rep:未知, 需补充))或者 E(ECN-Echo(nt | rep:未知,　需补充))组成,单独一个'.'表示没有flags标识.
+   数据段顺序号(Data-seqno)描述了此包中数据所对应序列号空间中的一个位置(nt:整个数据被分段,每段有一个顺序号, 所有的顺序号构成一个序列号空间)(可参考以下例子).
+   Ack 描述的是同一个连接,同一个方向,下一个本端应该接收的(对方应该发送的)数据片段的顺序号.
+   Window是本端可用的数据接收缓冲区的大小(也是对方发送数据时需根据这个大小来组织数据).
+   Urg(urgent) 表示数据包中有紧急的数据. options 描述了tcp的一些选项, 这些选项都用尖括号来表示(如 <mss 1024>).
+
+   src, dst 和 flags 这三个域总是会被显示. 其他域的显示与否依赖于tcp协议头里的信息.
+
+* 2015-06-02
+** zabbix triggers functions
+   abschange  两者绝对差值
+   avg avg(#5) avg(3600) avg(3600,86400) 后面可以加次数和时间
+   band -> bitwise and, 按位与
+   change 带符号的差值
+   count (sec|#num,<pattern>,<operator>,<time_shift>)
+   date
+   dayofmonth
+   dayofweek
+   delta(sec|#num,<time_shift>)
+   diff
+   fuzzytime(sec) 检查时间是否一致
+   iregexp 不区分大小写的匹配
+   last (sec|#num,<time_shift>)
+   max
+   min
+   nodata
+   now
+   prev
+   regexp
+   str
+   strlen
+   sum
+   time
+
+* 2015-06- 3 05:58 Wed PM
+
+**  分区工具
+    fdisk -l
+    fdisk /dev/sdb
+
+    df -lh
+
+    cfdisk -Ps
+    cfdisk /dev/sdb
+
+    parted
+
+    sfdisk -l
+** dmsetup
+   dmsetup create xxxname --table '0 1000 linear /dev/sdb 0'
+   把0-1000这一段映射到 /dev/sdb 的0处,相当于是个连接
+
+* 2015-06- 5 01:06 Fri PM
+  安装的库文件,都会在 /usr/lib/pkgconfig 里边生成 一个 .pc 的文件, 表示版本号
+
+** 安装 pacemaker
+   apt-get install build-essential automake autoconf libtool pkg-config
+   安装 libqb from github, 如果版本号是未知, 需要修改/usr/lib/pkgconfig/libqb.pc 里边的版本
+   缺少 libcpg, 需要安装 corosync, corosync-dev corosync-dbg
+   apt-get install uuid-dev libglib2.0-dev libxml2-dev libxslt1-dev libbz2-dev libncurses5-dev
+
+**  改变时区
+    tzselect
+    或者修改 /etc/timezone
+    但是这样并不能改变终端的显示信息
+    需要修改.profile, 加入
+    TZ='Asia/Shanghai';export TZ
+
+* 2015-06- 8 03:23 Mon PM
+
+** linux 添加虚拟网卡
+1. ifconfig eth0:0 x.x.x.x up
+2.通过其他方法
+
+** sql 导出导入数据
+   mysqldump > 导出
+   mysql < 导入
+
+** linux shell
+   #!/bin/less
+   #!/bin/more etc.
+
+   $UID 当前用户的 uid
+
+* 2015-06-11 11:04 Thu AM
+  查看 imap 证书
+  openssl s_client -connect imap.sample.com:imaps
+  查看 smtp 证书
+  openssl s_client -connect smtp.sample.com:smtps
+
+** linux bash builtin
+   set 设置变量
+   enable 激活 bash 的内置函数
+   enable -n 使内置函数失效,如果有外部的同名函数,将使用
+
+* 2015-06-15 01:44 Mon PM
+**  启动一个服务
+start-stop-daemon --start --oknodo --user root --name whatisthename --pidfile /run/ok.pid --startas /root/a --chuid root -- --daemon
+start-stop-daemon --stop  --oknodo --user root --name whatisthename --pidfile /run/ok.pid --retry 5
+man start-stop-daemon
+
+** getopts
+getopts 后边跟需要解析的参数,以-为准, 比如
+ getopts h,  如果 h 需要参数,后边加:,如果后边的参数紧跟,不能有空格,需要::,双冒号, 参数会赋给 option 变量, 参数的值会赋给 OPTARG
+参数可以紧跟,这样,参数就不需要值
+循环的时候,参数的值会赋给, OPTARG, 参数的位置, OPTIND, 初始为1,每次 getopts 都会+1.
+#+BEGIN_VERSE
+#!/bin/bash
+while getopts h:ms option
+do
+    case "$option" in
+        h)
+            echo "option:h, value $OPTARG"
+            echo "next arg index:$OPTIND";;
+        m)
+            echo "option:m, value $OPTARG"
+            echo "next arg index:$OPTIND";;
+        s)
+            echo "option:s, value $OPTARG"
+            echo "next arg index:$OPTIND";;
+        \?)
+            echo "Usage: args [-h n] [-m] [-s]"
+            echo "-h means hours"
+            echo "-m means minutes"
+            echo "-s means seconds"
+            exit 1;;
+    esac
+done
+echo "done done"
+#+END_VERSE
+
+* 2015-06-18 04:46 Thu PM
+** ack
+ack -l --print0 foo | xargs -r0 rm --
+
+* 2015-06-19 02:58 Fri PM
+** 四层 七层 负载均衡
+四层的负载均衡,直接转发请求到后端服务器,相当于是路由器.
+七层的会自己和客户端建立连接,然后发给后端, 相当于是个代理, 更加智能化,一定程度上防 DDOS
+
+** sshd_config
+useDNS no 可以禁止反向解析 ip, 导致的缓慢
+
+** just mark
+#+BEGIN_VERSE
+sbin/iptables -t nat -A POSTROUTING -o tun0  -j MASQUERADE
+端口转发:
+iptables -t nat -A PREROUTING -d 192.81.131.180/32 -p tcp -m tcp --dport 993 -j DNAT --to-destination 122.144.134.217:993
+
+SNAT，DNAT，MASQUERADE都是NAT
+MASQUERADE是SNAT的一个特例
+SNAT是指在数据包从网卡发送出去的时候，把数据包中的源地址部分替换为指定的IP，这样，接收方就认为数据包的来源是被替换的那个IP的主机
+MASQUERADE是用发送数据的网卡上的IP来替换源IP，因此，对于那些IP不固定的场合，比如拨号网络或者通过dhcp分配IP的情况下，就得用MASQUERADE
+DNAT，就是指数据包从网卡发送出去的时候，修改数据包中的目的IP，表现为如果你想访问A，可是因为网关做了DNAT，把所有访问A的数据包的目的IP全部修改为B，那么，你实际上访问的是B
+
+因为，路由是按照目的地址来选择的，因此，DNAT是在PREROUTING链上来进行的，而SNAT是在数据包发送出去的时候才进行，因此是在POSTROUTING链上进行的
+#+END_VERSE
+
+* 2015-06-23 03:12 Tue PM
+** access and trunk
+以太网端口有 3种链路类型:access、trunk、hybird
+Access类型端口只能属于1个VLAN 般用于连接计算机 端口；
+
+Trunk类型端口可以允许多个VLAN通过,可以接收和发送多个VLAN 报文,一般用于交换机之间的连接；
+
+Hybrid类型端口可以允许多个VLAN通过，可以接收和发送多个VLAN 报文，可以用于交换机的间连接也可以用于连接用户计算机。
+
+Hybrid端口和Trunk端口在接收数据时处理思路方法是一样的，唯一区别的处在于发送数据时:Hybrid端口可以允许多个VLAN报文发送时不打标签，而Trunk端口只允许缺省VLAN报文发送时不打标签。
+
+* 2015-06-24 12:10 Wed PM
+** networksetup
+mac的 networksetup 可以设置所有网络配置
+
+** vpn
+TAP 等同于一个以太网设备，它操作第二层数据包如以太网数据帧。TUN模拟了网络层设备，操作第三层数据包比如IP数据封包.
+
+** dhcping 可以查看这个是否为 dhcp
+dhcping -s 192.168.82.13 -r -v
+
+** route
+192.168.80.0/22 dev eth0  proto kernel  scope link  src 192.168.81.191
+
+protocol:
+redirect - the route was installed due to an ICMP redirect.
+
+kernel - the route was installed by the kernel during autoconfiguration.
+
+boot - the route was installed during the bootup sequence. If a routing daemon starts, it will purge all of them.
+
+static - the route was installed by the administrator to override dynamic routing. Routing daemon will
+respect them and, probably, even advertise them to its peers.
+
+ra - the route was installed by Router Discovery protocol.
+
+** arp
+arp -a -n
+
+* 2015-06-29 04:24 Mon PM
+** kvm
+ 通过 virsh 可以管理 kvm .
+** 安装一个 kvm
+ 首先创建一个 img, truncate --size=20000M /var/lib/libvirt/images/test.img ,  这样创建好了一个 img.
+第一种方法: 可以通过 virt-install ,命令来自 virt-inst 包.
+virt-install --virt-type kvm --name ubuntu --ram 1024 \
+ --cdrom=/data/xxx/.iso --disk path=/var/lib/libvirt/images/test.img,size=10 --graphics vnc,listen=0.0.0.0 --noautoconsole\
+ --os-type=linux
+ 设置好之后通过 vnc 连接,然后安装.
+
+第二种方法: 可以通过写好配置文件, 在 /etc/libvirt/qemu/xx.xml,
+然后 virsh create xxx
+
+** vnc 闪退
+把高级里边的 ColorLevel 从 pal8 改成 rgb222 或者 full.
+
+* 2015-06-30 11:02 Tue AM
+**  改变 debian 的默认编辑器
+update-alternatives --config editor
+
+**  修改用户密码, mysql
+mysql> update mysql.user set password=PASSWORD(‘新密码’) where User=’root’;
+mysql> flush privileges;
+mysql> quit
+
+** 网桥工具
+http://tianhao936.blog.51cto.com/1043670/1343767
+ apt-get install bridge-utils
+ 修改/etc/network/interfaces
+#+BEGIN_VERSE
+iface br0 inet static
+  address x.xx.x.x
+  netmask x.x.x.x
+  gateway x.x.x.x
+  bridge_ports eth0
+  bridge_stp off
+  bridge_fd 0
+
+#+END_VERSE
+sysctl -p 确保以下三项为0
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+
+** sql
+id, orderid, name, period, city, area, tel, type, addr, payed, sent, completed
+create table orders (
+   id int(10) not null auto_increment,
+   name varchar(20) not null,
+   order_id varchar(32) not null,
+   order_period varchar(3) not null,
+   city varchar(20),
+   area varchar(20),
+   tel varchar(20) not null,
+   type varchar(3) not null,
+   addr varchar(100) not null,
+   payed varchar(3),
+   sent varchar(3),
+   completed varchar(3),
+   primary key (id)
+);
+
+create table products (
+ product_id int(10) not null auto_increment,
+ name varchar(50) not null,
+ price int(10) ,
+ one_month int(10),
+ three_month int(10),
+ six_month int(10),
+ one_year int(10),
+ primary key (id)
+);

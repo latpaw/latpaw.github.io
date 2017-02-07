@@ -1,0 +1,25 @@
+#+TITLE:       Diary 2016-9
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-09-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2016_09
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* angular
+ng-app
+ng-init
+ng-model
+ng-controller
+ng-disabled
+ng-show
+ng-hide
+ng-click
+ng-if
+ng-repeat
+ng-switch
+ng-view
+ng-include
+ng-class

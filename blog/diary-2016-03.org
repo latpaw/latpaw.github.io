@@ -1,0 +1,78 @@
+#+TITLE:       Diary 2016-3
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-03-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2016_03
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* Tue Mar  1 14:34:37 2016
+
+* perl
+** 变量
+不同的类型有不同的变量空间，不冲突
+变量使用$, $a = 13
+数组使用@, @a = (1,2,3), 使用的时候要用 $
+关联数组使用%, %a =(key1,"value1",key2,"value2"), $b = %a{key1}
+组合字符使用 点号
+
+@int1 = (1,2,3,4,5)
+$#，取数组最后一个元素的index,4
+$c = @int1, 最后一个元素,5
+($c)＝ @int1, 第一个元素,1
+$int1[0] = 3, 赋值第一个元素,3
+delete $fred{one}, 移除一个元素
+** 循环
+if(xx){ }elsif(oo){ }else{ }
+while(xx){}
+do{}while(xx)
+unless(xx){}
+until(xx){}
+for(i=0;i<10;i++){}
+for $int(@int_array){ $int }
+foreach $int(@int_array){ $int }
+如果省略$int,默认为$_
+last , 相当于break
+next , 相当于continue
+** 正则
+$string =~ s/:/;/g
+
+前置: s替换 tr转换
+后置: e执行表达式 g全局
+** 函数
+sub hello{
+}
+执行的时候使用&hello(a,b)
+第一个参数为$_[0],第二个$_[1]
+参数的数组@_
+
+our:   定义或者声明一个全局变量，在当前的包环境下。
+my:    定义一个新的、局部范围（块或者文件）有效的变量。推荐!!!
+local: 重新定义局部范围有效的变量，主要用于屏蔽同名的全局变量。局部的全局变量调用时也会被覆盖
+
+* force apt-get reinstall config files
+apt-get -o DPkg::options::=--force-confmiss --reinstall install xxx
+
+* SPF
+
+* rootkit
+* rkhunter
+* CLI
+node nesh
+php boris
+python bpython
+ruby pry
+* Hack TOOLS
+ccat
+fdupes   find the duplicated files
+sqlmap
+medusa
+hydra
+
+* About Mails
+dovecot  => MUA , mail user agent
+postfix => MTA, mail transfer agent
+MDA , mail deliver agent
+DKIM , DomainKeys Identified Mail

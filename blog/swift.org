@@ -1,0 +1,60 @@
+#+TITLE: Swift
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-10-07 Tue
+#+URI:         /blog/%y/%m/%d/swift
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        swift
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* swift
+** closure
+   #+BEGIN_SRC  swift
+  func returnClosure() -> ()->Int {
+  func hello()-> Int {
+  return 10
+  }
+  return hello
+  }
+
+var names = ["hello","world","latpaw","wtf"];
+
+names.sort({ (s1:String, s2: String) in return s1 > s2})
+names.sort({ s1, s2 in return s1 > s2 })
+names.sort({ s1, s2 in s1 > s2})
+names.sort({ $0 > $1 })
+names.sort() { $0 > $1 }
+names.sort {s1, s2 in return s1 > s2}
+names.sort(>)
+   #+END_SRC
+autoclosure
+var b : String { return "hello" }
+** function
+   #+BEGIN_SRC swift
+   func send(from person: Person, to anotherPerson: Person) -> Bool {
+   print(person, anotherPerson)
+   }
+   send(from: me, to: obama)
+   func inc1(inout num: Int){
+   num += 1
+   }
+   var num = 10
+   inc1(&num) // 相当于引用，可以在函数内部改变变量值
+   #+END_SRC
+** check api availability
+   #+BEGIN_SRC swift
+    if #available(iOS 9, OSX 10.10){
+       // something for ios9
+    }else{
+      // something for older ios
+    }
+   #+END_SRC
+** guard
+guard 一般是用来做赋值，带一个else表示赋值失败的时候执行
+** enum
+rawvalue
+indirect
+** class struct
+** subscript
+** for x in xs where x == "xxxx" {  }

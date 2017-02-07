@@ -1,0 +1,401 @@
+#+TITLE:       Some tools
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-10-07 Tue
+#+URI:         /blog/%y/%m/%d/knowledge_tools
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        knowledge
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* Language
+** C/C++
+*** webkit v8 game
+** Ruby
+*** rails sinatra puppet
+** Javascript
+*** Angular Jquery Backbone Underscore requirejs seajs spm node grunt gulp
+** Haskell
+** Lisp
+*** emacs elisp
+** Scheme
+*** mit scheme
+** Perl
+** Python
+** Shell
+** Lua
+*** game script
+** HTML/CSS
+*** html5 css3 svg webgl
+** Go
+** Dart
+** php
+
+* Part
+** SICP
+** 编译器
+** 数据结构
+** 算法
+** Game
+** STL
+** operating system
+**  泛型编程
+** opengl
+* Editor
+** Emacs
+** Vim
+** Sublime Text 2
+** Ruby Mine
+** Eclipse
+** Xcode
+
+* Emacs Mode
+** Org
+** JS3
+** Helm
+** Smex
+** Company
+** Auto-Pair
+** Projectile
+** yasnippet
+** LaTex
+** Web
+** HS
+** Anzu
+** Slime
+** RestClient
+
+* OPS
+** Nagios
+** Puppet
+
+* Linux
+** Too much
+
+* Other
+** 正则表达式
+** 反射
+** 模式
+** Confused
+
+
+* 最近
+
+** game
+
+*** c++ lua js webgl
+
+** web
+
+*** webkit js
+
+** ops
+
+*** c nginx mysql security shell unix
+
+** cs
+
+*** scheme lisp emacs vim ruby python perl
+
+
+* 一些点
+卢卡斯数, 斐波那契数列, 斐波那契螺旋 快速幂, 矩阵, 黄金比例, 杨辉三角
+巴都万数列, 等边三角形螺旋, 角谷猜想 3n+1 2n/2
+ps 列出的进程中有方括号的是内核级进程
+进程迁移 migration
+内存导引
+sh -x /etc/init.d/mysql start 查找启动的错误
+sh -> dash
+弗洛伊德算法
+*  网络工具
+nload
+nethogs
+sar
+vmstat
+iostat
+tcpdump
+netstat
+slurm
+collectl
+net-diag  netload
+bmon
+cbm
+tcptrack
+vnstat
+trafshow
+speedometer
+iptraf
+tcpflow
+*  缩写熟记
+| abbrev   | meaning                                    |
+|----------+--------------------------------------------|
+| ICMP     | internet control message protocol          |
+| BGP      | border gateway protocol                    |
+| GETTY    | get teletypewriter                         |
+| EGP      |                                            |
+| IGP      | interior gateway protocol                  |
+| AS       | autonomous system                          |
+| TTY      | teletypewriter                             |
+| PTY      | pseudo-tty                                 |
+| SSH      | secure shell                               |
+| PTS      | pseudo-terminal slave                      |
+| ptmx     | pseudo-terminal master                     |
+| tts      | tty serial                                 |
+| qos      | quality of service                         |
+| osi      | open system interconnect                   |
+| iso      | internal Standardization organization      |
+| arp      | address resolution protocol                |
+| mac      | media access control                       |
+| ap       | access point                               |
+| igmp     | internet group management protocol         |
+| ISAM     | indexed sequential access method           |
+| innodb   | just like isam, mysql engine               |
+| cli      | command language interpreter               |
+| acpi     | advanced configuration and power interface |
+| ldap     | lightweight directory access protocol      |
+| rpc      | remote procedure call protocol             |
+| termcap  | terminal capabilities                      |
+| terminfo | terminal information                       |
+| curses   | cursor addressing                          |
+| ncurses  | new curses                                 |
+| spool    | Simultaneous Peripheral Operations On Line |
+| mime     | multi-purpose internet mail extensions     |
+| anacron  | anachronistic cron                         |
+| mtu      | maxmium transmission units                 |
+| slip     | serial line internet protocol              |
+| ppp      | point to point protocol                    |
+| rip      | route information protocol                 |
+| ttl      | time to live                               |
+| ospf     | open shortest path first                   |
+| pgp      | pretty good privacy                        |
+| gpg      | gnu privacy guard                          |
+| stp      | spanning tree protocol                     |
+| nbt      | netbios over tcp/ip                        |
+
+** 常用命令
+| command         | simple meaning                                              |
+|-----------------+-------------------------------------------------------------|
+| File system     |                                                             |
+| cmp             | compare                                                     |
+| cksum           | check sum                                                   |
+| fuser           | check who is using the files                                |
+| pax             | read and write file archives and copy directory hierarchies |
+| size            | get the size of file                                        |
+| split           | split the file                                              |
+| tee             |                                                             |
+| type            | get the type of file                                        |
+| cat             |                                                             |
+| cd              |                                                             |
+| chmod           |                                                             |
+| chgrp           |                                                             |
+| chown           |                                                             |
+| cp              |                                                             |
+| dd              |                                                             |
+| du              |                                                             |
+| df              |                                                             |
+| file            |                                                             |
+| fsck            |                                                             |
+| ln              |                                                             |
+| ls              |                                                             |
+| mkdir           |                                                             |
+| mount           |                                                             |
+| mv              |                                                             |
+| pwd             |                                                             |
+| rm              |                                                             |
+| rmdir           |                                                             |
+| touch           |                                                             |
+| umask           |                                                             |
+| ulimit          |                                                             |
+|                 |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Processes       |                                                             |
+| at              | do something at sometime                                    |
+| chroot          | set the dir to be / temporary                               |
+| pgrep           | get the pids by name or other expression                    |
+| pkill           | just like the previous                                      |
+| pstree          |                                                             |
+| htop            |                                                             |
+|-----------------+-------------------------------------------------------------|
+| User Evironment |                                                             |
+| env             |                                                             |
+| finger          | the user info                                               |
+| id              | get the userid groupid and other info                       |
+| logname         | username                                                    |
+| mesg            | control the write access, y or n                            |
+| talk            | talk with user                                              |
+| tput            |                                                             |
+| w               | get who am i                                                |
+| wall            | write to all                                                |
+| write           | write to somebody                                           |
+| uname           | unix name                                                   |
+| clear           |                                                             |
+| exit            |                                                             |
+| history         |                                                             |
+| su              |                                                             |
+| sudo            |                                                             |
+| uptime          |                                                             |
+|                 |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Text Processing |                                                             |
+| banner          |                                                             |
+| basename        | get the filename of the path                                |
+| dirname         | get the name exclude filename                               |
+| comm            | compare two files                                           |
+| csplit          |                                                             |
+| cut             |                                                             |
+| diff            | show the diffrence of two files                             |
+| ed              | editor                                                      |
+| ex              | vi                                                          |
+| fmt             | format file input                                           |
+| fold            | format file input in another way                            |
+| join            |                                                             |
+| less            |                                                             |
+| more            |                                                             |
+| nl              |                                                             |
+| paste           |                                                             |
+| sed             |                                                             |
+| spell           |                                                             |
+| strings         | output the strings                                          |
+| tail            |                                                             |
+| uniq            |                                                             |
+| tr              |                                                             |
+| vi              |                                                             |
+| wc              |                                                             |
+| xargs           |                                                             |
+| awk             |                                                             |
+| iconv           |                                                             |
+|                 |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Shell           |                                                             |
+| alias           |                                                             |
+| echo            |                                                             |
+| expr            |                                                             |
+| printf          |                                                             |
+| sleep           |                                                             |
+| test            |                                                             |
+| true            |                                                             |
+| unset           |                                                             |
+| wait            |                                                             |
+| yes             |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Network         |                                                             |
+| dig             |                                                             |
+| host            |                                                             |
+| ifconfig        |                                                             |
+| inetd           |                                                             |
+| netcat          |                                                             |
+| netstat         |                                                             |
+| nslookup        |                                                             |
+| ping            |                                                             |
+| rdate           |                                                             |
+| rlogin          |                                                             |
+| ssh             |                                                             |
+| route           |                                                             |
+| mtr             |                                                             |
+| traceroute      |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Searhing        |                                                             |
+| find            |                                                             |
+| grep            |                                                             |
+| locate          |                                                             |
+| whatis          |                                                             |
+| whereis         |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Documentation   |                                                             |
+| apropos         |                                                             |
+| info            |                                                             |
+| help            |                                                             |
+| man             |                                                             |
+|-----------------+-------------------------------------------------------------|
+| Misc            |                                                             |
+| bc              |                                                             |
+| dc              |                                                             |
+| cal             |                                                             |
+| lp              |                                                             |
+| od              |                                                             |
+| arch            |                                                             |
+| lspci           |                                                             |
+| lsmod           |                                                             |
+| lsusb           |                                                             |
+| date            |                                                             |
+| clock           |                                                             |
+| shutdown        |                                                             |
+| reboot          |                                                             |
+| logout          |                                                             |
+| lstree          |                                                             |
+| tree            |                                                             |
+| adduser         |                                                             |
+| useradd         |                                                             |
+| groupadd        |                                                             |
+| groupdel        |                                                             |
+| userdel         |                                                             |
+| pwck            |                                                             |
+| grpck           |                                                             |
+| newgrp          |                                                             |
+| chattr          |                                                             |
+| lsattr          |                                                             |
+| bunzip2         |                                                             |
+| bzip2           |                                                             |
+| gunzip          |                                                             |
+| gzip            |                                                             |
+| rar             |                                                             |
+| tar             |                                                             |
+| unrar           |                                                             |
+| unzip           |                                                             |
+| zip             |                                                             |
+| rpm             |                                                             |
+| apt-get         |                                                             |
+| aptitude        |                                                             |
+| rpmbuild        |                                                             |
+| yum             |                                                             |
+| dpkg            |                                                             |
+| tac             |                                                             |
+| grep            |                                                             |
+| sort            |                                                             |
+| badblocks       |                                                             |
+| mkfs            |                                                             |
+| mke2fs          |                                                             |
+| mkswap          |                                                             |
+| dump            |                                                             |
+| restore         |                                                             |
+| rsync           |                                                             |
+| mkisofs         |                                                             |
+| ifup            |                                                             |
+| ifdown          |                                                             |
+| chfn            | change finger information                                   |
+|-----------------+-------------------------------------------------------------|
+| Networks        |                                                             |
+| nmon            |                                                             |
+| strace          |                                                             |
+| ltrace          |                                                             |
+| ss              |                                                             |
+| sysdig          |                                                             |
+| perf            |                                                             |
+| sar             |                                                             |
+| dstat           |                                                             |
+| mpstat          |                                                             |
+| rdmsr           |                                                             |
+| pidstat         |                                                             |
+| tiptop          |                                                             |
+| vmstat          |                                                             |
+| free            |                                                             |
+| slabtop         |                                                             |
+| tcpdump         |                                                             |
+| nicstat         |                                                             |
+| ip              |                                                             |
+| lldptool        |                                                             |
+| snmpget         |                                                             |
+| ethtool         |                                                             |
+| iptraf          |                                                             |
+| swapon          |                                                             |
+| blktrace        |                                                             |
+| iotop           |                                                             |
+| iostat          |                                                             |
+| lttng           |                                                             |
+| dtrace          |                                                             |
+| ebpf            |                                                             |
+| ktap            |                                                             |
+| stap            |                                                             |
+| ftrace          |                                                             |
+| pcstat          |                                                             |
+|                 |                                                             |

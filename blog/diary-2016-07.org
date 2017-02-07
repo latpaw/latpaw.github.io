@@ -1,0 +1,30 @@
+#+TITLE:       Diary 2016-7
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-07-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2016_07
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* Sat Jul  9 21:02:25 2016
+** gridfs
+** mgo
+** nginx gridfs
+* Sun Jul 10 22:09:05 2016
+** apidoc
+** swagger stoplight
+* Fri Jul 15 22:49:22 2016
+** typings and tsd
+   tsd install react --save
+   typings install dt~react --global --save
+** jslint < eslint
+** tide mode
+** show-css mode
+** css-comb
+* Mon Jul 18 12:01:41 2016
+** axure
+Axure RP 8.0 激活码：（亲测可用）
+用户名：aaa
+注册码：2GQrt5XHYY7SBK/4b22Gm4Dh8alaR0/0k3gEN5h7FkVPIn8oG3uphlOeytIajxGU

@@ -1,0 +1,65 @@
+#+TITLE:       Diary 2016-4
+#+AUTHOR:      latpaw
+#+EMAIL:       jiangyuezhang@outlook.com
+#+DATE:        2016-04-07 Tue
+#+URI:         /blog/%y/%m/%d/diary_2016_04
+#+KEYWORDS: <TODO: insert your keywords here>
+#+TAGS:        diary
+#+LANGUAGE:    en
+#+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: <TODO: insert your description here>
+* 主要的 IPC 方法
+- 文件, filesystem
+- 信号, signal
+- berkely sockets
+- 消息队列, queue
+-- rabbitmq, zeromq, beanstalk, iron
+- 管道, pipe
+- 信号量, Semaphore, mutex
+- 共享内存 shared memory
+- 消息传递，message passing, 在运行时确定
+* future and promise
+** future: 一般是promise的值，不可变
+** promise: 一般是个过程，函数，可变
+** SSA: 静态单赋值
+* 异常
+异常是控制流中的突变，用来相应处理器状态中的某些变化
+** 中断
+** 陷阱
+** 故障
+** 终止
+* mysql
+purge master logs before date_sub(current_date, interval 10 day);
+show master logs;
+* lvresize
+lvresize will not work. you need to resize2fs before use df to make it affect the disk.
+
+* emacs
+** diary appt agenda
+   :LOGBOOK:
+   CLOCK: [2016-04-11 Mon 20:15]--[2016-04-11 Mon 20:16] =>  0:01
+   :END:
+** ffap
+* 偏函数， currying
+* scala，cqrs
+* 如果org-mode 表格无法对齐，可以尝试buffer-face-set
+* 使用emacs作为cide，jump，需要开启semantic mode
+  #+begin_src emacs-lisp
+  (semantic-add-system-include "/usr/local/include")
+  #+end_src
+  通过semantic-ia-fast-jump跳转目标
+* golang
+1. gocode, complete
+2. godef, jump跳转目标
+3. godoc
+4. gorename
+5. go oracle
+
+* js browser dom api?
+
+* ali
+nodejs 中间件类型
+angular 简介
+inline－block
+js 继承，多态
+jsonp等
