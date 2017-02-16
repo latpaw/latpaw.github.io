@@ -20,6 +20,7 @@
 ** sublime                                                                                    :editor:
 ** homebrew                                                                                  :manager:
 *** Brewfile
+#+BEGIN_SRC
     tap 'caskroom/cask'
     tap 'homebrew/bundle'
     tap 'homebrew/core'
@@ -189,6 +190,7 @@
     cask 'techstoreclub-simple-comic'
     cask 'virtualbox'
     cask 'wireshark'
+#+END_SRC
 
 ** sketch                                                                                   :tools:
 *** content generator

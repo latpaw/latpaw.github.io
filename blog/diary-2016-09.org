@@ -9,6 +9,7 @@
 #+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
 #+DESCRIPTION: <TODO: insert your description here>
 * angular
+#+BEGIN_SRC
 ng-app
 ng-init
 ng-model
@@ -23,3 +24,4 @@ ng-switch
 ng-view
 ng-include
 ng-class
+#+END_SRC

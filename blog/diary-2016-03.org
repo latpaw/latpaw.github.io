@@ -12,6 +12,7 @@
 
 * perl
 ** 变量
+#+BEGIN_SRC
 不同的类型有不同的变量空间，不冲突
 变量使用$, $a = 13
 数组使用@, @a = (1,2,3), 使用的时候要用 $
@@ -24,7 +25,9 @@ $c = @int1, 最后一个元素,5
 ($c)＝ @int1, 第一个元素,1
 $int1[0] = 3, 赋值第一个元素,3
 delete $fred{one}, 移除一个元素
+#+END_SRC
 ** 循环
+#+BEGIN_SRC
 if(xx){ }elsif(oo){ }else{ }
 while(xx){}
 do{}while(xx)
@@ -36,12 +39,14 @@ foreach $int(@int_array){ $int }
 如果省略$int,默认为$_
 last , 相当于break
 next , 相当于continue
+#+END_SRC
 ** 正则
 $string =~ s/:/;/g
 
 前置: s替换 tr转换
 后置: e执行表达式 g全局
 ** 函数
+#+BEGIN_SRC
 sub hello{
 }
 执行的时候使用&hello(a,b)
@@ -51,7 +56,7 @@ sub hello{
 our:   定义或者声明一个全局变量，在当前的包环境下。
 my:    定义一个新的、局部范围（块或者文件）有效的变量。推荐!!!
 local: 重新定义局部范围有效的变量，主要用于屏蔽同名的全局变量。局部的全局变量调用时也会被覆盖
-
+#+END_SRC
 * force apt-get reinstall config files
 apt-get -o DPkg::options::=--force-confmiss --reinstall install xxx
 

@@ -11,20 +11,30 @@
 * 2015-07- 2 02:26 Thu PM
 ** 几个无线概念
  QoS 服务质量, quality of service, 用来解决无线路由延迟的机制.
+
  SSID service set identifier, 其实就是无线名称. 可以关掉广播, 让设备无法被搜索到.
+
  Multi-SSID, 在一个热点上开启之后相当于多个路由器,提供多个无线接入,可以隔离,可以互通.
+
  WEP 无线加密协议 wireless encryption protocol. 已过时. xxx
+
  WPA wifi protected access
+
  WDS 无线分散系统, wireless dirstribution system, 把无线串接起来,有 桥接和中继 两种.
+
  WMM 无线多媒体.
+
  WPA-PSK 预共享密钥,( pre shared key)就是普通的设置 wifi 连接的方式, 成为 wpa 个人版, 企业版的需要 802.1X 认证中心.
+
  Diceware 投掷色子生成密码
 
 ** man 使用 less 的快捷键,不装 less,  man就挂了
 * 2015-07- 3 02:33 Fri PM
 ** 修改 ssh 登陆的提示信息
 / etc/issue
+
 /etc/motd
+
  也可以禁用掉 motd, 然后在 /etc/profile 里面添加自定义的提示,或者函数
 
 可以自定义 command_not_found_handle 来定义没有此函数的时候的提醒.
@@ -35,31 +45,47 @@
 ** zabbix agent
 * Mon Jul  6 16:03:06 2015
 ** emacs socks5 proxy
+#+BEGIN_SRC elisp
 (setq url-proxy-services
       '(("socks5" . "192.168.80.96:1080")))
+#+END_SRC
 ** linux uid
 linux 下有 real uid 和 effective uid 两种, 正常情况下 real uid 是不会变的,当一个用户来运行当前的程序时,会临时把 effective uid 改为当前用户的 uid, 然后 kernel 来判定是否可以自执行
+
 如果程序被加了 s 位,那么执行的时候将以创建这个程序的用户的 uid 为 effective uid, 比如说 su, sudo,  但是 uid 是轻易不会变的
+
 程序可以通过 getuid, setuid, geteuid, seteuid 来获取和改变 uid
 
 ** telnet 发送邮件
  telnet xx.xx.xx 25
+
 EHLO mail.xxx.com
+
 MAIL FROM: xx@xx.com
+
 RCPT TO: xx@xx.com
+
 DATA
+
 Subject: hello there // you need a blank line down there
 
 QUIT
+
 // 安全性在哪里...
 
 ** /dev
 null 无底洞的空
+
 zero 读取的全是0
+
 full 输入任何数据提示硬盘已满,用来测试硬盘满的时候的程序表现.
+
 random 读取随机数
+
 urandom 持续产生随机数
+
 loop loopback 设备,用来将文件模拟为设备. mount xxx /mnt -o loop=/dev/loop0
+
 /dev/shm 虚拟的内存设备, 可以通过 fstab 设定其大小, 可以把 /tmp mount 到这里,提高速度
 
 * Tue Jul  7 11:21:04 2015
@@ -72,15 +98,22 @@ pluggable authentication Modules
 可以分割终端,类似 mac 的 finder
 ** apt-get install most
 export PAGER=most
+
 export MANWIDTH=100
+
 可以修改 man 的样式
 
 ** nagle 算法, 避免网络中太多的小包造成拥塞
 基于停.等协议, 把小于一定长度的数据包,暂时放在缓存里,等数据包的长度大于等于指定长度的时候,发送.
+
 （1）如果包长度达到MSS，则允许发送；
+
 （2）如果该包含有FIN，则允许发送；
+
 （3）设置了TCP_NODELAY选项，则允许发送；
+
 （4）未设置TCP_CORK选项时，若所有发出去的小数据包（包长度小于MSS）均被确认，则允许发送；
+
 （5）上述条件都未满足，但发生了超时（一般为200ms），则立即发送。
 
 ** cork  算法,提高网络利用效率
@@ -89,21 +122,30 @@ export MANWIDTH=100
 ** TCP确认延迟机制
 当Server端收到数据之后，它并不会马上向client端发送ACK，而是会将ACK的发送延迟一段时间（假设为t），它希望在t时间内server端会向client
 端发送应答数据，这样ACK就能够和应答数据一起发送，就像是应答数据捎带着ACK过去。t大概就是40ms。
+
 这就解释了为什么'\r\n'（B块）总是在A块之后40ms才发出。
 
 ** 滑动窗口
 滑动窗口协议是用来改善吞吐量的一种技术，即容许发送方在接收任何应答之前传送附加的包。接收方告诉发送方在某一时刻能送多少包（称窗口尺寸）。
+
 滑动窗口协议的基本原理就是在任意时刻，发送方都维持了一个连续的允许发送的帧的序号，称为发送窗口；同时，接收方也维持了一个连续的允许接收的帧的序号，称为接收窗口。
+
 发送窗口和接收窗口的序号的上下界不一定要一样，甚至大小也可以不同。不同的滑动窗口协议窗口大小一般不同。
+
 发送方窗口内的序列号代表了那些已经被发送，但是还没有被确认的帧，或者是那些可以被发送的帧。
 
 * Thu Jul  9 15:02:05 2015
 ** vim
  缩写 :ab
+
  :w !sudo tee % 以 root 的权限保存(当打开忘记 sudo 的时候)
+
  di( 删除对应串内部的字符, 删除括号内的字符
+
  daw delete a word
+
  dt; delete to ;
+
  df; delete to ; and ;
 
 * Fri Jul 10 09:49:09 2015
@@ -116,6 +158,7 @@ The letters `acdeijstuACDST' select the new attributes for the files: append onl
        updates (D), synchronous updates (S), and top of directory hierarchy (T).
 ** inotify
 inotifywait
+
 go, ruby, python, c++ etc inotify
 ** lsof
  可以替代 netstat ps 命令.
@@ -125,6 +168,7 @@ http://www.macx.cn/thread-2115958-1-1.html
 
 ** haproxy acl hdr_end hdr_beg hdr_dom...
 haproxy  检查配置文件
+
  haproxy -f /etc/haproxy/xx.cfg -c //只检查
 
 * Wed Jul 15 11:02:06 2015
@@ -133,6 +177,7 @@ haproxy  检查配置文件
 
 ** .profile .bashrc
 .profile 文件在 bash 登录的时候加载, 也可以使用 bash -l, 其中有引入.bashrc
+
 .bashrc 默认情况下是运行 bash 命令的时候加载, 此时不加载 .profile, 可以使用 --norc, 不加载 bashrc
 
  修改 CDPATH 变量,可以改变 cd 的时候的默认搜索路径
@@ -142,18 +187,22 @@ haproxy  检查配置文件
 * Thu Jul 16 10:52:05 2015
 ** /sbin 目录下的连接
  shutdown , 关机
+
  halt, 立即关掉, 正常情况下是调用 shutdown
+
  reboot,poweroff 是 halt 的软连接
+
  mkfs.ext2 mkfs.ext4 modprobe iptables ip fsk.ext2 swapoff 等都是链接,详见 ls -l /sbin
 
 ** chroot sftp,且只能通过 sftp 登录
+#+BEGIN_SRC
  Match User username // 可以是 User, 可以是 Group
    ChrootDirectory %h
    ForceCommand internal-sftp
    AllowTcpForwarding no
    PermitTunnel no
    X11Forwarding no
-
+#+END_SRC
 sudo chown root.root /home/username //需要 chroot 的目录一定要设置为 root
 
  记得重启 ssh 服务.
@@ -161,25 +210,36 @@ sudo chown root.root /home/username //需要 chroot 的目录一定要设置为 
 * Wed Jul 22 15:57:10 2015
 ** linux bridge
 apt-get install bridge-utils
-brctl addbr brname
-brctl addif brname eth0
-ip link set dev br0 up
-ip a add 192.168.0.x/22 dev br0
- 一定注意要写成脚本执行,否则中间会断掉网,后果很严重.
 
+brctl addbr brname
+
+brctl addif brname eth0
+
+ip link set dev br0 up
+
+ip a add 192.168.0.x/22 dev br0
+
+ 一定注意要写成脚本执行,否则中间会断掉网,后果很严重.
 * Thu Jul 23 15:36:02 2015
 ** netcat nc , 可以用来拷贝文件, 向指定端口发送数据等
  nc -lp 1234 > hello  // 监听端口
+
  nc x.x.x.x 1234 < txt_to_be_sent
+
  或者: (发送压缩包)
+
  nc -lp 1234 | tar zxvf -
+
  tar zcvf - hello/* | nc x.x.x.x 1234
 
 扫描端口:
+
  nc -v -w 1 x.x.x.x -z 1-10000
 
 telnet 功能:
+
  nc x.x.x.x 80
+
  nc x.x.x.x 25
 
 ** tcpdump
@@ -192,20 +252,26 @@ pcap-filter // tcpdump 等包过滤工具使用的规则
 sockslist.net
 ** kvm 迁移
 出现Could not access KVM kernel module: Permission denied:
+
 修改/ etc/libvirt/qemu.conf user 和 group 为 root, 然后重启 libvirtd 服务
 
  qemu 2.1 too new 的问题,直接去其他的平台,拷贝一个 /usr/bin/kvm 过来
 
  biso.bin not found
+
  安装 seabios vgabios, 然后在 kvm 和 qemu 的目录中,做 seabios 里边 bin 的连接, 具体哪个看日志决定
 
 * Wed Jul 29 16:06:46 2015
 ** less
  可以实用 vim/macros/less.sh ,同时有 less 的模式和 vim 的高亮功能
+
  详见 locate less.sh
+
 less  和 more 的 md5都一样...
 * Thu Jul 30 17:01:48 2015
 ** dnscrypt-proxy chinadns
 dnscrypt-proxy  可以使用 tcp 传输 dns 解析过程, 服务器默认是 opendns, 但是会造成国内的用户访问国外的地址
+
  chinadns 可以区分国内和国外的 ip, 给予响应的地址,又能 防止 dns 污染
+
 这两者也可以配合使用

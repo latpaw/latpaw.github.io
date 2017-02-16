@@ -13,26 +13,40 @@
 ** long time no see
 ** mysql
 alter table hello rename hello2;
+
 alter table hello add column world char(40);
+
 alter table hello drop column wolrd;
+
 alter table hello modify world char(40);
+
 alter table hello change column world world2 char(50);
 
 show privilges\G
+
 show grant for userxxx;
 * Tue Aug 18 10:18:54 2015
 **  断点续传
 在请求的 header 里边添加 RANGE: bytes=2000102-
+
 这样可以获取这个位置之后的字节.
+
 返回的 header 会把状态码改为206,并添加 Content-Range=bytes 200080-1092839999349/1092839999349
 ** lsof
 lsof /file
+
 lsof -u latpaw
+
 lsof -c mysql
+
 lsof -i tcp
+
 lsof -i :3306
+
 lsof -i tcp:80
+
 lsof -i -stcp:listen
+
 lsof -i -stcp:established
 
 * Wed Aug 19 17:51:48 2015
@@ -43,12 +57,18 @@ lsof -i -stcp:established
 ** vulcand
 *** vulcand
 vulcand 做负载均衡,需要手动添加域名到配置中
+
  vulcanctl host  add --name xxx
+
 vulcanctl host ls
+
 详见 man vulcanctl
 
 ** git
 git describe --tags // 查看当前 tag
+
 git tag //查看所有 tag
+
 git checkout xxx //检出 tag
+
 git tag hello // 添加 tag
