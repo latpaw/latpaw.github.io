@@ -1,3 +1,6 @@
 #+TITLE: Index
 
 This is the home page of latpaw.
+
+[[http:/latpaw.html][latpaw]]
+[[http:/duet.html][duet]]

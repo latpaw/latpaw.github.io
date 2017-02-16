@@ -4,7 +4,7 @@
 #+DATE:        2017-02-07 二
 #+URI:         /blog/%y/%m/%d/2017-first-blog
 #+KEYWORDS:    <TODO: insert your keywords here>
-#+TAGS:        <TODO: insert your tags here>
+#+TAGS: nothing
 #+LANGUAGE:    en
 #+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
 #+DESCRIPTION: <TODO: insert your description here>

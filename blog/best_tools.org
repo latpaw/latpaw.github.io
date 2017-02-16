@@ -3,11 +3,11 @@
 #+EMAIL:       jiangyuezhang@outlook.com
 #+DATE:        2017-02-07 Tue
 #+URI:         /blog/%y/%m/%d/best_tools
-#+KEYWORDS: <TODO: insert your keywords here>
+#+KEYWORDS:
 #+TAGS:        tools,emacs
 #+LANGUAGE:    en
 #+OPTIONS:     H:6 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
-#+DESCRIPTION: <TODO: insert your description here>
+#+DESCRIPTION:
 * MAC
 ** alfred                                                                                      :tools:
 ** [[file:vim.org][vim/mvim]]                                                                                   :editor:
