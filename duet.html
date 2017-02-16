@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<title>duet game</title>
+	<style>
+	 *{margin:0;padding:0;}
+	 #can{width:100%;height:100%;}
+	</style>
+    </head>
+    <body>
+	<canvas id="can"></canvas>
+	<script>
+	 var game;
+	 var theta = 0, keydown = false, request, recty = 0, alive = true, lives=[], rects = [];
+	 var delta = 0, stopped;
+	 var ax, ay, bx, by, ar=10, br=10;
+	 var mainW = window.innerWidth, mainH = window.innerHeight;
+	 var half = mainW/2;
+
+	 var circle_data = [half,700,75];
+	 var down_limit = circle_data[1] + circle_data[2] + 10;
+	 var rect_data = [[half+100,0,200,20], [half-200,-150,200,20], [half,-300,200,20], [half+100,-450,50,20], [half+50,-600,200,20], [half+50,-750,200,20],[half+50,-900,200,20],[half+50,-11500,200,20],[half+50,-1300,200,20],[half+50,-1450,200,20],[half+50,-1600,200,20] ];
+
+
+	 var c = document.querySelector('#can');
+	 var ct = c.getContext('2d');
+
+	 c.setAttribute('width', mainW)
+	 c.setAttribute('height', mainH)
+	 function circle(x,y,r,color,action){
+	     this.x = x;
+	     this.y = y;
+	     this.r = r;
+	     this.color = color;
+	     this.action = action;
+	 }
+	 
+	 circle.prototype.draw=function(){
+	     ct[this.action+'Style']=this.color;
+	     ct.beginPath();
+	     ct.arc(this.x,this.y,this.r,0,2*Math.PI);
+	     ct[this.action]();
+	     ct.closePath();
+	 }
+
+	 
+
+	 function drawCircle(cx,cy,cr,x,y,x1,y1){
+	     var gray_circle = new circle(cx,cy,cr,"#cfcfcf",'stroke')
+	     gray_circle.draw();
+
+	     var red_circle = new circle(x,y,10,"#f00",'fill');
+	     red_circle.draw();
+
+	     var blue_circle = new circle(x1,y1,10,"#00f",'fill');
+	     blue_circle.draw();
+
+	 }
+
+	 function animate(et,x,y,r){
+
+	     //a
+	     ax = x+r*Math.sin(theta),
+	     ay = y+r*Math.cos(theta),
+	     //b
+	     bx = x-r*Math.sin(theta),
+	     by = y-r*Math.cos(theta);
+
+	     drawCircle(x,y,r,ax,ay,bx,by);
+	     
+	     theta += delta;
+	 }
+
+	 function check(x,y,r,x1,y1,width,height){
+	     var x2 = x1 + width;
+	     var y2 = y1 + height;
+	     for(var j = y1; j <= y2; j++){
+		 if( Math.pow(x-x1,2)+Math.pow(j-y,2) <= Math.pow(10,2)){
+		     return false;
+		 }
+		 if( Math.pow(x-x2,2)+Math.pow(j-y,2) <= Math.pow(10,2)){
+		     return false;
+		 }
+	     }
+	     for(var j = x1; j <= x2; j++){
+		 if( Math.pow(y-y1,2)+Math.pow(j-x,2) <= Math.pow(10,2)){
+		     return false;
+		 }
+		 if( Math.pow(y-y2,2)+Math.pow(j-x,2) <= Math.pow(10,2)){
+		     return false;
+		 }
+	     }
+	     return 1;
+	 }
+
+	 function rect(x,y,x1,y1){
+	     this.x = x;
+	     this.y = y;
+	     this.x1 = x1;
+	     this.y1 = y1;
+	 }
+	 rect.prototype.draw=function(){
+	     ct.fillStyle='#fff'
+	     ct.fillRect(this.x,this.y,this.x1,this.y1)
+	 }
+	 rect.prototype.move=function(){
+	     this.draw();
+	     recty+=0.5;
+	 }
+
+	 function drawRect(el,index,array){
+	     rects[index] = new rect(el[0],el[1]+recty,el[2],el[3]);
+	     rects[index].move();
+	 }
+
+	 window.onkeydown = function(e){
+	     if(!keydown){
+		 if(e.keyCode == 37){
+		     delta = 5/180*Math.PI;
+		 }
+		 if(e.keyCode == 39){
+		     delta = -5/180*Math.PI;
+		 }
+	     }
+
+	     if(e.keyCode == 38 && stopped){
+		 game = requestAnimationFrame(start)
+	     }
+
+	     keydown = true;
+	 }
+
+	 window.onkeyup=function(e){
+	     delta = 0;
+	     keydown = false;
+	 }
+
+	 var t=0;
+	 function background(x,y){
+	     this.x = x;
+	     this.y = y;
+	     this.t = t;
+	 }
+
+	 background.prototype.draw=function(){
+	     this.width = 50 + 10 * Math.abs(Math.sin(this.t))
+
+	     ct.fillRect(this.x-this.width/2,this.y-this.width/2,this.width,this.width)
+
+	     this.t+=0.05
+	 }
+
+	 var backs=[];;
+	 function drawBackground(){
+	     
+	     for(a=0;a<=15;a++){
+		 backs[a] = new background(mainW*Math.random(),mainW*Math.random());
+	     }
+	     
+	 }
+	 drawBackground();
+
+	 function start(){
+	     ct.clearRect(0,0,c.width,c.height)
+	     ct.fillStyle = '#aaa';
+	     ct.fillRect(0,0,c.width,c.height)
+	     
+	     ct.fillStyle="#999";
+	     
+	     for(a=0;a<backs.length;a++){
+		 backs[a].draw();
+	     }
+
+	     animate({},circle_data[0],circle_data[1],circle_data[2]);
+
+	     rect_data.forEach(drawRect);
+
+	     rect_data.forEach(function(el,index,array){
+		 if(el[1]+recty > 0 && el[1]+recty < down_limit){
+		     lives.push( check(ax,ay,ar,el[0],el[1]+recty,el[2],el[3]) && check(bx,by,br,el[0],el[1]+recty,el[2],el[3]) );
+		 }
+	     })
+
+	     alive = lives.every(function(live,ind,array){
+		 return !!live
+	     })
+
+	     var len = rect_data.length;
+
+	     if(!alive || rect_data[len-1][1] + recty > down_limit){
+		 theta = 0;
+		 recty = 0;
+		 stopped = true;
+		 lives=[];
+	     }else{
+		 stopped = false;
+		 requestAnimationFrame(start)
+	     }
+
+	 }
+
+	 game = requestAnimationFrame(start)
+	</script>
+	
+    </body>
+</html>
