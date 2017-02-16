@@ -28,7 +28,7 @@
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="/Blog">Blog</a></li>
+                <li class="active"><a href="/blog/">Blog</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,27 +41,27 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Emacs Package</h1>
-            <div id="outline-container-orgb6f749b" class="outline-2">
-<h2 id="orgb6f749b">如果要是用emacs，首先要了解emacs有哪些功能，能实现什么，不能实现什么（极少）</h2>
-<div class="outline-text-2" id="text-orgb6f749b">
+            <div id="outline-container-org8947186" class="outline-2">
+<h2 id="org8947186">如果要是用emacs，首先要了解emacs有哪些功能，能实现什么，不能实现什么（极少）</h2>
+<div class="outline-text-2" id="text-org8947186">
 <p>
 一般emacs的教程都非常的长，很难理解
 下面就emacs的功能分解下
 </p>
 </div>
-<div id="outline-container-org6417d28" class="outline-3">
-<h3 id="org6417d28">C-h用来查询帮助，比如C-h m，查询当前模式的描述，一般包括快捷键等</h3>
+<div id="outline-container-org2b842fd" class="outline-3">
+<h3 id="org2b842fd">C-h用来查询帮助，比如C-h m，查询当前模式的描述，一般包括快捷键等</h3>
 </div>
 </div>
-<div id="outline-container-org1fc0410" class="outline-2">
-<h2 id="org1fc0410">Markdown</h2>
-<div class="outline-text-2" id="text-org1fc0410">
-</div><div id="outline-container-org58e9283" class="outline-3">
-<h3 id="org58e9283">Markdown-mode</h3>
-<div class="outline-text-3" id="text-org58e9283">
-</div><div id="outline-container-orgba11e45" class="outline-4">
-<h4 id="orgba11e45">markdown-mode</h4>
-<div class="outline-text-4" id="text-orgba11e45">
+<div id="outline-container-org26ac9e7" class="outline-2">
+<h2 id="org26ac9e7">Markdown</h2>
+<div class="outline-text-2" id="text-org26ac9e7">
+</div><div id="outline-container-org10c30f9" class="outline-3">
+<h3 id="org10c30f9">Markdown-mode</h3>
+<div class="outline-text-3" id="text-org10c30f9">
+</div><div id="outline-container-org1caa114" class="outline-4">
+<h4 id="org1caa114">markdown-mode</h4>
+<div class="outline-text-4" id="text-org1caa114">
 <p>
 -- install marked or some other package can parse markdown
 </p>
@@ -72,9 +72,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org5fa5247" class="outline-3">
-<h3 id="org5fa5247">Setting</h3>
-<div class="outline-text-3" id="text-org5fa5247">
+<div id="outline-container-org4499ca0" class="outline-3">
+<h3 id="org4499ca0">Setting</h3>
+<div class="outline-text-3" id="text-org4499ca0">
 <p>
 -- set markdown-command to "marked" by
 </p>
@@ -89,21 +89,21 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org95ddb88" class="outline-2">
-<h2 id="org95ddb88">GO LANG</h2>
-<div class="outline-text-2" id="text-org95ddb88">
-</div><div id="outline-container-orgac3a5e8" class="outline-3">
-<h3 id="orgac3a5e8">Mode</h3>
-<div class="outline-text-3" id="text-orgac3a5e8">
+<div id="outline-container-org89ca556" class="outline-2">
+<h2 id="org89ca556">GO LANG</h2>
+<div class="outline-text-2" id="text-org89ca556">
+</div><div id="outline-container-org01bac71" class="outline-3">
+<h3 id="org01bac71">Mode</h3>
+<div class="outline-text-3" id="text-org01bac71">
 <p>
 -- go-mode
 先正确设置GOPATH，GOROOT
 </p>
 </div>
 </div>
-<div id="outline-container-org1e19068" class="outline-3">
-<h3 id="org1e19068">Package</h3>
-<div class="outline-text-3" id="text-org1e19068">
+<div id="outline-container-org1a9005e" class="outline-3">
+<h3 id="org1a9005e">Package</h3>
+<div class="outline-text-3" id="text-org1a9005e">
 <p>
 使用go get 安装外部工具
 </p>
@@ -114,9 +114,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf433026" class="outline-3">
-<h3 id="orgf433026">Setting</h3>
-<div class="outline-text-3" id="text-orgf433026">
+<div id="outline-container-org5df14e8" class="outline-3">
+<h3 id="org5df14e8">Setting</h3>
+<div class="outline-text-3" id="text-org5df14e8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'go-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-go))
@@ -132,64 +132,64 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org24be0bd" class="outline-2">
-<h2 id="org24be0bd">RUBY</h2>
-<div class="outline-text-2" id="text-org24be0bd">
-</div><div id="outline-container-orgccab895" class="outline-3">
-<h3 id="orgccab895">Mode</h3>
-<div class="outline-text-3" id="text-orgccab895">
-</div><div id="outline-container-org232442d" class="outline-4">
-<h4 id="org232442d">ruby-mode</h4>
+<div id="outline-container-orgba3d006" class="outline-2">
+<h2 id="orgba3d006">RUBY</h2>
+<div class="outline-text-2" id="text-orgba3d006">
+</div><div id="outline-container-org7efa0ef" class="outline-3">
+<h3 id="org7efa0ef">Mode</h3>
+<div class="outline-text-3" id="text-org7efa0ef">
+</div><div id="outline-container-org5b8103b" class="outline-4">
+<h4 id="org5b8103b">ruby-mode</h4>
 </div>
-<div id="outline-container-org54d7dd4" class="outline-4">
-<h4 id="org54d7dd4">ruby end</h4>
-<div class="outline-text-4" id="text-org54d7dd4">
+<div id="outline-container-orgbc8d491" class="outline-4">
+<h4 id="orgbc8d491">ruby end</h4>
+<div class="outline-text-4" id="text-orgbc8d491">
 <p>
 自动添加end
 </p>
 </div>
 </div>
-<div id="outline-container-orgd9bd5c1" class="outline-4">
-<h4 id="orgd9bd5c1">robe</h4>
-<div class="outline-text-4" id="text-orgd9bd5c1">
+<div id="outline-container-org2ea65d9" class="outline-4">
+<h4 id="org2ea65d9">robe</h4>
+<div class="outline-text-4" id="text-org2ea65d9">
 <p>
 代码分析，补全等
 </p>
 </div>
 </div>
-<div id="outline-container-orgcef18ea" class="outline-4">
-<h4 id="orgcef18ea">inf-ruby</h4>
+<div id="outline-container-org8cacbb6" class="outline-4">
+<h4 id="org8cacbb6">inf-ruby</h4>
 </div>
-<div id="outline-container-org56f4417" class="outline-4">
-<h4 id="org56f4417">guard-mode</h4>
-<div class="outline-text-4" id="text-org56f4417">
+<div id="outline-container-org9edec43" class="outline-4">
+<h4 id="org9edec43">guard-mode</h4>
+<div class="outline-text-4" id="text-org9edec43">
 <p>
 可以高亮显示注释中的代码
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgff86fc7" class="outline-3">
-<h3 id="orgff86fc7">Setting</h3>
-<div class="outline-text-3" id="text-orgff86fc7">
+<div id="outline-container-org274a98e" class="outline-3">
+<h3 id="org274a98e">Setting</h3>
+<div class="outline-text-3" id="text-org274a98e">
 <p>
 开启ruby end和robe mode
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf78ca0c" class="outline-2">
-<h2 id="orgf78ca0c">JAVASCRIPT</h2>
-<div class="outline-text-2" id="text-orgf78ca0c">
-</div><div id="outline-container-orgf1901a8" class="outline-3">
-<h3 id="orgf1901a8">Mode</h3>
-<div class="outline-text-3" id="text-orgf1901a8">
-</div><div id="outline-container-orgdd79f05" class="outline-4">
-<h4 id="orgdd79f05">js2-mode</h4>
+<div id="outline-container-orgc69ab58" class="outline-2">
+<h2 id="orgc69ab58">JAVASCRIPT</h2>
+<div class="outline-text-2" id="text-orgc69ab58">
+</div><div id="outline-container-org4a199b1" class="outline-3">
+<h3 id="org4a199b1">Mode</h3>
+<div class="outline-text-3" id="text-org4a199b1">
+</div><div id="outline-container-orgf95ce5a" class="outline-4">
+<h4 id="orgf95ce5a">js2-mode</h4>
 </div>
-<div id="outline-container-orgae86d40" class="outline-4">
-<h4 id="orgae86d40">tern-mode</h4>
-<div class="outline-text-4" id="text-orgae86d40">
+<div id="outline-container-org30c003d" class="outline-4">
+<h4 id="org30c003d">tern-mode</h4>
+<div class="outline-text-4" id="text-org30c003d">
 <p>
 js的语法分析补全工具，需要安装外部工具ternjs
 npm install tern
@@ -197,157 +197,157 @@ npm install tern
 </p>
 </div>
 </div>
-<div id="outline-container-orgf11ace3" class="outline-4">
-<h4 id="orgf11ace3">jsfmt</h4>
+<div id="outline-container-orgfad9ca1" class="outline-4">
+<h4 id="orgfad9ca1">jsfmt</h4>
 </div>
-<div id="outline-container-orgc07b759" class="outline-4">
-<h4 id="orgc07b759">web-beautify</h4>
-<div class="outline-text-4" id="text-orgc07b759">
+<div id="outline-container-orgf43b1a0" class="outline-4">
+<h4 id="orgf43b1a0">web-beautify</h4>
+<div class="outline-text-4" id="text-orgf43b1a0">
 <p>
 npm install -g js-beautify
 (setq jsfmt-command "js-beautify")
 </p>
 </div>
 </div>
-<div id="outline-container-org1ba6998" class="outline-4">
-<h4 id="org1ba6998">swank-js slime-js skewer (有待解决)</h4>
+<div id="outline-container-org6b2cfb8" class="outline-4">
+<h4 id="org6b2cfb8">swank-js slime-js skewer (有待解决)</h4>
 </div>
-<div id="outline-container-orgff809b4" class="outline-4">
-<h4 id="orgff809b4">js-comint</h4>
+<div id="outline-container-org931adbd" class="outline-4">
+<h4 id="org931adbd">js-comint</h4>
 </div>
-<div id="outline-container-orgdb45246" class="outline-4">
-<h4 id="orgdb45246">js-refactor</h4>
+<div id="outline-container-orgb10e1bf" class="outline-4">
+<h4 id="orgb10e1bf">js-refactor</h4>
 </div>
-<div id="outline-container-org1f6df53" class="outline-4">
-<h4 id="org1f6df53">js-highlight-vars</h4>
-</div>
-</div>
-<div id="outline-container-org62c564a" class="outline-3">
-<h3 id="org62c564a">Setting</h3>
+<div id="outline-container-org244ecbf" class="outline-4">
+<h4 id="org244ecbf">js-highlight-vars</h4>
 </div>
 </div>
-<div id="outline-container-org15291b9" class="outline-2">
-<h2 id="org15291b9">WEB</h2>
-<div class="outline-text-2" id="text-org15291b9">
-</div><div id="outline-container-orgb92ed11" class="outline-3">
-<h3 id="orgb92ed11">Mode</h3>
-<div class="outline-text-3" id="text-orgb92ed11">
-</div><div id="outline-container-org8d2c5b8" class="outline-4">
-<h4 id="org8d2c5b8">web-mode</h4>
-</div>
-<div id="outline-container-orgb1d2ab4" class="outline-4">
-<h4 id="orgb1d2ab4">emmet-mode</h4>
+<div id="outline-container-orgecc25e4" class="outline-3">
+<h3 id="orgecc25e4">Setting</h3>
 </div>
 </div>
-<div id="outline-container-org58c3437" class="outline-3">
-<h3 id="org58c3437">Setting</h3>
+<div id="outline-container-org5aaf922" class="outline-2">
+<h2 id="org5aaf922">WEB</h2>
+<div class="outline-text-2" id="text-org5aaf922">
+</div><div id="outline-container-orgbdf2277" class="outline-3">
+<h3 id="orgbdf2277">Mode</h3>
+<div class="outline-text-3" id="text-orgbdf2277">
+</div><div id="outline-container-org1f00ebb" class="outline-4">
+<h4 id="org1f00ebb">web-mode</h4>
+</div>
+<div id="outline-container-org0edcf6a" class="outline-4">
+<h4 id="org0edcf6a">emmet-mode</h4>
 </div>
 </div>
-<div id="outline-container-org541bf7d" class="outline-2">
-<h2 id="org541bf7d">CPP</h2>
-<div class="outline-text-2" id="text-org541bf7d">
-</div><div id="outline-container-org8ef0439" class="outline-3">
-<h3 id="org8ef0439">Mode</h3>
-<div class="outline-text-3" id="text-org8ef0439">
-</div><div id="outline-container-orgec65585" class="outline-4">
-<h4 id="orgec65585">c++-mode</h4>
-</div>
-<div id="outline-container-org81b2d6b" class="outline-4">
-<h4 id="org81b2d6b">helm-gtags(optional)</h4>
+<div id="outline-container-orgf8c6374" class="outline-3">
+<h3 id="orgf8c6374">Setting</h3>
 </div>
 </div>
-<div id="outline-container-org7534684" class="outline-3">
-<h3 id="org7534684">Setting</h3>
-<div class="outline-text-3" id="text-org7534684">
+<div id="outline-container-orgcd277a6" class="outline-2">
+<h2 id="orgcd277a6">CPP</h2>
+<div class="outline-text-2" id="text-orgcd277a6">
+</div><div id="outline-container-org0c9465d" class="outline-3">
+<h3 id="org0c9465d">Mode</h3>
+<div class="outline-text-3" id="text-org0c9465d">
+</div><div id="outline-container-org06c18ba" class="outline-4">
+<h4 id="org06c18ba">c++-mode</h4>
+</div>
+<div id="outline-container-orgf280a4d" class="outline-4">
+<h4 id="orgf280a4d">helm-gtags(optional)</h4>
+</div>
+</div>
+<div id="outline-container-org5b41b16" class="outline-3">
+<h3 id="org5b41b16">Setting</h3>
+<div class="outline-text-3" id="text-org5b41b16">
 <p>
 相当复杂
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orge1e6090" class="outline-2">
-<h2 id="orge1e6090">LISP</h2>
-<div class="outline-text-2" id="text-orge1e6090">
-</div><div id="outline-container-org9b3bfff" class="outline-3">
-<h3 id="org9b3bfff">Mode</h3>
-<div class="outline-text-3" id="text-org9b3bfff">
-</div><div id="outline-container-org68cbeb6" class="outline-4">
-<h4 id="org68cbeb6">emacs-lisp-mode</h4>
+<div id="outline-container-org4a9d349" class="outline-2">
+<h2 id="org4a9d349">LISP</h2>
+<div class="outline-text-2" id="text-org4a9d349">
+</div><div id="outline-container-org888e79e" class="outline-3">
+<h3 id="org888e79e">Mode</h3>
+<div class="outline-text-3" id="text-org888e79e">
+</div><div id="outline-container-org7ba1027" class="outline-4">
+<h4 id="org7ba1027">emacs-lisp-mode</h4>
 </div>
-<div id="outline-container-org8fb602e" class="outline-4">
-<h4 id="org8fb602e">elisp-slime-nav-mode</h4>
-</div>
-</div>
-</div>
-<div id="outline-container-org51e2b59" class="outline-2">
-<h2 id="org51e2b59">PHP</h2>
-</div>
-<div id="outline-container-org395d3ff" class="outline-2">
-<h2 id="org395d3ff">PYTHON</h2>
-</div>
-<div id="outline-container-org2771872" class="outline-2">
-<h2 id="org2771872">Elixir</h2>
-<div class="outline-text-2" id="text-org2771872">
-</div><div id="outline-container-orge56f0d8" class="outline-3">
-<h3 id="orge56f0d8">elixir-mode</h3>
-</div>
-<div id="outline-container-org00bc271" class="outline-3">
-<h3 id="org00bc271">alchemist</h3>
+<div id="outline-container-org524fb40" class="outline-4">
+<h4 id="org524fb40">elisp-slime-nav-mode</h4>
 </div>
 </div>
-<div id="outline-container-orgb06ef17" class="outline-2">
-<h2 id="orgb06ef17">Swift</h2>
-<div class="outline-text-2" id="text-orgb06ef17">
-</div><div id="outline-container-org49d0ede" class="outline-3">
-<h3 id="org49d0ede">swift-mode</h3>
 </div>
-<div id="outline-container-org3fe2d1f" class="outline-3">
-<h3 id="org3fe2d1f">company-sourcekit</h3>
+<div id="outline-container-org5979b27" class="outline-2">
+<h2 id="org5979b27">PHP</h2>
 </div>
-<div id="outline-container-orgf657fe3" class="outline-3">
-<h3 id="orgf657fe3">sourcekittendaemon</h3>
+<div id="outline-container-org9598d68" class="outline-2">
+<h2 id="org9598d68">PYTHON</h2>
+</div>
+<div id="outline-container-org703ddb4" class="outline-2">
+<h2 id="org703ddb4">Elixir</h2>
+<div class="outline-text-2" id="text-org703ddb4">
+</div><div id="outline-container-org3f1d53e" class="outline-3">
+<h3 id="org3f1d53e">elixir-mode</h3>
+</div>
+<div id="outline-container-orgd7e40f8" class="outline-3">
+<h3 id="orgd7e40f8">alchemist</h3>
 </div>
 </div>
-<div id="outline-container-orgbc08a93" class="outline-2">
-<h2 id="orgbc08a93">MOSTLY USED PACKAGES</h2>
-<div class="outline-text-2" id="text-orgbc08a93">
-</div><div id="outline-container-org28fde97" class="outline-3">
-<h3 id="org28fde97">which key，在按下快捷键的prefix的时候显示按键帮助</h3>
+<div id="outline-container-org4cf519c" class="outline-2">
+<h2 id="org4cf519c">Swift</h2>
+<div class="outline-text-2" id="text-org4cf519c">
+</div><div id="outline-container-org7e88c64" class="outline-3">
+<h3 id="org7e88c64">swift-mode</h3>
 </div>
-<div id="outline-container-orgba122f4" class="outline-3">
-<h3 id="orgba122f4">helm, 更好的命令支持</h3>
+<div id="outline-container-orgf990b1b" class="outline-3">
+<h3 id="orgf990b1b">company-sourcekit</h3>
 </div>
-<div id="outline-container-orgc4057aa" class="outline-3">
-<h3 id="orgc4057aa">helm-mini</h3>
+<div id="outline-container-orgb57ec10" class="outline-3">
+<h3 id="orgb57ec10">sourcekittendaemon</h3>
 </div>
-<div id="outline-container-org5a74965" class="outline-3">
-<h3 id="org5a74965">yas-snippets, 提供多语言的代码片段功能</h3>
 </div>
-<div id="outline-container-orgc9c6f26" class="outline-3">
-<h3 id="orgc9c6f26">flycheck，即时检查语法问题</h3>
+<div id="outline-container-org3c05a40" class="outline-2">
+<h2 id="org3c05a40">MOSTLY USED PACKAGES</h2>
+<div class="outline-text-2" id="text-org3c05a40">
+</div><div id="outline-container-orgf6ac17c" class="outline-3">
+<h3 id="orgf6ac17c">which key，在按下快捷键的prefix的时候显示按键帮助</h3>
 </div>
-<div id="outline-container-org46fbb62" class="outline-3">
-<h3 id="org46fbb62">flyspell，即时检查拼写问题</h3>
-<div class="outline-text-3" id="text-org46fbb62">
+<div id="outline-container-org9d7ef11" class="outline-3">
+<h3 id="org9d7ef11">helm, 更好的命令支持</h3>
+</div>
+<div id="outline-container-orgdc69c6d" class="outline-3">
+<h3 id="orgdc69c6d">helm-mini</h3>
+</div>
+<div id="outline-container-orgdf507eb" class="outline-3">
+<h3 id="orgdf507eb">yas-snippets, 提供多语言的代码片段功能</h3>
+</div>
+<div id="outline-container-org4fea9f2" class="outline-3">
+<h3 id="org4fea9f2">flycheck，即时检查语法问题</h3>
+</div>
+<div id="outline-container-org7a50edf" class="outline-3">
+<h3 id="org7a50edf">flyspell，即时检查拼写问题</h3>
+<div class="outline-text-3" id="text-org7a50edf">
 <p>
 可能需要安装ispell外部工具
 </p>
 </div>
 </div>
-<div id="outline-container-org8edd617" class="outline-3">
-<h3 id="org8edd617">flymake，与flycheck二选一即可</h3>
+<div id="outline-container-org7e1e829" class="outline-3">
+<h3 id="org7e1e829">flymake，与flycheck二选一即可</h3>
 </div>
-<div id="outline-container-orgfd85a0e" class="outline-3">
-<h3 id="orgfd85a0e">projectitle， 项目管理工具</h3>
-<div class="outline-text-3" id="text-orgfd85a0e">
+<div id="outline-container-org830a13f" class="outline-3">
+<h3 id="org830a13f">projectitle， 项目管理工具</h3>
+<div class="outline-text-3" id="text-org830a13f">
 <p>
 可以用来切换项目，切换文件等
 </p>
 </div>
 </div>
-<div id="outline-container-orgce7071e" class="outline-3">
-<h3 id="orgce7071e">company，补全功能</h3>
-<div class="outline-text-3" id="text-orgce7071e">
+<div id="outline-container-org45a3d21" class="outline-3">
+<h3 id="org45a3d21">company，补全功能</h3>
+<div class="outline-text-3" id="text-org45a3d21">
 <p>
 各种语言支持的程度不一样，如果需要添加补齐功能，使用类似下面的方法，加到company的补齐后端中
 </p>
@@ -357,71 +357,71 @@ npm install -g js-beautify
 </div>
 </div>
 </div>
-<div id="outline-container-orgb5ea262" class="outline-3">
-<h3 id="orgb5ea262">auto-complete,与company二选一</h3>
+<div id="outline-container-orgefe7b46" class="outline-3">
+<h3 id="orgefe7b46">auto-complete,与company二选一</h3>
 </div>
-<div id="outline-container-org5cfade7" class="outline-3">
-<h3 id="org5cfade7">auto-pair自动添加对称的括号等(smartparens)</h3>
+<div id="outline-container-org0133845" class="outline-3">
+<h3 id="org0133845">auto-pair自动添加对称的括号等(smartparens)</h3>
 </div>
-<div id="outline-container-org93583b2" class="outline-3">
-<h3 id="org93583b2">hide-show，origami，二选一，可以折叠代码</h3>
+<div id="outline-container-org0b7e37f" class="outline-3">
+<h3 id="org0b7e37f">hide-show，origami，二选一，可以折叠代码</h3>
 </div>
-<div id="outline-container-org302fd80" class="outline-3">
-<h3 id="org302fd80">winner, emacs的窗口管理工具</h3>
+<div id="outline-container-orga3f0af9" class="outline-3">
+<h3 id="orga3f0af9">winner, emacs的窗口管理工具</h3>
 </div>
-<div id="outline-container-org0a8e6ac" class="outline-3">
-<h3 id="org0a8e6ac">electric-indent, 更好的代码格式化、对齐工具</h3>
+<div id="outline-container-orge1d19ca" class="outline-3">
+<h3 id="orge1d19ca">electric-indent, 更好的代码格式化、对齐工具</h3>
 </div>
-<div id="outline-container-org74f7754" class="outline-3">
-<h3 id="org74f7754">hungry-delete,删除前方所有的空行，空格等</h3>
+<div id="outline-container-org5b468e4" class="outline-3">
+<h3 id="org5b468e4">hungry-delete,删除前方所有的空行，空格等</h3>
 </div>
-<div id="outline-container-orgce36629" class="outline-3">
-<h3 id="orgce36629">gnus, 首发邮件，新闻组等</h3>
+<div id="outline-container-org329b400" class="outline-3">
+<h3 id="org329b400">gnus, 首发邮件，新闻组等</h3>
 </div>
-<div id="outline-container-orgf4ae41a" class="outline-3">
-<h3 id="orgf4ae41a">irc，irc聊天</h3>
+<div id="outline-container-orgd004d75" class="outline-3">
+<h3 id="orgd004d75">irc，irc聊天</h3>
 </div>
-<div id="outline-container-org503181d" class="outline-3">
-<h3 id="org503181d">magit, git管理工具</h3>
+<div id="outline-container-org83f52ff" class="outline-3">
+<h3 id="org83f52ff">magit, git管理工具</h3>
 </div>
-<div id="outline-container-orgd1453f2" class="outline-3">
-<h3 id="orgd1453f2">helm-github-stars, 列出github上自己star过的项目，可以搜索</h3>
+<div id="outline-container-orgd9dceb9" class="outline-3">
+<h3 id="orgd9dceb9">helm-github-stars, 列出github上自己star过的项目，可以搜索</h3>
 </div>
-<div id="outline-container-org881c929" class="outline-3">
-<h3 id="org881c929">gist工具，可以新建，查看，删除，fork等</h3>
+<div id="outline-container-org5de70fe" class="outline-3">
+<h3 id="org5de70fe">gist工具，可以新建，查看，删除，fork等</h3>
 </div>
-<div id="outline-container-org0f5a76f" class="outline-3">
-<h3 id="org0f5a76f">diminish, 提供mode line的缩写</h3>
+<div id="outline-container-org7ea6d0e" class="outline-3">
+<h3 id="org7ea6d0e">diminish, 提供mode line的缩写</h3>
 </div>
-<div id="outline-container-org3d50169" class="outline-3">
-<h3 id="org3d50169">undo tree，历史修改记录</h3>
+<div id="outline-container-org8baef32" class="outline-3">
+<h3 id="org8baef32">undo tree，历史修改记录</h3>
 </div>
-<div id="outline-container-org8cf69a0" class="outline-3">
-<h3 id="org8cf69a0">keyfreq</h3>
+<div id="outline-container-orgcf7edc9" class="outline-3">
+<h3 id="orgcf7edc9">keyfreq</h3>
 </div>
-<div id="outline-container-org4f483ef" class="outline-3">
-<h3 id="org4f483ef">keychord</h3>
+<div id="outline-container-orge7dce6d" class="outline-3">
+<h3 id="orge7dce6d">keychord</h3>
 </div>
-<div id="outline-container-orgc4b7a4a" class="outline-3">
-<h3 id="orgc4b7a4a">diff-hl-mode, git gutter 可以标示出当前文档做了那些改动，可以跳转，回到过去等</h3>
+<div id="outline-container-org3881623" class="outline-3">
+<h3 id="org3881623">diff-hl-mode, git gutter 可以标示出当前文档做了那些改动，可以跳转，回到过去等</h3>
 </div>
-<div id="outline-container-orge87d2a8" class="outline-3">
-<h3 id="orge87d2a8">work group2 ,设定工作组，可以切换，类似project</h3>
+<div id="outline-container-org1c05152" class="outline-3">
+<h3 id="org1c05152">work group2 ,设定工作组，可以切换，类似project</h3>
 </div>
-<div id="outline-container-orgc97c5f7" class="outline-3">
-<h3 id="orgc97c5f7">slime</h3>
-<div class="outline-text-3" id="text-orgc97c5f7">
+<div id="outline-container-org791e09f" class="outline-3">
+<h3 id="org791e09f">slime</h3>
+<div class="outline-text-3" id="text-org791e09f">
 <p>
 需要设置inferior-lisp-program 为相应的lisp程序，一般为sbcl或者scheme
 </p>
 </div>
 </div>
-<div id="outline-container-org46b9a91" class="outline-3">
-<h3 id="org46b9a91">multi-cursor</h3>
+<div id="outline-container-org3050681" class="outline-3">
+<h3 id="org3050681">multi-cursor</h3>
 </div>
-<div id="outline-container-org18a248d" class="outline-3">
-<h3 id="org18a248d">org-reveal</h3>
-<div class="outline-text-3" id="text-org18a248d">
+<div id="outline-container-org5a0aef4" class="outline-3">
+<h3 id="org5a0aef4">org-reveal</h3>
+<div class="outline-text-3" id="text-org5a0aef4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(require 'ox-reveal)
 (setq org-reveal-root "file:///Users/latpaw/test/js/reveal.js")
@@ -430,16 +430,16 @@ npm install -g js-beautify
 </div>
 </div>
 </div>
-<div id="outline-container-org1eb4f65" class="outline-3">
-<h3 id="org1eb4f65">hlinum</h3>
-<div class="outline-text-3" id="text-org1eb4f65">
+<div id="outline-container-orgd4da1d7" class="outline-3">
+<h3 id="orgd4da1d7">hlinum</h3>
+<div class="outline-text-3" id="text-orgd4da1d7">
 <p>
 <a href="https://github-cloud.s3.amazonaws.com/releases/46151567/506f560a-9ba3-11e5-8373-24bc7ad65393.pkg">https://github-cloud.s3.amazonaws.com/releases/46151567/506f560a-9ba3-11e5-8373-24bc7ad65393.pkg</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgdbdfc14" class="outline-3">
-<h3 id="orgdbdfc14">bookmark+</h3>
+<div id="outline-container-orge1d72cb" class="outline-3">
+<h3 id="orge1d72cb">bookmark+</h3>
 </div>
 </div>
 

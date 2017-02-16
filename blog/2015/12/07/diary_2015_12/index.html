@@ -28,7 +28,7 @@
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="/Blog">Blog</a></li>
+                <li class="active"><a href="/blog/">Blog</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,45 +41,45 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Diary 2015-12</h1>
-            <div id="outline-container-org2f05064" class="outline-2">
-<h2 id="org2f05064">Thu Dec  3 11:36:41 2015</h2>
-<div class="outline-text-2" id="text-org2f05064">
-</div><div id="outline-container-org5fae528" class="outline-3">
-<h3 id="org5fae528">mysql export csv&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mysql">mysql</span></span></h3>
-<div class="outline-text-3" id="text-org5fae528">
+            <div id="outline-container-org45325c5" class="outline-2">
+<h2 id="org45325c5">Thu Dec  3 11:36:41 2015</h2>
+<div class="outline-text-2" id="text-org45325c5">
+</div><div id="outline-container-orgf60fc65" class="outline-3">
+<h3 id="orgf60fc65">mysql export csv&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mysql">mysql</span></span></h3>
+<div class="outline-text-3" id="text-orgf60fc65">
 <p>
 export: select * from test_info into outfile '/tmp/test.csv' fields terminated by ',' optionally enclosed by '"' escaped by '"' lines terminated by '\r\n';
 import: load data infile '/tmp/test.csv' into table test_info fields terminated by ','  optionally enclosed by '"' escaped by '"' lines terminated by '\r\n';
 </p>
 </div>
 </div>
-<div id="outline-container-org0c0bf40" class="outline-3">
-<h3 id="org0c0bf40">bem&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
-<div class="outline-text-3" id="text-org0c0bf40">
+<div id="outline-container-org0143076" class="outline-3">
+<h3 id="org0143076">bem&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
+<div class="outline-text-3" id="text-org0143076">
 <p>
 what is bem
-<a href="http://en.bem.info">http://en.bem.info</a>
+<a href="http://en.bem.info/">http://en.bem.info/</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orga0b66f6" class="outline-3">
-<h3 id="orga0b66f6">react&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
-<div class="outline-text-3" id="text-orga0b66f6">
+<div id="outline-container-org1338dfb" class="outline-3">
+<h3 id="org1338dfb">react&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
+<div class="outline-text-3" id="text-org1338dfb">
 <p>
 react diff
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf9f6aed" class="outline-2">
-<h2 id="orgf9f6aed">Tue Dec 15 17:55:59 2015</h2>
-<div class="outline-text-2" id="text-orgf9f6aed">
-</div><div id="outline-container-orgbbd0d9b" class="outline-3">
-<h3 id="orgbbd0d9b">coreos</h3>
-<div class="outline-text-3" id="text-orgbbd0d9b">
-</div><div id="outline-container-orga63fa7c" class="outline-4">
-<h4 id="orga63fa7c">etcd</h4>
-<div class="outline-text-4" id="text-orga63fa7c">
+<div id="outline-container-org5d542bf" class="outline-2">
+<h2 id="org5d542bf">Tue Dec 15 17:55:59 2015</h2>
+<div class="outline-text-2" id="text-org5d542bf">
+</div><div id="outline-container-orgb054b8d" class="outline-3">
+<h3 id="orgb054b8d">coreos</h3>
+<div class="outline-text-3" id="text-orgb054b8d">
+</div><div id="outline-container-org66828d1" class="outline-4">
+<h4 id="org66828d1">etcd</h4>
+<div class="outline-text-4" id="text-org66828d1">
 <p>
 etcd作为服务，运行于coreos，每台coreos启动，指定discovery url，再启动之后会注册服务
 表示实例启动
@@ -87,35 +87,35 @@ etcd作为服务，运行于coreos，每台coreos启动，指定discovery url，
 </p>
 </div>
 </div>
-<div id="outline-container-org1f01dcf" class="outline-4">
-<h4 id="org1f01dcf">fleet</h4>
-<div class="outline-text-4" id="text-org1f01dcf">
+<div id="outline-container-org39766fd" class="outline-4">
+<h4 id="org39766fd">fleet</h4>
+<div class="outline-text-4" id="text-org39766fd">
 <p>
 fleet作为服务，类似定制版的systemd，可以新建，删除，活着管理coreos中的服务，通过etcd注册的各实例，可以把
 需要运行的服务分配到各实例中去，由etcd负责分配
 </p>
 </div>
 </div>
-<div id="outline-container-orgad438ec" class="outline-4">
-<h4 id="orgad438ec">confd</h4>
-<div class="outline-text-4" id="text-orgad438ec">
+<div id="outline-container-org0bbaff0" class="outline-4">
+<h4 id="org0bbaff0">confd</h4>
+<div class="outline-text-4" id="text-org0bbaff0">
 <p>
 confd作为独立运行的软件，需要单独安装
 安装之后，可以把etcd中添加的配置，转换为docker中运行所需的配置文件
 </p>
 </div>
 </div>
-<div id="outline-container-orgc8d4e6a" class="outline-4">
-<h4 id="orgc8d4e6a">flannel</h4>
-<div class="outline-text-4" id="text-orgc8d4e6a">
+<div id="outline-container-orgc4c99e7" class="outline-4">
+<h4 id="orgc4c99e7">flannel</h4>
+<div class="outline-text-4" id="text-orgc4c99e7">
 <p>
 flannel作为内置服务，负责管理coreos中的网络，使得启动的各容器可以互通
 </p>
 </div>
 </div>
-<div id="outline-container-org6446cf3" class="outline-4">
-<h4 id="org6446cf3">rkt</h4>
-<div class="outline-text-4" id="text-org6446cf3">
+<div id="outline-container-org3e00250" class="outline-4">
+<h4 id="org3e00250">rkt</h4>
+<div class="outline-text-4" id="text-org3e00250">
 <p>
 to be continued
 <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-coreos-system-components">https://www.digitalocean.com/community/tutorials/an-introduction-to-coreos-system-components</a>
