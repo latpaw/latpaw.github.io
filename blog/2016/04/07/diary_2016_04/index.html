@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>Diary 2016-4 - org-page</title>
+  <title>Diary 2016-4 - L</title>
   <meta charset="utf-8" />
   <meta name="author" content="latpaw" />
   <meta name="description" content="&lt;TODO: insert your description here&gt;" />
@@ -24,11 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">org-page</a>
+            <a class="navbar-brand" href="/">L</a>
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="/blog/">Blog</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/tags/">Tags</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,9 +43,9 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Diary 2016-4</h1>
-            <div id="outline-container-org12ad0bc" class="outline-2">
-<h2 id="org12ad0bc">主要的 IPC 方法</h2>
-<div class="outline-text-2" id="text-org12ad0bc">
+            <div id="outline-container-org0bb8d5d" class="outline-2">
+<h2 id="org0bb8d5d">主要的 IPC 方法</h2>
+<div class="outline-text-2" id="text-org0bb8d5d">
 <ul class="org-ul">
 <li>文件, filesystem</li>
 <li>信号, signal</li>
@@ -61,81 +63,81 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc79bcad" class="outline-2">
-<h2 id="orgc79bcad">future and promise</h2>
-<div class="outline-text-2" id="text-orgc79bcad">
-</div><div id="outline-container-orgfdb4e25" class="outline-3">
-<h3 id="orgfdb4e25">future: 一般是promise的值，不可变</h3>
+<div id="outline-container-orgb88e1fc" class="outline-2">
+<h2 id="orgb88e1fc">future and promise</h2>
+<div class="outline-text-2" id="text-orgb88e1fc">
+</div><div id="outline-container-org89f212b" class="outline-3">
+<h3 id="org89f212b">future: 一般是promise的值，不可变</h3>
 </div>
-<div id="outline-container-org2f3c6fe" class="outline-3">
-<h3 id="org2f3c6fe">promise: 一般是个过程，函数，可变</h3>
+<div id="outline-container-orgabc02d7" class="outline-3">
+<h3 id="orgabc02d7">promise: 一般是个过程，函数，可变</h3>
 </div>
-<div id="outline-container-org452c54d" class="outline-3">
-<h3 id="org452c54d">SSA: 静态单赋值</h3>
+<div id="outline-container-orgee79efa" class="outline-3">
+<h3 id="orgee79efa">SSA: 静态单赋值</h3>
 </div>
 </div>
-<div id="outline-container-org2067c25" class="outline-2">
-<h2 id="org2067c25">异常</h2>
-<div class="outline-text-2" id="text-org2067c25">
+<div id="outline-container-org6b39e94" class="outline-2">
+<h2 id="org6b39e94">异常</h2>
+<div class="outline-text-2" id="text-org6b39e94">
 <p>
 异常是控制流中的突变，用来相应处理器状态中的某些变化
 </p>
 </div>
-<div id="outline-container-orge56b296" class="outline-3">
-<h3 id="orge56b296">中断</h3>
+<div id="outline-container-orge05db6a" class="outline-3">
+<h3 id="orge05db6a">中断</h3>
 </div>
-<div id="outline-container-org518928f" class="outline-3">
-<h3 id="org518928f">陷阱</h3>
+<div id="outline-container-org50cab2b" class="outline-3">
+<h3 id="org50cab2b">陷阱</h3>
 </div>
-<div id="outline-container-org16563b1" class="outline-3">
-<h3 id="org16563b1">故障</h3>
+<div id="outline-container-org2ac6f98" class="outline-3">
+<h3 id="org2ac6f98">故障</h3>
 </div>
-<div id="outline-container-org4886327" class="outline-3">
-<h3 id="org4886327">终止</h3>
+<div id="outline-container-org11beddf" class="outline-3">
+<h3 id="org11beddf">终止</h3>
 </div>
 </div>
-<div id="outline-container-org78e2207" class="outline-2">
-<h2 id="org78e2207">mysql</h2>
-<div class="outline-text-2" id="text-org78e2207">
+<div id="outline-container-orgfee4c5a" class="outline-2">
+<h2 id="orgfee4c5a">mysql</h2>
+<div class="outline-text-2" id="text-orgfee4c5a">
 <p>
 purge master logs before date_sub(current_date, interval 10 day);
 show master logs;
 </p>
 </div>
 </div>
-<div id="outline-container-orgdcbd883" class="outline-2">
-<h2 id="orgdcbd883">lvresize</h2>
-<div class="outline-text-2" id="text-orgdcbd883">
+<div id="outline-container-org48bc68f" class="outline-2">
+<h2 id="org48bc68f">lvresize</h2>
+<div class="outline-text-2" id="text-org48bc68f">
 <p>
 lvresize will not work. you need to resize2fs before use df to make it affect the disk.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb8884ca" class="outline-2">
-<h2 id="orgb8884ca">emacs</h2>
-<div class="outline-text-2" id="text-orgb8884ca">
-</div><div id="outline-container-orgdf2cda8" class="outline-3">
-<h3 id="orgdf2cda8">diary appt agenda</h3>
-<div class="outline-text-3" id="text-orgdf2cda8">
+<div id="outline-container-orgfb2a17b" class="outline-2">
+<h2 id="orgfb2a17b">emacs</h2>
+<div class="outline-text-2" id="text-orgfb2a17b">
+</div><div id="outline-container-orgf109b5b" class="outline-3">
+<h3 id="orgf109b5b">diary appt agenda</h3>
+<div class="outline-text-3" id="text-orgf109b5b">
 </div>
 </div>
-<div id="outline-container-org06c91c8" class="outline-3">
-<h3 id="org06c91c8">ffap</h3>
+<div id="outline-container-org443c99a" class="outline-3">
+<h3 id="org443c99a">ffap</h3>
 </div>
 </div>
-<div id="outline-container-orgc87102d" class="outline-2">
-<h2 id="orgc87102d">偏函数， currying</h2>
+<div id="outline-container-org055696b" class="outline-2">
+<h2 id="org055696b">偏函数， currying</h2>
 </div>
-<div id="outline-container-orgd125746" class="outline-2">
-<h2 id="orgd125746">scala，cqrs</h2>
+<div id="outline-container-orgb2129e4" class="outline-2">
+<h2 id="orgb2129e4">scala，cqrs</h2>
 </div>
-<div id="outline-container-orgbc61cf2" class="outline-2">
-<h2 id="orgbc61cf2">如果org-mode 表格无法对齐，可以尝试buffer-face-set</h2>
+<div id="outline-container-org3ad0ade" class="outline-2">
+<h2 id="org3ad0ade">如果org-mode 表格无法对齐，可以尝试buffer-face-set</h2>
 </div>
-<div id="outline-container-org56a33d0" class="outline-2">
-<h2 id="org56a33d0">使用emacs作为cide，jump，需要开启semantic mode</h2>
-<div class="outline-text-2" id="text-org56a33d0">
+<div id="outline-container-org16530dc" class="outline-2">
+<h2 id="org16530dc">使用emacs作为cide，jump，需要开启semantic mode</h2>
+<div class="outline-text-2" id="text-org16530dc">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(semantic-add-system-include "/usr/local/include")
 </pre>
@@ -145,9 +147,9 @@ lvresize will not work. you need to resize2fs before use df to make it affect th
 </p>
 </div>
 </div>
-<div id="outline-container-org7a16a6f" class="outline-2">
-<h2 id="org7a16a6f">golang</h2>
-<div class="outline-text-2" id="text-org7a16a6f">
+<div id="outline-container-org79910b4" class="outline-2">
+<h2 id="org79910b4">golang</h2>
+<div class="outline-text-2" id="text-org79910b4">
 <ol class="org-ol">
 <li>gocode, complete</li>
 <li>godef, jump跳转目标</li>
@@ -158,13 +160,13 @@ lvresize will not work. you need to resize2fs before use df to make it affect th
 </div>
 </div>
 
-<div id="outline-container-org3c76212" class="outline-2">
-<h2 id="org3c76212">js browser dom api?</h2>
+<div id="outline-container-org663fe85" class="outline-2">
+<h2 id="org663fe85">js browser dom api?</h2>
 </div>
 
-<div id="outline-container-org0cf992a" class="outline-2">
-<h2 id="org0cf992a">ali</h2>
-<div class="outline-text-2" id="text-org0cf992a">
+<div id="outline-container-org8eed29b" class="outline-2">
+<h2 id="org8eed29b">ali</h2>
+<div class="outline-text-2" id="text-org8eed29b">
 <p>
 nodejs 中间件类型
 angular 简介

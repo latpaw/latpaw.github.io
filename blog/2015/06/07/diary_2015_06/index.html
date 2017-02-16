@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>Diary 2015-6 - org-page</title>
+  <title>Diary 2015-6 - L</title>
   <meta charset="utf-8" />
   <meta name="author" content="latpaw" />
   <meta name="description" content="&lt;TODO: insert your description here&gt;" />
@@ -24,11 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">org-page</a>
+            <a class="navbar-brand" href="/">L</a>
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="/blog/">Blog</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/tags/">Tags</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,12 +43,12 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Diary 2015-6</h1>
-            <div id="outline-container-orgbb54715" class="outline-2">
-<h2 id="orgbb54715">2015-06-01</h2>
-<div class="outline-text-2" id="text-orgbb54715">
-</div><div id="outline-container-org1be0902" class="outline-3">
-<h3 id="org1be0902">tcpdump 数据格式</h3>
-<div class="outline-text-3" id="text-org1be0902">
+            <div id="outline-container-org268b2bf" class="outline-2">
+<h2 id="org268b2bf">2015-06-01</h2>
+<div class="outline-text-2" id="text-org268b2bf">
+</div><div id="outline-container-orge29bb1b" class="outline-3">
+<h3 id="orge29bb1b">tcpdump 数据格式</h3>
+<div class="outline-text-3" id="text-orge29bb1b">
 <p>
 src &gt; dst: flags data-seqno ack window urgent options
 src 和 dst 是源和目的IP地址以及相应的端口. flags 标志由S(SYN), F(FIN), P(PUSH, R(RST), W(ECN CWT(nt | rep:未知, 需补充))或者 E(ECN-Echo(nt | rep:未知,　需补充))组成,单独一个'.'表示没有flags标识.
@@ -63,12 +65,12 @@ src, dst 和 flags 这三个域总是会被显示. 其他域的显示与否依�
 </div>
 </div>
 
-<div id="outline-container-org9fb2151" class="outline-2">
-<h2 id="org9fb2151">2015-06-02</h2>
-<div class="outline-text-2" id="text-org9fb2151">
-</div><div id="outline-container-org9a522d7" class="outline-3">
-<h3 id="org9a522d7">zabbix triggers functions</h3>
-<div class="outline-text-3" id="text-org9a522d7">
+<div id="outline-container-org3dd5fc8" class="outline-2">
+<h2 id="org3dd5fc8">2015-06-02</h2>
+<div class="outline-text-2" id="text-org3dd5fc8">
+</div><div id="outline-container-org4f103a6" class="outline-3">
+<h3 id="org4f103a6">zabbix triggers functions</h3>
+<div class="outline-text-3" id="text-org4f103a6">
 <p>
 abschange  两者绝对差值
 avg avg(#5) avg(3600) avg(3600,86400) 后面可以加次数和时间
@@ -98,12 +100,12 @@ time
 </div>
 </div>
 
-<div id="outline-container-org0449e5f" class="outline-2">
-<h2 id="org0449e5f">2015-06- 3 05:58 Wed PM</h2>
-<div class="outline-text-2" id="text-org0449e5f">
-</div><div id="outline-container-orgb953244" class="outline-3">
-<h3 id="orgb953244">分区工具</h3>
-<div class="outline-text-3" id="text-orgb953244">
+<div id="outline-container-orgd90974c" class="outline-2">
+<h2 id="orgd90974c">2015-06- 3 05:58 Wed PM</h2>
+<div class="outline-text-2" id="text-orgd90974c">
+</div><div id="outline-container-orgb6b2b34" class="outline-3">
+<h3 id="orgb6b2b34">分区工具</h3>
+<div class="outline-text-3" id="text-orgb6b2b34">
 <p>
 fdisk -l
 fdisk /dev/sdb
@@ -127,9 +129,9 @@ sfdisk -l
 </p>
 </div>
 </div>
-<div id="outline-container-org3eb2103" class="outline-3">
-<h3 id="org3eb2103">dmsetup</h3>
-<div class="outline-text-3" id="text-org3eb2103">
+<div id="outline-container-org8c2e111" class="outline-3">
+<h3 id="org8c2e111">dmsetup</h3>
+<div class="outline-text-3" id="text-org8c2e111">
 <p>
 dmsetup create xxxname --table '0 1000 linear /dev/sdb 0'
 把0-1000这一段映射到 /dev/sdb 的0处,相当于是个连接
@@ -138,17 +140,17 @@ dmsetup create xxxname --table '0 1000 linear /dev/sdb 0'
 </div>
 </div>
 
-<div id="outline-container-orgf979de8" class="outline-2">
-<h2 id="orgf979de8">2015-06- 5 01:06 Fri PM</h2>
-<div class="outline-text-2" id="text-orgf979de8">
+<div id="outline-container-orgcf8fe8c" class="outline-2">
+<h2 id="orgcf8fe8c">2015-06- 5 01:06 Fri PM</h2>
+<div class="outline-text-2" id="text-orgcf8fe8c">
 <p>
 安装的库文件,都会在 /usr/lib/pkgconfig 里边生成 一个 .pc 的文件, 表示版本号
 </p>
 </div>
 
-<div id="outline-container-orgab39ad0" class="outline-3">
-<h3 id="orgab39ad0">安装 pacemaker</h3>
-<div class="outline-text-3" id="text-orgab39ad0">
+<div id="outline-container-org2e92b6d" class="outline-3">
+<h3 id="org2e92b6d">安装 pacemaker</h3>
+<div class="outline-text-3" id="text-org2e92b6d">
 <p>
 apt-get install build-essential automake autoconf libtool pkg-config
 安装 libqb from github, 如果版本号是未知, 需要修改/usr/lib/pkgconfig/libqb.pc 里边的版本
@@ -158,9 +160,9 @@ apt-get install uuid-dev libglib2.0-dev libxml2-dev libxslt1-dev libbz2-dev libn
 </div>
 </div>
 
-<div id="outline-container-orge02c826" class="outline-3">
-<h3 id="orge02c826">改变时区</h3>
-<div class="outline-text-3" id="text-orge02c826">
+<div id="outline-container-orgdba4980" class="outline-3">
+<h3 id="orgdba4980">改变时区</h3>
+<div class="outline-text-3" id="text-orgdba4980">
 <p>
 tzselect
 或者修改 /etc/timezone
@@ -172,12 +174,12 @@ TZ='Asia/Shanghai';export TZ
 </div>
 </div>
 
-<div id="outline-container-org32a0aaa" class="outline-2">
-<h2 id="org32a0aaa">2015-06- 8 03:23 Mon PM</h2>
-<div class="outline-text-2" id="text-org32a0aaa">
-</div><div id="outline-container-orga7cfef8" class="outline-3">
-<h3 id="orga7cfef8">linux 添加虚拟网卡</h3>
-<div class="outline-text-3" id="text-orga7cfef8">
+<div id="outline-container-org73f4dd2" class="outline-2">
+<h2 id="org73f4dd2">2015-06- 8 03:23 Mon PM</h2>
+<div class="outline-text-2" id="text-org73f4dd2">
+</div><div id="outline-container-orgd3d13ad" class="outline-3">
+<h3 id="orgd3d13ad">linux 添加虚拟网卡</h3>
+<div class="outline-text-3" id="text-orgd3d13ad">
 <ol class="org-ol">
 <li>ifconfig eth0:0 x.x.x.x up</li>
 </ol>
@@ -187,9 +189,9 @@ TZ='Asia/Shanghai';export TZ
 </div>
 </div>
 
-<div id="outline-container-org319babe" class="outline-3">
-<h3 id="org319babe">sql 导出导入数据</h3>
-<div class="outline-text-3" id="text-org319babe">
+<div id="outline-container-orgca2accf" class="outline-3">
+<h3 id="orgca2accf">sql 导出导入数据</h3>
+<div class="outline-text-3" id="text-orgca2accf">
 <p>
 mysqldump &gt; 导出
 mysql &lt; 导入
@@ -197,9 +199,9 @@ mysql &lt; 导入
 </div>
 </div>
 
-<div id="outline-container-orgccf0af7" class="outline-3">
-<h3 id="orgccf0af7">linux shell</h3>
-<div class="outline-text-3" id="text-orgccf0af7">
+<div id="outline-container-org0f93348" class="outline-3">
+<h3 id="org0f93348">linux shell</h3>
+<div class="outline-text-3" id="text-org0f93348">
 <p>
 #!/bin/less
 #!/bin/more etc.
@@ -212,9 +214,9 @@ $UID 当前用户的 uid
 </div>
 </div>
 
-<div id="outline-container-orgb237a25" class="outline-2">
-<h2 id="orgb237a25">2015-06-11 11:04 Thu AM</h2>
-<div class="outline-text-2" id="text-orgb237a25">
+<div id="outline-container-org6834afc" class="outline-2">
+<h2 id="org6834afc">2015-06-11 11:04 Thu AM</h2>
+<div class="outline-text-2" id="text-org6834afc">
 <p>
 查看 imap 证书
 openssl s_client -connect imap.sample.com:imaps
@@ -223,9 +225,9 @@ openssl s_client -connect smtp.sample.com:smtps
 </p>
 </div>
 
-<div id="outline-container-org22b1f1f" class="outline-3">
-<h3 id="org22b1f1f">linux bash builtin</h3>
-<div class="outline-text-3" id="text-org22b1f1f">
+<div id="outline-container-orgd0b3f3d" class="outline-3">
+<h3 id="orgd0b3f3d">linux bash builtin</h3>
+<div class="outline-text-3" id="text-orgd0b3f3d">
 <p>
 set 设置变量
 enable 激活 bash 的内置函数
@@ -235,12 +237,12 @@ enable -n 使内置函数失效,如果有外部的同名函数,将使用
 </div>
 </div>
 
-<div id="outline-container-org3034a5a" class="outline-2">
-<h2 id="org3034a5a">2015-06-15 01:44 Mon PM</h2>
-<div class="outline-text-2" id="text-org3034a5a">
-</div><div id="outline-container-orgc1df37a" class="outline-3">
-<h3 id="orgc1df37a">启动一个服务</h3>
-<div class="outline-text-3" id="text-orgc1df37a">
+<div id="outline-container-org61312ea" class="outline-2">
+<h2 id="org61312ea">2015-06-15 01:44 Mon PM</h2>
+<div class="outline-text-2" id="text-org61312ea">
+</div><div id="outline-container-orga378b25" class="outline-3">
+<h3 id="orga378b25">启动一个服务</h3>
+<div class="outline-text-3" id="text-orga378b25">
 <p>
 start-stop-daemon --start --oknodo --user root --name whatisthename --pidfile /run/ok.pid --startas /root/a --chuid root -- --daemon
 start-stop-daemon --stop  --oknodo --user root --name whatisthename --pidfile /run/ok.pid --retry 5
@@ -249,9 +251,9 @@ man start-stop-daemon
 </div>
 </div>
 
-<div id="outline-container-orged0caf4" class="outline-3">
-<h3 id="orged0caf4">getopts</h3>
-<div class="outline-text-3" id="text-orged0caf4">
+<div id="outline-container-orgc6d5c68" class="outline-3">
+<h3 id="orgc6d5c68">getopts</h3>
+<div class="outline-text-3" id="text-orgc6d5c68">
 <p>
 getopts 后边跟需要解析的参数,以-为准, 比如
  getopts h,  如果 h 需要参数,后边加:,如果后边的参数紧跟,不能有空格,需要::,双冒号, 参数会赋给 option 变量, 参数的值会赋给 OPTARG
@@ -286,12 +288,12 @@ echo "done done"
 </div>
 </div>
 
-<div id="outline-container-orge4fabe7" class="outline-2">
-<h2 id="orge4fabe7">2015-06-18 04:46 Thu PM</h2>
-<div class="outline-text-2" id="text-orge4fabe7">
-</div><div id="outline-container-org5d11c36" class="outline-3">
-<h3 id="org5d11c36">ack</h3>
-<div class="outline-text-3" id="text-org5d11c36">
+<div id="outline-container-org12176f5" class="outline-2">
+<h2 id="org12176f5">2015-06-18 04:46 Thu PM</h2>
+<div class="outline-text-2" id="text-org12176f5">
+</div><div id="outline-container-org6382fa6" class="outline-3">
+<h3 id="org6382fa6">ack</h3>
+<div class="outline-text-3" id="text-org6382fa6">
 <p>
 ack -l --print0 foo | xargs -r0 rm --
 </p>
@@ -299,12 +301,12 @@ ack -l --print0 foo | xargs -r0 rm --
 </div>
 </div>
 
-<div id="outline-container-org59234a9" class="outline-2">
-<h2 id="org59234a9">2015-06-19 02:58 Fri PM</h2>
-<div class="outline-text-2" id="text-org59234a9">
-</div><div id="outline-container-org73f03b0" class="outline-3">
-<h3 id="org73f03b0">四层 七层 负载均衡</h3>
-<div class="outline-text-3" id="text-org73f03b0">
+<div id="outline-container-org5812b57" class="outline-2">
+<h2 id="org5812b57">2015-06-19 02:58 Fri PM</h2>
+<div class="outline-text-2" id="text-org5812b57">
+</div><div id="outline-container-org814f5bb" class="outline-3">
+<h3 id="org814f5bb">四层 七层 负载均衡</h3>
+<div class="outline-text-3" id="text-org814f5bb">
 <p>
 四层的负载均衡,直接转发请求到后端服务器,相当于是路由器.
 七层的会自己和客户端建立连接,然后发给后端, 相当于是个代理, 更加智能化,一定程度上防 DDOS
@@ -312,18 +314,18 @@ ack -l --print0 foo | xargs -r0 rm --
 </div>
 </div>
 
-<div id="outline-container-orga614638" class="outline-3">
-<h3 id="orga614638">sshd_config</h3>
-<div class="outline-text-3" id="text-orga614638">
+<div id="outline-container-org557b35d" class="outline-3">
+<h3 id="org557b35d">sshd_config</h3>
+<div class="outline-text-3" id="text-org557b35d">
 <p>
 useDNS no 可以禁止反向解析 ip, 导致的缓慢
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1420ebc" class="outline-3">
-<h3 id="org1420ebc">just mark</h3>
-<div class="outline-text-3" id="text-org1420ebc">
+<div id="outline-container-orgcbb5351" class="outline-3">
+<h3 id="orgcbb5351">just mark</h3>
+<div class="outline-text-3" id="text-orgcbb5351">
 <p class="verse">
 sbin/iptables -t nat -A POSTROUTING -o tun0  -j MASQUERADE
 端口转发:
@@ -341,12 +343,12 @@ DNAT，就是指数据包从网卡发送出去的时候，修改数据包中的�
 </div>
 </div>
 
-<div id="outline-container-org6183bce" class="outline-2">
-<h2 id="org6183bce">2015-06-23 03:12 Tue PM</h2>
-<div class="outline-text-2" id="text-org6183bce">
-</div><div id="outline-container-org2ac8fbc" class="outline-3">
-<h3 id="org2ac8fbc">access and trunk</h3>
-<div class="outline-text-3" id="text-org2ac8fbc">
+<div id="outline-container-org603da63" class="outline-2">
+<h2 id="org603da63">2015-06-23 03:12 Tue PM</h2>
+<div class="outline-text-2" id="text-org603da63">
+</div><div id="outline-container-org445940a" class="outline-3">
+<h3 id="org445940a">access and trunk</h3>
+<div class="outline-text-3" id="text-org445940a">
 <p>
 以太网端口有 3种链路类型:access、trunk、hybird
 Access类型端口只能属于1个VLAN 般用于连接计算机 端口；
@@ -367,39 +369,39 @@ Hybrid端口和Trunk端口在接收数据时处理思路方法是一样的，唯
 </div>
 </div>
 
-<div id="outline-container-orgdbcb7dc" class="outline-2">
-<h2 id="orgdbcb7dc">2015-06-24 12:10 Wed PM</h2>
-<div class="outline-text-2" id="text-orgdbcb7dc">
-</div><div id="outline-container-org321419b" class="outline-3">
-<h3 id="org321419b">networksetup</h3>
-<div class="outline-text-3" id="text-org321419b">
+<div id="outline-container-org6c68f70" class="outline-2">
+<h2 id="org6c68f70">2015-06-24 12:10 Wed PM</h2>
+<div class="outline-text-2" id="text-org6c68f70">
+</div><div id="outline-container-org47b0f42" class="outline-3">
+<h3 id="org47b0f42">networksetup</h3>
+<div class="outline-text-3" id="text-org47b0f42">
 <p>
 mac的 networksetup 可以设置所有网络配置
 </p>
 </div>
 </div>
 
-<div id="outline-container-org94b5ce1" class="outline-3">
-<h3 id="org94b5ce1">vpn</h3>
-<div class="outline-text-3" id="text-org94b5ce1">
+<div id="outline-container-org8d7ad58" class="outline-3">
+<h3 id="org8d7ad58">vpn</h3>
+<div class="outline-text-3" id="text-org8d7ad58">
 <p>
 TAP 等同于一个以太网设备，它操作第二层数据包如以太网数据帧。TUN模拟了网络层设备，操作第三层数据包比如IP数据封包.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org46c3aa1" class="outline-3">
-<h3 id="org46c3aa1">dhcping 可以查看这个是否为 dhcp</h3>
-<div class="outline-text-3" id="text-org46c3aa1">
+<div id="outline-container-orgabf170c" class="outline-3">
+<h3 id="orgabf170c">dhcping 可以查看这个是否为 dhcp</h3>
+<div class="outline-text-3" id="text-orgabf170c">
 <p>
 dhcping -s 192.168.82.13 -r -v
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7c7b6d7" class="outline-3">
-<h3 id="org7c7b6d7">route</h3>
-<div class="outline-text-3" id="text-org7c7b6d7">
+<div id="outline-container-org57f284a" class="outline-3">
+<h3 id="org57f284a">route</h3>
+<div class="outline-text-3" id="text-org57f284a">
 <p>
 192.168.80.0/22 dev eth0  proto kernel  scope link  src 192.168.81.191
 </p>
@@ -428,9 +430,9 @@ ra - the route was installed by Router Discovery protocol.
 </div>
 </div>
 
-<div id="outline-container-org42156f7" class="outline-3">
-<h3 id="org42156f7">arp</h3>
-<div class="outline-text-3" id="text-org42156f7">
+<div id="outline-container-org8bd94e7" class="outline-3">
+<h3 id="org8bd94e7">arp</h3>
+<div class="outline-text-3" id="text-org8bd94e7">
 <p>
 arp -a -n
 </p>
@@ -438,20 +440,20 @@ arp -a -n
 </div>
 </div>
 
-<div id="outline-container-orge118581" class="outline-2">
-<h2 id="orge118581">2015-06-29 04:24 Mon PM</h2>
-<div class="outline-text-2" id="text-orge118581">
-</div><div id="outline-container-org1abd388" class="outline-3">
-<h3 id="org1abd388">kvm</h3>
-<div class="outline-text-3" id="text-org1abd388">
+<div id="outline-container-orgc0ef1d0" class="outline-2">
+<h2 id="orgc0ef1d0">2015-06-29 04:24 Mon PM</h2>
+<div class="outline-text-2" id="text-orgc0ef1d0">
+</div><div id="outline-container-org25b11a4" class="outline-3">
+<h3 id="org25b11a4">kvm</h3>
+<div class="outline-text-3" id="text-org25b11a4">
 <p>
 通过 virsh 可以管理 kvm .
 </p>
 </div>
 </div>
-<div id="outline-container-orgb8a27fa" class="outline-3">
-<h3 id="orgb8a27fa">安装一个 kvm</h3>
-<div class="outline-text-3" id="text-orgb8a27fa">
+<div id="outline-container-org9a8a00c" class="outline-3">
+<h3 id="org9a8a00c">安装一个 kvm</h3>
+<div class="outline-text-3" id="text-org9a8a00c">
 <p>
  首先创建一个 img, truncate --size=20000M /var/lib/libvirt/images/test.img ,  这样创建好了一个 img.
 第一种方法: 可以通过 virt-install ,命令来自 virt-inst 包.
@@ -468,9 +470,9 @@ virt-install --virt-type kvm --name ubuntu --ram 1024 \
 </div>
 </div>
 
-<div id="outline-container-org70f61f5" class="outline-3">
-<h3 id="org70f61f5">vnc 闪退</h3>
-<div class="outline-text-3" id="text-org70f61f5">
+<div id="outline-container-org90b84b3" class="outline-3">
+<h3 id="org90b84b3">vnc 闪退</h3>
+<div class="outline-text-3" id="text-org90b84b3">
 <p>
 把高级里边的 ColorLevel 从 pal8 改成 rgb222 或者 full.
 </p>
@@ -478,21 +480,21 @@ virt-install --virt-type kvm --name ubuntu --ram 1024 \
 </div>
 </div>
 
-<div id="outline-container-org21963dd" class="outline-2">
-<h2 id="org21963dd">2015-06-30 11:02 Tue AM</h2>
-<div class="outline-text-2" id="text-org21963dd">
-</div><div id="outline-container-org02db788" class="outline-3">
-<h3 id="org02db788">改变 debian 的默认编辑器</h3>
-<div class="outline-text-3" id="text-org02db788">
+<div id="outline-container-org43b03d9" class="outline-2">
+<h2 id="org43b03d9">2015-06-30 11:02 Tue AM</h2>
+<div class="outline-text-2" id="text-org43b03d9">
+</div><div id="outline-container-orgf4a77b1" class="outline-3">
+<h3 id="orgf4a77b1">改变 debian 的默认编辑器</h3>
+<div class="outline-text-3" id="text-orgf4a77b1">
 <p>
 update-alternatives --config editor
 </p>
 </div>
 </div>
 
-<div id="outline-container-org98d9d69" class="outline-3">
-<h3 id="org98d9d69">修改用户密码, mysql</h3>
-<div class="outline-text-3" id="text-org98d9d69">
+<div id="outline-container-orgd49d7f5" class="outline-3">
+<h3 id="orgd49d7f5">修改用户密码, mysql</h3>
+<div class="outline-text-3" id="text-orgd49d7f5">
 <p>
 mysql&gt; update mysql.user set password=PASSWORD(‘新密码’) where User=’root’;
 mysql&gt; flush privileges;
@@ -501,9 +503,9 @@ mysql&gt; quit
 </div>
 </div>
 
-<div id="outline-container-orge778d73" class="outline-3">
-<h3 id="orge778d73">网桥工具</h3>
-<div class="outline-text-3" id="text-orge778d73">
+<div id="outline-container-org48e01a6" class="outline-3">
+<h3 id="org48e01a6">网桥工具</h3>
+<div class="outline-text-3" id="text-org48e01a6">
 <p>
 <a href="http://tianhao936.blog.51cto.com/1043670/1343767">http://tianhao936.blog.51cto.com/1043670/1343767</a>
  apt-get install bridge-utils
@@ -528,9 +530,9 @@ net.bridge.bridge-nf-call-arptables = 0
 </div>
 </div>
 
-<div id="outline-container-org9a513f4" class="outline-3">
-<h3 id="org9a513f4">sql</h3>
-<div class="outline-text-3" id="text-org9a513f4">
+<div id="outline-container-org1e56a80" class="outline-3">
+<h3 id="org1e56a80">sql</h3>
+<div class="outline-text-3" id="text-org1e56a80">
 <p>
 id, orderid, name, period, city, area, tel, type, addr, payed, sent, completed
 create table orders (

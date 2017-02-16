@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>Diary 2015-5 - org-page</title>
+  <title>Diary 2015-5 - L</title>
   <meta charset="utf-8" />
   <meta name="author" content="latpaw" />
   <meta name="description" content="&lt;TODO: insert your description here&gt;" />
@@ -24,11 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">org-page</a>
+            <a class="navbar-brand" href="/">L</a>
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="/blog/">Blog</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/tags/">Tags</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,15 +43,15 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Diary 2015-5</h1>
-            <div id="outline-container-org370e7c6" class="outline-2">
-<h2 id="org370e7c6">diary 2015 05</h2>
-<div class="outline-text-2" id="text-org370e7c6">
-</div><div id="outline-container-orgf309ac1" class="outline-3">
-<h3 id="orgf309ac1">2015-05-18</h3>
-<div class="outline-text-3" id="text-orgf309ac1">
-</div><div id="outline-container-org5d007a7" class="outline-4">
-<h4 id="org5d007a7">mysql 替换成 percona mysql</h4>
-<div class="outline-text-4" id="text-org5d007a7">
+            <div id="outline-container-org558ae2a" class="outline-2">
+<h2 id="org558ae2a">diary 2015 05</h2>
+<div class="outline-text-2" id="text-org558ae2a">
+</div><div id="outline-container-org11c1a63" class="outline-3">
+<h3 id="org11c1a63">2015-05-18</h3>
+<div class="outline-text-3" id="text-org11c1a63">
+</div><div id="outline-container-orge6c8aa0" class="outline-4">
+<h4 id="orge6c8aa0">mysql 替换成 percona mysql</h4>
+<div class="outline-text-4" id="text-orge6c8aa0">
 <p>
 需要先删除旧版的 oracle mysql
 apt-get remove mysql-server mysql-common mysql-client
@@ -72,9 +74,9 @@ apt-get install percona-server-server-5.6 percona-server-common percona-server-c
 </p>
 </div>
 </div>
-<div id="outline-container-org010a4ef" class="outline-4">
-<h4 id="org010a4ef">apt-cacher-ng</h4>
-<div class="outline-text-4" id="text-org010a4ef">
+<div id="outline-container-org98b65b2" class="outline-4">
+<h4 id="org98b65b2">apt-cacher-ng</h4>
+<div class="outline-text-4" id="text-org98b65b2">
 <p>
 apt-cacher 分为服务端和客户端, 服务端配置:
 /etc/apt-cacher-ng/acng.conf
@@ -92,12 +94,12 @@ deb <a href="http://x.x.x.x:3142/web-domain/">http://x.x.x.x:3142/web-domain/</a
 </div>
 </div>
 
-<div id="outline-container-orga68be75" class="outline-3">
-<h3 id="orga68be75">2015-05-19</h3>
-<div class="outline-text-3" id="text-orga68be75">
-</div><div id="outline-container-orgfc44747" class="outline-4">
-<h4 id="orgfc44747">如果出现W: There is no public key available for the following key IDs: 4D270D06F42584E6 类似的情况</h4>
-<div class="outline-text-4" id="text-orgfc44747">
+<div id="outline-container-orgcede098" class="outline-3">
+<h3 id="orgcede098">2015-05-19</h3>
+<div class="outline-text-3" id="text-orgcede098">
+</div><div id="outline-container-org14d6add" class="outline-4">
+<h4 id="org14d6add">如果出现W: There is no public key available for the following key IDs: 4D270D06F42584E6 类似的情况</h4>
+<div class="outline-text-4" id="text-org14d6add">
 <p>
 解决办法:
 apt-get install debian-keyring debian-archive-keyring
@@ -105,9 +107,9 @@ apt-key update
 </p>
 </div>
 </div>
-<div id="outline-container-orgd520a80" class="outline-4">
-<h4 id="orgd520a80">sudo: unable to resolve host</h4>
-<div class="outline-text-4" id="text-orgd520a80">
+<div id="outline-container-org72711b2" class="outline-4">
+<h4 id="org72711b2">sudo: unable to resolve host</h4>
+<div class="outline-text-4" id="text-org72711b2">
 <p>
 问题在于安装服务器的时候的主机名被改动
 解决办法:
@@ -115,9 +117,9 @@ apt-key update
 </p>
 </div>
 </div>
-<div id="outline-container-orgd905098" class="outline-4">
-<h4 id="orgd905098">设置静态 ip</h4>
-<div class="outline-text-4" id="text-orgd905098">
+<div id="outline-container-org391836c" class="outline-4">
+<h4 id="org391836c">设置静态 ip</h4>
+<div class="outline-text-4" id="text-org391836c">
 <p>
 debian: /etc/networks/interfaces
 iface eth0 inet static
@@ -133,9 +135,9 @@ NETMASK=x.x.x.x
 </p>
 </div>
 </div>
-<div id="outline-container-org6c4c9ce" class="outline-4">
-<h4 id="org6c4c9ce">debian phpize</h4>
-<div class="outline-text-4" id="text-org6c4c9ce">
+<div id="outline-container-orgb87aca1" class="outline-4">
+<h4 id="orgb87aca1">debian phpize</h4>
+<div class="outline-text-4" id="text-orgb87aca1">
 <p>
 apt-get install php5-dev
 </p>
@@ -143,18 +145,18 @@ apt-get install php5-dev
 </div>
 </div>
 
-<div id="outline-container-org0930d32" class="outline-3">
-<h3 id="org0930d32">2015-05-20</h3>
-<div class="outline-text-3" id="text-org0930d32">
-</div><div id="outline-container-org22ccdfd" class="outline-4">
-<h4 id="org22ccdfd">csapp 深入理解计算机系统</h4>
+<div id="outline-container-orgda0e1cf" class="outline-3">
+<h3 id="orgda0e1cf">2015-05-20</h3>
+<div class="outline-text-3" id="text-orgda0e1cf">
+</div><div id="outline-container-org1ef3a4a" class="outline-4">
+<h4 id="org1ef3a4a">csapp 深入理解计算机系统</h4>
 </div>
-<div id="outline-container-orgf51fa9f" class="outline-4">
-<h4 id="orgf51fa9f">尾递归优化,计算机用迭代的形式解释递归</h4>
+<div id="outline-container-org9fddfdc" class="outline-4">
+<h4 id="org9fddfdc">尾递归优化,计算机用迭代的形式解释递归</h4>
 </div>
-<div id="outline-container-org73437f0" class="outline-4">
-<h4 id="org73437f0">&lt;suffix&gt; invalid DN 21 openldap</h4>
-<div class="outline-text-4" id="text-org73437f0">
+<div id="outline-container-org7871e14" class="outline-4">
+<h4 id="org7871e14">&lt;suffix&gt; invalid DN 21 openldap</h4>
+<div class="outline-text-4" id="text-org7871e14">
 <p>
 需要在配置文件中添加 core cosine inetorgperson nis.schema
 slaptest -f slapd.conf -v 生成配置文件
@@ -163,21 +165,21 @@ slaptest -f slapd.conf -v 生成配置文件
 </div>
 </div>
 
-<div id="outline-container-orgc46333b" class="outline-3">
-<h3 id="orgc46333b">2015-05-21</h3>
-<div class="outline-text-3" id="text-orgc46333b">
-</div><div id="outline-container-orgb458adf" class="outline-4">
-<h4 id="orgb458adf">too many connections failed ssh</h4>
-<div class="outline-text-4" id="text-orgb458adf">
+<div id="outline-container-org372e6a8" class="outline-3">
+<h3 id="org372e6a8">2015-05-21</h3>
+<div class="outline-text-3" id="text-org372e6a8">
+</div><div id="outline-container-orgee04910" class="outline-4">
+<h4 id="orgee04910">too many connections failed ssh</h4>
+<div class="outline-text-4" id="text-orgee04910">
 <p>
 just add MaxAuthTries=100 to the sshd_config
 </p>
 </div>
 </div>
 
-<div id="outline-container-org752eb5a" class="outline-4">
-<h4 id="org752eb5a">debian ldap server</h4>
-<div class="outline-text-4" id="text-org752eb5a">
+<div id="outline-container-org68d0bfc" class="outline-4">
+<h4 id="org68d0bfc">debian ldap server</h4>
+<div class="outline-text-4" id="text-org68d0bfc">
 <p>
 ldap 可以通过网络获取账号密码 sudo 权限等
 apt-get install python-dev python-pip libmysqlclient-dev libldap2-dev(lber.h)
@@ -198,9 +200,9 @@ sudo cp /usr/share/doc/sudo-ldap/schema.OpenLDAP /etc/ldap/schema/sudo.schema
 </div>
 
 
-<div id="outline-container-org5f778a4" class="outline-5">
-<h5 id="org5f778a4">安装 client</h5>
-<div class="outline-text-5" id="text-org5f778a4">
+<div id="outline-container-org0ca50cd" class="outline-5">
+<h5 id="org0ca50cd">安装 client</h5>
+<div class="outline-text-5" id="text-org0ca50cd">
 <p>
 apt-get install libnss-ldap libpam-ldap sudo-ldap
 </p>
@@ -217,9 +219,9 @@ apt-get install libnss-ldap libpam-ldap sudo-ldap
 </div>
 </div>
 
-<div id="outline-container-orgd5b0093" class="outline-5">
-<h5 id="orgd5b0093">nsswitch.conf  添加</h5>
-<div class="outline-text-5" id="text-orgd5b0093">
+<div id="outline-container-org5c3c96a" class="outline-5">
+<h5 id="org5c3c96a">nsswitch.conf  添加</h5>
+<div class="outline-text-5" id="text-org5c3c96a">
 <p>
 passwd: compat ldap
 group: compat ldap
@@ -229,18 +231,18 @@ netgroup: ldap
 </div>
 </div>
 
-<div id="outline-container-orgd32a60f" class="outline-5">
-<h5 id="orgd32a60f">/etc/pam.d/common-session</h5>
-<div class="outline-text-5" id="text-orgd32a60f">
+<div id="outline-container-org8ef47cf" class="outline-5">
+<h5 id="org8ef47cf">/etc/pam.d/common-session</h5>
+<div class="outline-text-5" id="text-org8ef47cf">
 <p>
 session optional pam_mkhomedir.so skel=/etc/skel umask=022
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgf935601" class="outline-5">
-<h5 id="orgf935601">/etc/pam.d/common-password ( remove 'use_authtok' )</h5>
-<div class="outline-text-5" id="text-orgf935601">
+<div id="outline-container-org3ccdcf7" class="outline-5">
+<h5 id="org3ccdcf7">/etc/pam.d/common-password ( remove 'use_authtok' )</h5>
+<div class="outline-text-5" id="text-org3ccdcf7">
 <p>
 password     [success=1 user_unknown=ignore default=die]     pam_ldap.so try_first_pass
 </p>
@@ -248,9 +250,9 @@ password     [success=1 user_unknown=ignore default=die]     pam_ldap.so try_fir
 </div>
 
 
-<div id="outline-container-org06e61ea" class="outline-5">
-<h5 id="org06e61ea">sudo 支持</h5>
-<div class="outline-text-5" id="text-org06e61ea">
+<div id="outline-container-org6195dce" class="outline-5">
+<h5 id="org6195dce">sudo 支持</h5>
+<div class="outline-text-5" id="text-org6195dce">
 <p>
 sudo -V 查看 sudo 是否支持 ldap, 需要--with-ldap, 如果支持, 查看 ldap 的配置文件
 一般是 /etc/sudo-ldap.conf /etc/ldap.secret
@@ -258,9 +260,9 @@ sudo -V 查看 sudo 是否支持 ldap, 需要--with-ldap, 如果支持, 查看 l
 </div>
 </div>
 
-<div id="outline-container-orgde4ea61" class="outline-5">
-<h5 id="orgde4ea61">sudo-ldap.conf, 一般为 ldap.conf连接</h5>
-<div class="outline-text-5" id="text-orgde4ea61">
+<div id="outline-container-org9c836f3" class="outline-5">
+<h5 id="org9c836f3">sudo-ldap.conf, 一般为 ldap.conf连接</h5>
+<div class="outline-text-5" id="text-org9c836f3">
 <p>
 URI ldap://192.168.81.191
 BASE dc=jumpserver,dc=org
@@ -269,9 +271,9 @@ Sudoers_base ou=Sudoers,dc=jumpserver,dc=org
 </div>
 </div>
 
-<div id="outline-container-org55b9e84" class="outline-5">
-<h5 id="org55b9e84">ldap.secret</h5>
-<div class="outline-text-5" id="text-org55b9e84">
+<div id="outline-container-orgaa82a6f" class="outline-5">
+<h5 id="orgaa82a6f">ldap.secret</h5>
+<div class="outline-text-5" id="text-orgaa82a6f">
 <p>
 为密码
 </p>
@@ -280,17 +282,17 @@ Sudoers_base ou=Sudoers,dc=jumpserver,dc=org
 </div>
 
 
-<div id="outline-container-orgcbf1a10" class="outline-4">
-<h4 id="orgcbf1a10">2015-05-25 apache 加密</h4>
-<div class="outline-text-4" id="text-orgcbf1a10">
+<div id="outline-container-orgd4580b3" class="outline-4">
+<h4 id="orgd4580b3">2015-05-25 apache 加密</h4>
+<div class="outline-text-4" id="text-orgd4580b3">
 <p>
 htpasswd -nbs username password
 </p>
 </div>
 
-<div id="outline-container-orgf5a8c3e" class="outline-5">
-<h5 id="orgf5a8c3e">linux 添加用户默认 shell 设置</h5>
-<div class="outline-text-5" id="text-orgf5a8c3e">
+<div id="outline-container-org6144b50" class="outline-5">
+<h5 id="org6144b50">linux 添加用户默认 shell 设置</h5>
+<div class="outline-text-5" id="text-org6144b50">
 <p>
 /etc/default/useradd 中, 可以设置默认的 shell, 默认的 skel,home 目录等.
 </p>
@@ -298,12 +300,12 @@ htpasswd -nbs username password
 </div>
 </div>
 
-<div id="outline-container-org8d43499" class="outline-4">
-<h4 id="org8d43499">2015-05-26</h4>
-<div class="outline-text-4" id="text-org8d43499">
-</div><div id="outline-container-org8d4b62e" class="outline-5">
-<h5 id="org8d4b62e">haproxy 添加 ip 限制</h5>
-<div class="outline-text-5" id="text-org8d4b62e">
+<div id="outline-container-orga3730a7" class="outline-4">
+<h4 id="orga3730a7">2015-05-26</h4>
+<div class="outline-text-4" id="text-orga3730a7">
+</div><div id="outline-container-org7f31c69" class="outline-5">
+<h5 id="org7f31c69">haproxy 添加 ip 限制</h5>
+<div class="outline-text-5" id="text-org7f31c69">
 <p>
 默认情况下, haproxy 会转发 请求到 nginx,首先要在 haproxy 上添加配置:
 --  option forwardfor
@@ -318,9 +320,9 @@ htpasswd -nbs username password
 </div>
 </div>
 
-<div id="outline-container-orgbee2d2a" class="outline-5">
-<h5 id="orgbee2d2a">刷新 dns 缓存</h5>
-<div class="outline-text-5" id="text-orgbee2d2a">
+<div id="outline-container-orgc048fa4" class="outline-5">
+<h5 id="orgc048fa4">刷新 dns 缓存</h5>
+<div class="outline-text-5" id="text-orgc048fa4">
 <p>
 windows: ipconfig /flushdns
 linux: service nscd restart
@@ -330,9 +332,9 @@ mac: type dscacheutil -flushcache
 </div>
 </div>
 
-<div id="outline-container-org23591c7" class="outline-5">
-<h5 id="org23591c7">inittab</h5>
-<div class="outline-text-5" id="text-org23591c7">
+<div id="outline-container-org72e65be" class="outline-5">
+<h5 id="org72e65be">inittab</h5>
+<div class="outline-text-5" id="text-org72e65be">
 <p>
 id : runlevel : action : process
 </p>

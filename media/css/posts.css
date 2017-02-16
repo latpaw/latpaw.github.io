@@ -98,3 +98,7 @@ img {
 hr {
     color: LightGrey;
 }
+
+#content {
+    margin-top: 70px;
+}

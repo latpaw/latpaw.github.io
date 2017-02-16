@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>Scala - org-page</title>
+  <title>Scala - L</title>
   <meta charset="utf-8" />
   <meta name="author" content="latpaw" />
   <meta name="description" content="&lt;TODO: insert your description here&gt;" />
@@ -24,11 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">org-page</a>
+            <a class="navbar-brand" href="/">L</a>
         </div>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="/blog/">Blog</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/tags/">Tags</a></li>
           <li><a href="https://github.com/latpaw">GitHub</a></li>
         </ul>
 </div>
@@ -41,12 +43,12 @@
     <div id="outline-container-sec-" class="row" style="padding-top: 70px">
         <div class="col-md-2"></div>
             <h1>Scala</h1>
-            <div id="outline-container-org1ce6937" class="outline-2">
-<h2 id="org1ce6937">Scala</h2>
-<div class="outline-text-2" id="text-org1ce6937">
-</div><div id="outline-container-orgcba5ac6" class="outline-3">
-<h3 id="orgcba5ac6">Actor sender</h3>
-<div class="outline-text-3" id="text-orgcba5ac6">
+            <div id="outline-container-orgea7355b" class="outline-2">
+<h2 id="orgea7355b">Scala</h2>
+<div class="outline-text-2" id="text-orgea7355b">
+</div><div id="outline-container-org3ef3f1e" class="outline-3">
+<h3 id="org3ef3f1e">Actor sender</h3>
+<div class="outline-text-3" id="text-org3ef3f1e">
 <div class="org-src-container">
 <pre class="src src-scala">package hello.latpaw.shapes
 
@@ -81,28 +83,28 @@ sender.!( Response("asd") )
 </div>
 </div>
 </div>
-<div id="outline-container-org94a68d5" class="outline-3">
-<h3 id="org94a68d5">case</h3>
-<div class="outline-text-3" id="text-org94a68d5">
+<div id="outline-container-org4ef5ceb" class="outline-3">
+<h3 id="org4ef5ceb">case</h3>
+<div class="outline-text-3" id="text-org4ef5ceb">
 <p>
 case 会创建 object，class，等伴函数
 </p>
 </div>
 </div>
-<div id="outline-container-orgc86ed09" class="outline-3">
-<h3 id="orgc86ed09">object 相当于单例类，和module的结合体</h3>
+<div id="outline-container-org59d3e3e" class="outline-3">
+<h3 id="org59d3e3e">object 相当于单例类，和module的结合体</h3>
 </div>
-<div id="outline-container-org4111f1d" class="outline-3">
-<h3 id="org4111f1d">偏函数</h3>
-<div class="outline-text-3" id="text-org4111f1d">
+<div id="outline-container-org41f7c06" class="outline-3">
+<h3 id="org41f7c06">偏函数</h3>
+<div class="outline-text-3" id="text-org41f7c06">
 <p>
 偏函数是指输入一个参数，返回固定的类型或者其他类型，一般来说是空值，比如 x/y，当y为0的时候不能正常返回
 </p>
 </div>
 </div>
-<div id="outline-container-org73f3976" class="outline-3">
-<h3 id="org73f3976">range</h3>
-<div class="outline-text-3" id="text-org73f3976">
+<div id="outline-container-orge9fb5a3" class="outline-3">
+<h3 id="orge9fb5a3">range</h3>
+<div class="outline-text-3" id="text-orge9fb5a3">
 <div class="org-src-container">
 <pre class="src src-scala">1 to 10 // include 10
 1 until 10 // not include 10
@@ -114,57 +116,57 @@ BigInt(8) to BigInt(100) by 9
 </div>
 </div>
 </div>
-<div id="outline-container-org0fed74d" class="outline-3">
-<h3 id="org0fed74d">apply</h3>
-<div class="outline-text-3" id="text-org0fed74d">
+<div id="outline-container-orgb359151" class="outline-3">
+<h3 id="orgb359151">apply</h3>
+<div class="outline-text-3" id="text-orgb359151">
 <p>
 apply()语法糖，让你调用一个对象时就像你在调用一个函数。
 </p>
 </div>
 </div>
-<div id="outline-container-orga6bf6ca" class="outline-3">
-<h3 id="orga6bf6ca">function1 function2 .. function22</h3>
-<div class="outline-text-3" id="text-orga6bf6ca">
+<div id="outline-container-orgb52570d" class="outline-3">
+<h3 id="orgb52570d">function1 function2 .. function22</h3>
+<div class="outline-text-3" id="text-orgb52570d">
 <p>
 分别带1-22个参数的trait
 The only distinction between Function1 and PartialFunction is that the latter can specify inputs which it will not handle.
 </p>
 </div>
-<div id="outline-container-org057cf16" class="outline-4">
-<h4 id="org057cf16">必须实现 apply 函数</h4>
+<div id="outline-container-orga1b5abf" class="outline-4">
+<h4 id="orga1b5abf">必须实现 apply 函数</h4>
 </div>
-<div id="outline-container-org3d86e61" class="outline-4">
-<h4 id="org3d86e61">function1 有apply， andThen: g(f(x))，compose: f(g(x))，toString 方法</h4>
+<div id="outline-container-orgaf8e4ec" class="outline-4">
+<h4 id="orgaf8e4ec">function1 有apply， andThen: g(f(x))，compose: f(g(x))，toString 方法</h4>
 </div>
-<div id="outline-container-orge374040" class="outline-4">
-<h4 id="orge374040">function2-22 有apply，curried，tupled， toString方法</h4>
-<div class="outline-text-4" id="text-orge374040">
+<div id="outline-container-orga1c7816" class="outline-4">
+<h4 id="orga1c7816">function2-22 有apply，curried，tupled， toString方法</h4>
+<div class="outline-text-4" id="text-orga1c7816">
 <p>
 <a href="http://blog.csdn.net/bdmh/article/details/50216589">http://blog.csdn.net/bdmh/article/details/50216589</a>
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org32413cf" class="outline-3">
-<h3 id="org32413cf">数据类型</h3>
-<div class="outline-text-3" id="text-org32413cf">
-</div><div id="outline-container-org25f5b95" class="outline-4">
-<h4 id="org25f5b95">List</h4>
+<div id="outline-container-orgb4c5bc9" class="outline-3">
+<h3 id="orgb4c5bc9">数据类型</h3>
+<div class="outline-text-3" id="text-orgb4c5bc9">
+</div><div id="outline-container-orgb7760c4" class="outline-4">
+<h4 id="orgb7760c4">List</h4>
 </div>
-<div id="outline-container-orgd808c21" class="outline-4">
-<h4 id="orgd808c21">Set</h4>
+<div id="outline-container-orgdbb84f4" class="outline-4">
+<h4 id="orgdbb84f4">Set</h4>
 </div>
-<div id="outline-container-org2d66e2a" class="outline-4">
-<h4 id="org2d66e2a">Tuple  t._1 t._2</h4>
-<div class="outline-text-4" id="text-org2d66e2a">
+<div id="outline-container-org08f896a" class="outline-4">
+<h4 id="org08f896a">Tuple  t._1 t._2</h4>
+<div class="outline-text-4" id="text-org08f896a">
 <p>
 1 -&gt; 2 创建一个元组
 </p>
 </div>
 </div>
-<div id="outline-container-org84a4a83" class="outline-4">
-<h4 id="org84a4a83">Map</h4>
-<div class="outline-text-4" id="text-org84a4a83">
+<div id="outline-container-org86f10f7" class="outline-4">
+<h4 id="org86f10f7">Map</h4>
+<div class="outline-text-4" id="text-org86f10f7">
 <p>
 Map(1-&gt;"one", 2-&gt;"two")
 val bb = Map("hello"-&gt;Map("a"-&gt;"b"))
@@ -172,17 +174,17 @@ bb.get("hello").getOrElse
 </p>
 </div>
 </div>
-<div id="outline-container-org88ec287" class="outline-4">
-<h4 id="org88ec287">Option</h4>
-<div class="outline-text-4" id="text-org88ec287">
+<div id="outline-container-org4195600" class="outline-4">
+<h4 id="org4195600">Option</h4>
+<div class="outline-text-4" id="text-org4195600">
 <p>
 是一个trait
 </p>
 </div>
 </div>
-<div id="outline-container-org8e89e8a" class="outline-4">
-<h4 id="org8e89e8a">函数组合子 functional combinator</h4>
-<div class="outline-text-4" id="text-org8e89e8a">
+<div id="outline-container-org7253289" class="outline-4">
+<h4 id="org7253289">函数组合子 functional combinator</h4>
+<div class="outline-text-4" id="text-org7253289">
 <p>
 map foreach filter zip partition find drop dropWhile
 foldLeft foldRight flatten flatMap
