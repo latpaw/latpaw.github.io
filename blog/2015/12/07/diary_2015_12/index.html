@@ -43,83 +43,101 @@
     <div id="outline-container-sec-" class="row">
         <div class="col-md-2"></div>
             <h1>Diary 2015-12</h1>
-            <div id="outline-container-org25f0f5e" class="outline-2">
-<h2 id="org25f0f5e">Thu Dec  3 11:36:41 2015</h2>
-<div class="outline-text-2" id="text-org25f0f5e">
-</div><div id="outline-container-orgf142c2d" class="outline-3">
-<h3 id="orgf142c2d">mysql export csv&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mysql">mysql</span></span></h3>
-<div class="outline-text-3" id="text-orgf142c2d">
+            <div id="outline-container-orga42a267" class="outline-2">
+<h2 id="orga42a267">Thu Dec  3 11:36:41 2015</h2>
+<div class="outline-text-2" id="text-orga42a267">
+</div><div id="outline-container-org2a6a735" class="outline-3">
+<h3 id="org2a6a735">mysql export csv&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mysql">mysql</span></span></h3>
+<div class="outline-text-3" id="text-org2a6a735">
 <p>
 export: select * from test_info into outfile '/tmp/test.csv' fields terminated by ',' optionally enclosed by '"' escaped by '"' lines terminated by '\r\n';
+</p>
+
+<p>
 import: load data infile '/tmp/test.csv' into table test_info fields terminated by ','  optionally enclosed by '"' escaped by '"' lines terminated by '\r\n';
 </p>
 </div>
 </div>
-<div id="outline-container-orge082df3" class="outline-3">
-<h3 id="orge082df3">bem&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
-<div class="outline-text-3" id="text-orge082df3">
+<div id="outline-container-org0a3d2ea" class="outline-3">
+<h3 id="org0a3d2ea">bem&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
+<div class="outline-text-3" id="text-org0a3d2ea">
 <p>
 what is bem
 <a href="http://en.bem.info/">http://en.bem.info/</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org79728e6" class="outline-3">
-<h3 id="org79728e6">react&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
-<div class="outline-text-3" id="text-org79728e6">
+<div id="outline-container-org4f229b1" class="outline-3">
+<h3 id="org4f229b1">react&#xa0;&#xa0;&#xa0;<span class="tag"><span class="new">new</span></span></h3>
+<div class="outline-text-3" id="text-org4f229b1">
 <p>
 react diff
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgadf8655" class="outline-2">
-<h2 id="orgadf8655">Tue Dec 15 17:55:59 2015</h2>
-<div class="outline-text-2" id="text-orgadf8655">
-</div><div id="outline-container-orgbce5c61" class="outline-3">
-<h3 id="orgbce5c61">coreos</h3>
-<div class="outline-text-3" id="text-orgbce5c61">
-</div><div id="outline-container-org1c4b31b" class="outline-4">
-<h4 id="org1c4b31b">etcd</h4>
-<div class="outline-text-4" id="text-org1c4b31b">
+<div id="outline-container-orgd5321cf" class="outline-2">
+<h2 id="orgd5321cf">Tue Dec 15 17:55:59 2015</h2>
+<div class="outline-text-2" id="text-orgd5321cf">
+</div><div id="outline-container-orgbfd7058" class="outline-3">
+<h3 id="orgbfd7058">coreos</h3>
+<div class="outline-text-3" id="text-orgbfd7058">
+</div><div id="outline-container-orgf51e3b9" class="outline-4">
+<h4 id="orgf51e3b9">etcd</h4>
+<div class="outline-text-4" id="text-orgf51e3b9">
 <p>
 etcd作为服务，运行于coreos，每台coreos启动，指定discovery url，再启动之后会注册服务
+</p>
+
+<p>
 表示实例启动
+</p>
+
+<p>
 通过etcd的rest http，可以修改配置，在各台coreos中同步
 </p>
 </div>
 </div>
-<div id="outline-container-org7682ae4" class="outline-4">
-<h4 id="org7682ae4">fleet</h4>
-<div class="outline-text-4" id="text-org7682ae4">
+<div id="outline-container-orgc2542f2" class="outline-4">
+<h4 id="orgc2542f2">fleet</h4>
+<div class="outline-text-4" id="text-orgc2542f2">
 <p>
 fleet作为服务，类似定制版的systemd，可以新建，删除，活着管理coreos中的服务，通过etcd注册的各实例，可以把
+</p>
+
+<p>
 需要运行的服务分配到各实例中去，由etcd负责分配
 </p>
 </div>
 </div>
-<div id="outline-container-orga133d92" class="outline-4">
-<h4 id="orga133d92">confd</h4>
-<div class="outline-text-4" id="text-orga133d92">
+<div id="outline-container-orgdf73c7e" class="outline-4">
+<h4 id="orgdf73c7e">confd</h4>
+<div class="outline-text-4" id="text-orgdf73c7e">
 <p>
 confd作为独立运行的软件，需要单独安装
+</p>
+
+<p>
 安装之后，可以把etcd中添加的配置，转换为docker中运行所需的配置文件
 </p>
 </div>
 </div>
-<div id="outline-container-org2549552" class="outline-4">
-<h4 id="org2549552">flannel</h4>
-<div class="outline-text-4" id="text-org2549552">
+<div id="outline-container-org7adec6f" class="outline-4">
+<h4 id="org7adec6f">flannel</h4>
+<div class="outline-text-4" id="text-org7adec6f">
 <p>
 flannel作为内置服务，负责管理coreos中的网络，使得启动的各容器可以互通
 </p>
 </div>
 </div>
-<div id="outline-container-org45436ff" class="outline-4">
-<h4 id="org45436ff">rkt</h4>
-<div class="outline-text-4" id="text-org45436ff">
+<div id="outline-container-org6f4c9fc" class="outline-4">
+<h4 id="org6f4c9fc">rkt</h4>
+<div class="outline-text-4" id="text-org6f4c9fc">
 <p>
 to be continued
+</p>
+
+<p>
 <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-coreos-system-components">https://www.digitalocean.com/community/tutorials/an-introduction-to-coreos-system-components</a>
 </p>
 </div>

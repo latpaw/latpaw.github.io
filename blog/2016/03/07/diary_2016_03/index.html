@@ -43,38 +43,36 @@
     <div id="outline-container-sec-" class="row">
         <div class="col-md-2"></div>
             <h1>Diary 2016-3</h1>
-            <div id="outline-container-org6eb6fea" class="outline-2">
-<h2 id="org6eb6fea">Tue Mar  1 14:34:37 2016</h2>
+            <div id="outline-container-org6008daa" class="outline-2">
+<h2 id="org6008daa">Tue Mar  1 14:34:37 2016</h2>
 </div>
 
-<div id="outline-container-orgfa42550" class="outline-2">
-<h2 id="orgfa42550">perl</h2>
-<div class="outline-text-2" id="text-orgfa42550">
-</div><div id="outline-container-orgce476f7" class="outline-3">
-<h3 id="orgce476f7">变量</h3>
-<div class="outline-text-3" id="text-orgce476f7">
-<p>
+<div id="outline-container-org12e2d34" class="outline-2">
+<h2 id="org12e2d34">perl</h2>
+<div class="outline-text-2" id="text-org12e2d34">
+</div><div id="outline-container-org301cf9d" class="outline-3">
+<h3 id="org301cf9d">变量</h3>
+<div class="outline-text-3" id="text-org301cf9d">
+<pre class="example">
 不同的类型有不同的变量空间，不冲突
 变量使用$, $a = 13
 数组使用@, @a = (1,2,3), 使用的时候要用 $
 关联数组使用%, %a =(key1,"value1",key2,"value2"), $b = %a{key1}
 组合字符使用 点号
-</p>
 
-<p>
 @int1 = (1,2,3,4,5)
 $#，取数组最后一个元素的index,4
 $c = @int1, 最后一个元素,5
 ($c)＝ @int1, 第一个元素,1
 $int1[0] = 3, 赋值第一个元素,3
 delete $fred{one}, 移除一个元素
-</p>
+</pre>
 </div>
 </div>
-<div id="outline-container-org29695cb" class="outline-3">
-<h3 id="org29695cb">循环</h3>
-<div class="outline-text-3" id="text-org29695cb">
-<p>
+<div id="outline-container-orgd4a1fc5" class="outline-3">
+<h3 id="orgd4a1fc5">循环</h3>
+<div class="outline-text-3" id="text-orgd4a1fc5">
+<pre class="example">
 if(xx){ }elsif(oo){ }else{ }
 while(xx){}
 do{}while(xx)
@@ -86,12 +84,12 @@ foreach $int(@int_array){ $int }
 如果省略$int,默认为$_
 last , 相当于break
 next , 相当于continue
-</p>
+</pre>
 </div>
 </div>
-<div id="outline-container-orgea308d0" class="outline-3">
-<h3 id="orgea308d0">正则</h3>
-<div class="outline-text-3" id="text-orgea308d0">
+<div id="outline-container-org6a84c48" class="outline-3">
+<h3 id="org6a84c48">正则</h3>
+<div class="outline-text-3" id="text-org6a84c48">
 <p>
 $string =~ s/:/;/g
 </p>
@@ -102,48 +100,45 @@ $string =~ s/:/;/g
 </p>
 </div>
 </div>
-<div id="outline-container-org3f0aeab" class="outline-3">
-<h3 id="org3f0aeab">函数</h3>
-<div class="outline-text-3" id="text-org3f0aeab">
-<p>
+<div id="outline-container-org07ed55c" class="outline-3">
+<h3 id="org07ed55c">函数</h3>
+<div class="outline-text-3" id="text-org07ed55c">
+<pre class="example">
 sub hello{
 }
 执行的时候使用&amp;hello(a,b)
 第一个参数为$_[0],第二个$_[1]
 参数的数组@_
-</p>
 
-<p>
 our:   定义或者声明一个全局变量，在当前的包环境下。
 my:    定义一个新的、局部范围（块或者文件）有效的变量。推荐!!!
 local: 重新定义局部范围有效的变量，主要用于屏蔽同名的全局变量。局部的全局变量调用时也会被覆盖
-</p>
+</pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orge260633" class="outline-2">
-<h2 id="orge260633">force apt-get reinstall config files</h2>
-<div class="outline-text-2" id="text-orge260633">
+<div id="outline-container-org7575fe2" class="outline-2">
+<h2 id="org7575fe2">force apt-get reinstall config files</h2>
+<div class="outline-text-2" id="text-org7575fe2">
 <p>
 apt-get -o DPkg::options::=--force-confmiss --reinstall install xxx
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc7e51cd" class="outline-2">
-<h2 id="orgc7e51cd">SPF</h2>
+<div id="outline-container-org1dccb3f" class="outline-2">
+<h2 id="org1dccb3f">SPF</h2>
 </div>
 
-<div id="outline-container-orgb4d4ccd" class="outline-2">
-<h2 id="orgb4d4ccd">rootkit</h2>
+<div id="outline-container-org084bc19" class="outline-2">
+<h2 id="org084bc19">rootkit</h2>
 </div>
-<div id="outline-container-org29f4de5" class="outline-2">
-<h2 id="org29f4de5">rkhunter</h2>
+<div id="outline-container-org789b591" class="outline-2">
+<h2 id="org789b591">rkhunter</h2>
 </div>
-<div id="outline-container-org6341405" class="outline-2">
-<h2 id="org6341405">CLI</h2>
-<div class="outline-text-2" id="text-org6341405">
+<div id="outline-container-org45e7527" class="outline-2">
+<h2 id="org45e7527">CLI</h2>
+<div class="outline-text-2" id="text-org45e7527">
 <p>
 node nesh
 php boris
@@ -152,9 +147,9 @@ ruby pry
 </p>
 </div>
 </div>
-<div id="outline-container-org3399f9e" class="outline-2">
-<h2 id="org3399f9e">Hack TOOLS</h2>
-<div class="outline-text-2" id="text-org3399f9e">
+<div id="outline-container-org2fd9b92" class="outline-2">
+<h2 id="org2fd9b92">Hack TOOLS</h2>
+<div class="outline-text-2" id="text-org2fd9b92">
 <p>
 ccat
 fdupes   find the duplicated files
@@ -165,9 +160,9 @@ hydra
 </div>
 </div>
 
-<div id="outline-container-org98d834b" class="outline-2">
-<h2 id="org98d834b">About Mails</h2>
-<div class="outline-text-2" id="text-org98d834b">
+<div id="outline-container-org288e01f" class="outline-2">
+<h2 id="org288e01f">About Mails</h2>
+<div class="outline-text-2" id="text-org288e01f">
 <p>
 dovecot  =&gt; MUA , mail user agent
 postfix =&gt; MTA, mail transfer agent

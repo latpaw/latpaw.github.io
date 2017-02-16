@@ -43,105 +43,165 @@
     <div id="outline-container-sec-" class="row">
         <div class="col-md-2"></div>
             <h1>Diary 2015-8</h1>
-            <div id="outline-container-org0162c29" class="outline-2">
-<h2 id="org0162c29">Mon Aug  3 10:39:30 2015</h2>
+            <div id="outline-container-org5790a44" class="outline-2">
+<h2 id="org5790a44">Mon Aug  3 10:39:30 2015</h2>
 </div>
-<div id="outline-container-orga202348" class="outline-2">
-<h2 id="orga202348">Tue Aug 11 09:34:12 2015</h2>
-<div class="outline-text-2" id="text-orga202348">
-</div><div id="outline-container-orga130db5" class="outline-3">
-<h3 id="orga130db5">long time no see</h3>
+<div id="outline-container-orgb93957f" class="outline-2">
+<h2 id="orgb93957f">Tue Aug 11 09:34:12 2015</h2>
+<div class="outline-text-2" id="text-orgb93957f">
+</div><div id="outline-container-org70281b1" class="outline-3">
+<h3 id="org70281b1">long time no see</h3>
 </div>
-<div id="outline-container-org870c9a9" class="outline-3">
-<h3 id="org870c9a9">mysql</h3>
-<div class="outline-text-3" id="text-org870c9a9">
+<div id="outline-container-org7987558" class="outline-3">
+<h3 id="org7987558">mysql</h3>
+<div class="outline-text-3" id="text-org7987558">
 <p>
 alter table hello rename hello2;
+</p>
+
+<p>
 alter table hello add column world char(40);
+</p>
+
+<p>
 alter table hello drop column wolrd;
+</p>
+
+<p>
 alter table hello modify world char(40);
+</p>
+
+<p>
 alter table hello change column world world2 char(50);
 </p>
 
 <p>
 show privilges\G
+</p>
+
+<p>
 show grant for userxxx;
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orga3a3b89" class="outline-2">
-<h2 id="orga3a3b89">Tue Aug 18 10:18:54 2015</h2>
-<div class="outline-text-2" id="text-orga3a3b89">
-</div><div id="outline-container-orgc78e2e9" class="outline-3">
-<h3 id="orgc78e2e9">断点续传</h3>
-<div class="outline-text-3" id="text-orgc78e2e9">
+<div id="outline-container-orgb4c4d32" class="outline-2">
+<h2 id="orgb4c4d32">Tue Aug 18 10:18:54 2015</h2>
+<div class="outline-text-2" id="text-orgb4c4d32">
+</div><div id="outline-container-org1d5e2d0" class="outline-3">
+<h3 id="org1d5e2d0">断点续传</h3>
+<div class="outline-text-3" id="text-org1d5e2d0">
 <p>
 在请求的 header 里边添加 RANGE: bytes=2000102-
+</p>
+
+<p>
 这样可以获取这个位置之后的字节.
+</p>
+
+<p>
 返回的 header 会把状态码改为206,并添加 Content-Range=bytes 200080-1092839999349/1092839999349
 </p>
 </div>
 </div>
-<div id="outline-container-org421e39e" class="outline-3">
-<h3 id="org421e39e">lsof</h3>
-<div class="outline-text-3" id="text-org421e39e">
+<div id="outline-container-orgd6a111a" class="outline-3">
+<h3 id="orgd6a111a">lsof</h3>
+<div class="outline-text-3" id="text-orgd6a111a">
 <p>
 lsof /file
+</p>
+
+<p>
 lsof -u latpaw
+</p>
+
+<p>
 lsof -c mysql
+</p>
+
+<p>
 lsof -i tcp
+</p>
+
+<p>
 lsof -i :3306
+</p>
+
+<p>
 lsof -i tcp:80
+</p>
+
+<p>
 lsof -i -stcp:listen
+</p>
+
+<p>
 lsof -i -stcp:established
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org65ec9b3" class="outline-2">
-<h2 id="org65ec9b3">Wed Aug 19 17:51:48 2015</h2>
-<div class="outline-text-2" id="text-org65ec9b3">
-</div><div id="outline-container-orgc01d419" class="outline-3">
-<h3 id="orgc01d419">riak</h3>
-<div class="outline-text-3" id="text-orgc01d419">
-</div><div id="outline-container-org9a1df73" class="outline-4">
-<h4 id="org9a1df73">erlexec: HOME not set</h4>
-<div class="outline-text-4" id="text-org9a1df73">
+<div id="outline-container-org619921c" class="outline-2">
+<h2 id="org619921c">Wed Aug 19 17:51:48 2015</h2>
+<div class="outline-text-2" id="text-org619921c">
+</div><div id="outline-container-orgef9cd05" class="outline-3">
+<h3 id="orgef9cd05">riak</h3>
+<div class="outline-text-3" id="text-orgef9cd05">
+</div><div id="outline-container-org71d853f" class="outline-4">
+<h4 id="org71d853f">erlexec: HOME not set</h4>
+<div class="outline-text-4" id="text-org71d853f">
 <p>
 在启动脚本里边 export HOME=/var/lib/riak
 </p>
 </div>
 </div>
-<div id="outline-container-org8670468" class="outline-4">
-<h4 id="org8670468">riak-admin diag 检查内容</h4>
+<div id="outline-container-org2d6c0a2" class="outline-4">
+<h4 id="org2d6c0a2">riak-admin diag 检查内容</h4>
 </div>
 </div>
-<div id="outline-container-orgdfd349c" class="outline-3">
-<h3 id="orgdfd349c">vulcand</h3>
-<div class="outline-text-3" id="text-orgdfd349c">
-</div><div id="outline-container-orgac11dc9" class="outline-4">
-<h4 id="orgac11dc9">vulcand</h4>
-<div class="outline-text-4" id="text-orgac11dc9">
+<div id="outline-container-orgc3fab99" class="outline-3">
+<h3 id="orgc3fab99">vulcand</h3>
+<div class="outline-text-3" id="text-orgc3fab99">
+</div><div id="outline-container-org003c549" class="outline-4">
+<h4 id="org003c549">vulcand</h4>
+<div class="outline-text-4" id="text-org003c549">
 <p>
 vulcand 做负载均衡,需要手动添加域名到配置中
- vulcanctl host  add --name xxx
+</p>
+
+<p>
+vulcanctl host  add --name xxx
+</p>
+
+<p>
 vulcanctl host ls
+</p>
+
+<p>
 详见 man vulcanctl
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0a3b2db" class="outline-3">
-<h3 id="org0a3b2db">git</h3>
-<div class="outline-text-3" id="text-org0a3b2db">
+<div id="outline-container-org910bfd2" class="outline-3">
+<h3 id="org910bfd2">git</h3>
+<div class="outline-text-3" id="text-org910bfd2">
 <p>
 git describe --tags // 查看当前 tag
+</p>
+
+<p>
 git tag //查看所有 tag
-git checkout xxx <i>/检出 tag
-git tag hello /</i> 添加 tag
+</p>
+
+<p>
+git checkout xxx //检出 tag
+</p>
+
+<p>
+git tag hello // 添加 tag
 </p>
 </div>
 </div>
