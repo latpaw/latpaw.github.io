@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 语音对讲机 · ESP32-S3 硬件方案</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--card2:#1d2129;--line:#2a2f3a;--text:#e6e8ec;--muted:#9aa3b2;--accent:#4f8cff;--green:#31c48d;--warn:#f5a623;--danger:#ef5b5b;--purple:#a78bfa;--mono:'SF Mono',Consolas,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:4px;height:54px;overflow-x:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:5px 11px;border-radius:8px;white-space:nowrap}
+nav a:hover{color:var(--text);background:var(--card2)}
+nav .logo{font-weight:700;color:var(--text);margin-right:10px;font-size:14px}
+header{padding:64px 0 44px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(79,140,255,.15),transparent),radial-gradient(ellipse 50% 40% at 80% 10%,rgba(167,139,250,.12),transparent)}
+.tag{display:inline-block;font-size:13px;color:var(--accent);border:1px solid rgba(79,140,255,.4);padding:3px 12px;border-radius:99px;margin-bottom:18px;background:rgba(79,140,255,.08)}
+h1{font-size:38px;line-height:1.25;margin-bottom:14px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:16px;max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:36px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat b{display:block;font-size:24px;color:var(--accent)}
+.stat span{font-size:13px;color:var(--muted)}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-size:26px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+h2 .num{font-family:var(--mono);font-size:15px;color:var(--accent);border:1px solid var(--line);background:var(--card);border-radius:10px;padding:2px 10px}
+.h2sub{color:var(--muted);font-size:14px;margin-bottom:26px}
+h3{font-size:18px;margin:26px 0 12px;color:var(--text)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.pill{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin:2px 4px 2px 0}
+.pill.b{color:var(--accent);border-color:rgba(79,140,255,.4);background:rgba(79,140,255,.08)}
+.pill.g{color:var(--green);border-color:rgba(49,196,141,.4);background:rgba(49,196,141,.08)}
+.pill.w{color:var(--warn);border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.08)}
+.pill.p{color:var(--purple);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.08)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:13px;background:var(--card2)}
+td code,code{font-family:var(--mono);font-size:13px;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--accent)}
+pre{background:#0b0d11;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:10px 0}
+pre code{background:none;border:none;color:#c9d1d9;padding:0;font-size:13px;line-height:1.6}
+ul,ol{margin:8px 0 8px 22px}
+li{margin:5px 0}
+.muted{color:var(--muted)}
+.rec{color:var(--green);font-weight:600}
+hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:14px 0}
+.fnode{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;flex:1;min-width:130px;text-align:center}
+.fnode b{display:block;font-size:14px;color:var(--text)}
+.fnode span{font-size:12px;color:var(--muted)}
+.fnode.hl{border-color:rgba(79,140,255,.5);background:rgba(79,140,255,.08)}
+.fnode.hl2{border-color:rgba(49,196,141,.5);background:rgba(49,196,141,.08)}
+.farrow{align-self:center;color:var(--muted);font-size:18px;padding:0 2px}
+.steps{counter-reset:s}
+.step{display:flex;gap:16px;margin-bottom:14px}
+.step .dot{counter-increment:s;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--accent);font-size:14px}
+.step .dot::before{content:counter(s)}
+.step .body{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.step .body b{color:var(--text)}
+.step .body p{color:var(--muted);font-size:14px;margin-top:2px}
+.note{border-left:3px solid var(--accent);background:rgba(79,140,255,.06);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14px}
+.note.warn{border-color:var(--warn);background:rgba(245,166,35,.06)}
+.note.ok{border-color:var(--green);background:rgba(49,196,141,.06)}
+footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+.kbd{font-family:var(--mono);background:var(--card2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:12px}
+.chk{display:flex;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:10px;cursor:pointer;align-items:flex-start}
+.chk:hover{border-color:#3a4150}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.chk .tk{flex:1}
+.chk .tk b{font-size:14.5px}
+.chk .tk p{font-size:13px;color:var(--muted);margin-top:3px}
+.chk .tk .do{color:var(--text)}
+.chk .tk .eff{color:var(--green)}
+.chk.done{opacity:.5}
+.chk.done .tk b{text-decoration:line-through}
+.phase{margin:30px 0 12px;font-size:19px;display:flex;align-items:center;gap:10px}
+.phase .ph{font-family:var(--mono);font-size:12px;color:var(--purple);border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.08);border-radius:8px;padding:2px 8px}
+.phase small{font-size:12px;color:var(--muted);font-weight:400}
+.progwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:8px}
+.progbar{height:10px;background:var(--card2);border-radius:99px;overflow:hidden}
+.progbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0;transition:width .3s}
+.progtxt{font-size:13px;color:var(--muted);margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.resetbtn{background:none;border:1px solid var(--line);color:var(--muted);font-size:12px;border-radius:8px;padding:3px 10px;cursor:pointer}
+.resetbtn:hover{color:var(--danger);border-color:var(--danger)}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<span class="logo">🎙️ AI 对讲机</span>
+<a href="#arch">架构</a><a href="#bom">硬件清单</a><a href="#wiring">接线</a><a href="#topo">拓扑图</a><a href="#software">软件方案</a><a href="#web">Web 配置</a><a href="#print">3D 打印</a><a href="#plan">实施计划</a><a href="#risk">风险</a>
+</div></nav>
+
+<header><div class="wrap">
+<span class="tag">一期方案 · 面包板 / 飞线验证 · 无需打板</span>
+<h1>ESP32-S3 <em>AI 语音对讲机</em><br>硬件 + 软件完整方案</h1>
+<p class="sub">按下按钮说话 → 语音上传识别 → 调用大模型 → 语音播放回答。旋钮调音量，开关控制电源，三色指示灯一眼看状态（🟢收音 / 🟡播放 / 🔴故障）；服务端部署在家里的闲置旧 Mac 上，浏览器页面配置模型 / 历史记录 / 个性化偏好。</p>
+<div class="stats">
+<div class="stat"><b>≈¥100</b><span>一期硬件总成本</span></div>
+<div class="stat"><b>8 类</b><span>核心元器件</span></div>
+<div class="stat"><b>旧 Mac</b><span>自建服务端 · ¥0/年</span></div>
+<div class="stat"><b>3~5 天</b><span>一期预计工期</span></div>
+</div>
+</div></header>
+<section id="arch"><div class="wrap">
+<h2><span class="num">01</span>系统架构</h2>
+<p class="h2sub">设备端只做「采集 + 播放 + 交互」，语音识别（ASR）、大模型（LLM）、语音合成（TTS）全部放在服务端，ESP32-S3 通过 Wi-Fi 以 Opus 音频流对接。</p>
+
+<h3>交互流程（按住说话）</h3>
+<div class="flow">
+<div class="fnode hl"><b>① 按下 PTT 按钮</b><span>GPIO 中断唤醒采集</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>② I2S 麦克风录音</b><span>INMP441 · 16kHz · 🟢绿灯亮</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>③ Opus 编码上传</b><span>WebSocket / MQTT+UDP</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl2"><b>④ 服务端处理（旧 Mac）</b><span>ASR → LLM → TTS</span></div>
+</div>
+<div class="flow">
+<div class="fnode hl2"><b>⑤ 流式返回音频</b><span>TTS 边合成边下发</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>⑥ I2S 功放播放</b><span>MAX98357A + 喇叭 · 🟡黄灯亮</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>⑦ 松开按钮结束</b><span>或 VAD 自动断句</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl"><b>⑧ 会话记录入库</b><span>Web 页面可查历史</span></div>
+</div>
+
+<h3>系统拓扑</h3>
+<div class="flow">
+<div class="fnode"><b>🔘 按钮 / 🎚 旋钮 / ⚡ 开关</b><span>GPIO + 旋转编码器</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl"><b>ESP32-S3 (Wi-Fi)</b><span>音频编解码 · 状态管理 · 内嵌 Web Server</span></div>
+<div class="farrow">⇄</div>
+<div class="fnode hl2"><b>AI 服务端（旧 Mac）</b><span>Docker 自建 xiaozhi-esp32-server<br>ASR/LLM/TTS 可配置</span></div>
+</div>
+<div class="flow">
+<div class="fnode"><b>📱 手机 / 💻 电脑浏览器</b><span>配网 · 选模型 · 查历史 · 设偏好</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl"><b>设备 Web 控制台</b><span>http://esp32.local</span></div>
+<div class="farrow">＋</div>
+<div class="fnode hl2"><b>服务端控制台</b><span>模型/记忆/角色人格</span></div>
+</div>
+<div class="note">💡 两个 Web 入口：<b>设备端页面</b>负责 Wi-Fi 配网、音量、按键行为、固件 OTA；<b>服务端页面</b>负责大模型选择、对话历史、用户偏好（记忆/人设）。自建服务端时可把两者合并为一个门户。</div>
+</div></section>
+<section id="bom"><div class="wrap">
+<h2><span class="num">02</span>硬件清单（BOM）</h2>
+<p class="h2sub">一期以面包板 + 杜邦线搭建，全部为常见模块，淘宝/立创商城易得。价格为 2026 年常见散件参考价。</p>
+
+<div class="card">
+<h3>核心必选件</h3>
+<table>
+<tr><th>器件</th><th>推荐型号</th><th>作用</th><th>参考价</th><th>备注</th></tr>
+<tr><td>主控板</td><td><b>ESP32-S3-DevKitC-1（N16R8）</b></td><td>Wi-Fi + 音频 + AI 推理入口</td><td>¥30~45</td><td class="rec">✔ 16MB Flash + 8MB PSRAM，xiaozhi 官方推荐配置；S3 双核 240MHz 跑 Opus 编解码无压力</td></tr>
+<tr><td>麦克风</td><td><b>INMP441</b>（I2S 数字麦）</td><td>拾音</td><td>¥4~8</td><td>信噪比 61dB，免 ADC；更安静环境可选 MSM261S4030H0</td></tr>
+<tr><td>功放</td><td><b>MAX98357A</b>（I2S 3W）</td><td>数字音频放大</td><td>¥5~9</td><td>免 DAC，I2S 直连，带静音脚</td></tr>
+<tr><td>喇叭</td><td>4Ω3W 或 8Ω2W 腔体喇叭（28~40mm）</td><td>放音</td><td>¥3~6</td><td>选带引线/焊片的，方便面包板夹线</td></tr>
+<tr><td>PTT 按钮</td><td>12mm 大按钮 或 街机按钮（带 LED 更佳）</td><td>按住说话</td><td>¥1~5</td><td>常开型；LED 可做状态指示</td></tr>
+<tr><td>旋钮</td><td><b>EC11 旋转编码器</b>（带按压开关）</td><td>调音量</td><td>¥2~4</td><td>无限位旋转，A/B 相 + 按钮 3 脚；按压可复用为"确认/唤醒"</td></tr>
+<tr><td>电源开关</td><td>MSK-12C02 拨动开关 或船型开关</td><td>开机/关机</td><td>¥0.5~2</td><td>串在电池正极或 USB 5V 输入</td></tr>
+<tr><td>状态指示灯</td><td><b>WS2812B RGB 灯珠</b>（1 颗）</td><td>三色状态指示</td><td>¥1~2</td><td class="rec">🟢收音 / 🟡播放 / 🔴故障，接线见 03 节；也可用 3 颗单色 LED + 330Ω 电阻替代</td></tr>
+<tr><td>面包板</td><td>830 孔</td><td>一期搭建</td><td>¥5~8</td><td>—</td></tr>
+<tr><td>杜邦线</td><td>公对公/公对母若干</td><td>飞线</td><td>¥5~10</td><td>I2S 线尽量短（&lt;15cm），减少干扰</td></tr>
+</table>
+<p class="muted">小计：<b>约 ¥57~99</b></p>
+</div>
+<div class="card">
+<h3>可选增强件（建议一并购入）</h3>
+<table>
+<tr><th>器件</th><th>型号</th><th>作用</th><th>参考价</th></tr>
+<tr><td>状态屏</td><td>SSD1306 0.96" OLED（I2C）</td><td>显示表情/状态/音量/IP，xiaozhi 原生支持</td><td>¥9~13</td></tr>
+<tr><td>充电板</td><td>TP4056（Type-C，带保护）</td><td>锂电池充电，为二期便携做准备</td><td>¥2~4</td></tr>
+<tr><td>电池</td><td>18650（3000mAh）+ 电池盒</td><td>移动供电，续航 &gt;10 小时</td><td>¥15~25</td></tr>
+<tr><td>升压板</td><td>MT3608 或直接用 TP4056+保护 输出</td><td>电池 → 5V 给开发板</td><td>¥2~3</td></tr>
+</table>
+<div class="note ok">✅ <b>为什么选 ESP32-S3 而不是 ESP32？</b> ① 支持向量指令，可跑 ESP-SR 离线唤醒词；② 原生 USB，烧录/调试免驱动板；③ PSRAM 是 Opus 音频流缓冲的硬需求（xiaozhi 明确要求 ≥8MB PSRAM 版本）；④ 生态：xiaozhi-esp32 对 S3 支持最完善。</div>
+<div class="note">💡 <b>替代方案：</b>如果想省接线功夫，可以直接买 <b>立创·实战派 ESP32-S3</b>（¥60 左右，自带麦克风+喇叭+屏+旋钮按键）或 <b>M5Stack CoreS3</b>，xiaozhi 均有现成板级支持。但自搭面包板更贴合你"跳线/焊接"的一期目标，且成本更低、扩展自由。</div>
+</div>
+</div></section>
+<section id="wiring"><div class="wrap">
+<h2><span class="num">03</span>引脚接线表</h2>
+<p class="h2sub">基于 ESP32-S3-DevKitC-1（N16R8）。已避开 Strapping 引脚（GPIO45/46）、USB（19/20）和被 Octal PSRAM 占用的 GPIO35~37。I2S 两组总线完全独立，互不干扰。</p>
+
+<div class="card">
+<h3>🎤 INMP441 麦克风（I2S 输入）</h3>
+<table>
+<tr><th>模块引脚</th><th>接 ESP32-S3</th><th>说明</th></tr>
+<tr><td>VDD</td><td>3.3V</td><td>⚠️ 切勿接 5V</td></tr>
+<tr><td>GND</td><td>GND</td><td>—</td></tr>
+<tr><td>SCK（BCLK）</td><td><code>GPIO 5</code></td><td>位时钟</td></tr>
+<tr><td>WS（LRCLK）</td><td><code>GPIO 4</code></td><td>左右声道时钟</td></tr>
+<tr><td>SD（DOUT）</td><td><code>GPIO 6</code></td><td>数据输出</td></tr>
+<tr><td>L/R</td><td>GND</td><td>接地=左声道（固件默认读左声道）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🔊 MAX98357A 功放（I2S 输出）</h3>
+<table>
+<tr><th>模块引脚</th><th>接 ESP32-S3</th><th>说明</th></tr>
+<tr><td>VIN</td><td>5V（VBUS）</td><td>接 5V 音量更大更稳</td></tr>
+<tr><td>GND</td><td>GND</td><td>与主控共地</td></tr>
+<tr><td>BCLK</td><td><code>GPIO 15</code></td><td>位时钟</td></tr>
+<tr><td>LRC</td><td><code>GPIO 16</code></td><td>声道时钟</td></tr>
+<tr><td>DIN</td><td><code>GPIO 7</code></td><td>数据输入</td></tr>
+<tr><td>GAIN</td><td>悬空</td><td>默认 9dB；嫌吵可接 GND 降到 12dB 衰减档（视模块丝印）</td></tr>
+<tr><td>SD（使能）</td><td>悬空或 3.3V</td><td>⚠️ 此 SD 是 Shutdown，不是数据脚；悬空=常开</td></tr>
+<tr><td>OUT±</td><td>喇叭两端</td><td>4Ω3W 喇叭直接接</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>🔘 PTT 按钮 + 🎚 EC11 旋钮 + 💡 指示灯</h3>
+<table>
+<tr><th>器件引脚</th><th>接 ESP32-S3</th><th>说明</th></tr>
+<tr><td>PTT 按钮一端</td><td><code>GPIO 0</code></td><td>固件内置上拉，按下=低电平触发</td></tr>
+<tr><td>PTT 按钮另一端</td><td>GND</td><td>无需外接电阻</td></tr>
+<tr><td>EC11 A 相</td><td><code>GPIO 11</code></td><td>旋转中断脚</td></tr>
+<tr><td>EC11 B 相</td><td><code>GPIO 12</code></td><td>旋转中断脚</td></tr>
+<tr><td>EC11 SW（按压）</td><td><code>GPIO 13</code></td><td>短按=开始/停止对话，长按=待机（可自定义）</td></tr>
+<tr><td>EC11 中间脚 C</td><td>GND</td><td>公共地</td></tr>
+<tr><td>WS2812 DIN</td><td><code>GPIO 17</code></td><td>三色状态灯：🟢收音 / 🟡播放 / 🔴故障（见下表）</td></tr>
+<tr><td>WS2812 VCC / GND</td><td>5V / GND</td><td>单颗灯珠功耗可忽略</td></tr>
+</table>
+<div class="note warn">⚠️ GPIO0 是 Boot Strapping 脚：<b>复位/上电瞬间不要按住 PTT 按钮</b>，否则会进入下载模式。正常使用时先开机再按，无影响。若担心误触，可改用 GPIO1 或 GPIO2 并在固件里同步修改。</div>
+</div>
+
+<div class="card">
+<h3>🚦 三色指示灯状态定义（WS2812）</h3>
+<table>
+<tr><th>灯色</th><th>状态</th><th>触发时机</th></tr>
+<tr><td>🟢 绿色（常亮）</td><td>收音中</td><td>按下 PTT 按钮、I2S 开始采集即亮；松开燄灭</td></tr>
+<tr><td>🟡 黄色（常亮）</td><td>输出中</td><td>收到服务端 TTS 音频、喇叭开始播放即亮；播完燄灭</td></tr>
+<tr><td>🔴 红色（闪烁）</td><td>故障</td><td>Wi-Fi 断开 / 服务端不可达 / API 报错 / 电量过低</td></tr>
+<tr><td>💤 燄灭或暗蓝呼吸</td><td>待机</td><td>正常联网待命</td></tr>
+</table>
+<p class="muted">实现：xiaozhi 固件板级配置自带状态灯（listening/speaking 状态可映射颜色），绿=Listening、黄=Speaking 开箱即用；红灯故障需在固件里小改几行（断网/报错时调 SetStatusLedColor 切红色）。若用 3 颗单色 LED 替代，则各占一个 GPIO，固件逻辑相同。</p>
+</div>
+
+<div class="card">
+<h3>📟 OLED 显示屏（可选，I2C）＋ ⚡ 供电</h3>
+<table>
+<tr><th>器件引脚</th><th>接 ESP32-S3</th><th>说明</th></tr>
+<tr><td>OLED VCC</td><td>3.3V</td><td>多数模块 3.3~5V 兼容</td></tr>
+<tr><td>OLED GND</td><td>GND</td><td>—</td></tr>
+<tr><td>OLED SDA</td><td><code>GPIO 41</code></td><td>I2C 数据（地址 0x3C）</td></tr>
+<tr><td>OLED SCL</td><td><code>GPIO 42</code></td><td>I2C 时钟</td></tr>
+<tr><td>电源开关</td><td>串入电池/5V 正极</td><td>物理断电，不占 GPIO；一期可先用开发板 USB 供电 + 带开关 USB 线</td></tr>
+<tr><td>电池电压检测（可选）</td><td><code>GPIO 8</code> ← 100kΩ/100kΩ 分压 ← 电池+</td><td>ADC 读电量，OLED 显示电池图标</td></tr>
+</table>
+</div>
+</div></section>
+<section id="topo"><div class="wrap">
+<h2><span class="num">04</span>硬件拓扑图</h2>
+<p class="h2sub">一期面包板飞线的完整连接关系 + 家庭网络部署。中心是 ESP32-S3，左侧输入件、右侧输出件，下方是旧 Mac 服务端与云端 API。</p>
+<div class="card">
+<svg viewBox="0 0 1020 775" style="width:100%;height:auto">
+<defs>
+<marker id="ab" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0L8,3.2L0,6.4Z" fill="#4f8cff"/></marker>
+<marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0L8,3.2L0,6.4Z" fill="#31c48d"/></marker>
+<marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0L8,3.2L0,6.4Z" fill="#ef5b5b"/></marker>
+<marker id="ap" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto"><path d="M0,0L8,3.2L0,6.4Z" fill="#a78bfa"/></marker>
+</defs>
+<rect x="20" y="70" width="190" height="58" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="115" y="94" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="600">🔘 PTT 大按钮</text>
+<text x="115" y="114" text-anchor="middle" fill="#9aa3b2" font-size="11">按住说话（常开）</text>
+<rect x="20" y="150" width="190" height="58" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="115" y="174" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="600">🎚 EC11 旋钮</text>
+<text x="115" y="194" text-anchor="middle" fill="#9aa3b2" font-size="11">音量调节 + 按压确认</text>
+<rect x="20" y="230" width="190" height="58" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="115" y="254" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="600">🎤 INMP441</text>
+<text x="115" y="274" text-anchor="middle" fill="#9aa3b2" font-size="11">I2S 数字麦克风</text>
+<rect x="20" y="310" width="190" height="58" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="115" y="334" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="600">⚡ 开关 + 电源</text>
+<text x="115" y="354" text-anchor="middle" fill="#9aa3b2" font-size="11">拨动开关 · USB/18650</text>
+<rect x="340" y="60" width="320" height="340" rx="14" fill="#171a21" stroke="#4f8cff" stroke-width="1.5"/>
+<text x="500" y="92" text-anchor="middle" fill="#e6e8ec" font-size="16" font-weight="700">ESP32-S3-DevKitC-1</text>
+<text x="500" y="114" text-anchor="middle" fill="#4f8cff" font-size="12">N16R8 · Wi-Fi 2.4G · 8MB PSRAM</text>
+<rect x="362" y="132" width="276" height="150" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="500" y="158" text-anchor="middle" fill="#e6e8ec" font-size="13" font-weight="600">xiaozhi-esp32 固件</text>
+<text x="500" y="180" text-anchor="middle" fill="#9aa3b2" font-size="11">PTT 按键状态机（按下开流/松开关流）</text>
+<text x="500" y="200" text-anchor="middle" fill="#9aa3b2" font-size="11">Opus 编解码 · I2S 录音/放音</text>
+<text x="500" y="220" text-anchor="middle" fill="#9aa3b2" font-size="11">设备 Web Server（配网/OTA/状态）</text>
+<text x="500" y="240" text-anchor="middle" fill="#9aa3b2" font-size="11">RGB 状态灯控制 · 旋钮音量映射</text>
+<text x="500" y="266" text-anchor="middle" fill="#31c48d" font-size="11">MCP：音量/亮度等设备能力上报</text>
+<line x1="210" y1="99" x2="336" y2="99" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="273" y="90" text-anchor="middle" fill="#9aa3b2" font-size="10">GPIO 0</text>
+<line x1="210" y1="179" x2="336" y2="179" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="273" y="170" text-anchor="middle" fill="#9aa3b2" font-size="10">GPIO 11/12/13</text>
+<line x1="210" y1="259" x2="336" y2="259" stroke="#31c48d" stroke-width="1.5" marker-end="url(#ag)"/>
+<text x="273" y="250" text-anchor="middle" fill="#9aa3b2" font-size="10">I2S · GPIO 4/5/6</text>
+<line x1="210" y1="339" x2="336" y2="339" stroke="#ef5b5b" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="273" y="330" text-anchor="middle" fill="#9aa3b2" font-size="10">5V / GND</text>
+<rect x="770" y="70" width="110" height="70" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="825" y="99" text-anchor="middle" fill="#e6e8ec" font-size="13" font-weight="600">MAX98357A</text>
+<text x="825" y="119" text-anchor="middle" fill="#9aa3b2" font-size="11">I2S 功放 3W</text>
+<rect x="900" y="70" width="100" height="70" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="950" y="99" text-anchor="middle" fill="#e6e8ec" font-size="13" font-weight="600">🔊 喇叭</text>
+<text x="950" y="119" text-anchor="middle" fill="#9aa3b2" font-size="11">4Ω3W</text>
+<line x1="880" y1="105" x2="896" y2="105" stroke="#31c48d" stroke-width="1.5" marker-end="url(#ag)"/>
+<line x1="660" y1="105" x2="766" y2="105" stroke="#31c48d" stroke-width="1.5" marker-end="url(#ag)"/>
+<text x="713" y="96" text-anchor="middle" fill="#9aa3b2" font-size="10">I2S · GPIO 7/15/16</text>
+<rect x="770" y="180" width="230" height="86" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="885" y="203" text-anchor="middle" fill="#e6e8ec" font-size="13" font-weight="600">🚦 WS2812 三色指示灯</text>
+<circle cx="815" cy="230" r="9" fill="#31c48d"/>
+<circle cx="885" cy="230" r="9" fill="#f5a623"/>
+<circle cx="955" cy="230" r="9" fill="#ef5b5b"/>
+<text x="815" y="254" text-anchor="middle" fill="#9aa3b2" font-size="10">🟢 收音中</text>
+<text x="885" y="254" text-anchor="middle" fill="#9aa3b2" font-size="10">🟡 播放中</text>
+<text x="955" y="254" text-anchor="middle" fill="#9aa3b2" font-size="10">🔴 故障</text>
+<line x1="660" y1="223" x2="766" y2="223" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="713" y="214" text-anchor="middle" fill="#9aa3b2" font-size="10">GPIO 17</text>
+<rect x="770" y="300" width="230" height="64" rx="10" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="885" y="326" text-anchor="middle" fill="#e6e8ec" font-size="13" font-weight="600">📟 OLED 0.96"（可选）</text>
+<text x="885" y="346" text-anchor="middle" fill="#9aa3b2" font-size="11">表情 · 状态 · IP · 电量</text>
+<line x1="660" y1="332" x2="766" y2="332" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="713" y="323" text-anchor="middle" fill="#9aa3b2" font-size="10">I2C · GPIO 41/42</text>
+<line x1="500" y1="400" x2="500" y2="516" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#ap)"/>
+<text x="512" y="445" fill="#a78bfa" font-size="11">Wi-Fi · Opus 音频流</text>
+<text x="512" y="462" fill="#9aa3b2" font-size="10">ws://旧Mac:8000/xiaozhi/v1/</text>
+<text x="512" y="478" fill="#9aa3b2" font-size="10">OTA http://旧Mac:8002/xiaozhi/ota/</text>
+<rect x="340" y="520" width="320" height="190" rx="14" fill="#171a21" stroke="#31c48d" stroke-width="1.5"/>
+<text x="500" y="548" text-anchor="middle" fill="#e6e8ec" font-size="15" font-weight="700">🖥 旧 Mac · 家庭服务器</text>
+<text x="500" y="568" text-anchor="middle" fill="#31c48d" font-size="11">Docker/OrbStack · 7×24 常开 · 防休眠</text>
+<rect x="360" y="582" width="135" height="56" rx="8" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="427" y="605" text-anchor="middle" fill="#e6e8ec" font-size="12" font-weight="600">xiaozhi-server</text>
+<text x="427" y="624" text-anchor="middle" fill="#9aa3b2" font-size="10">音频链路 · Python</text>
+<rect x="505" y="582" width="135" height="56" rx="8" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="572" y="605" text-anchor="middle" fill="#e6e8ec" font-size="12" font-weight="600">智控台 Web</text>
+<text x="572" y="624" text-anchor="middle" fill="#9aa3b2" font-size="10">模型·历史·喜好</text>
+<rect x="360" y="650" width="280" height="44" rx="8" fill="#1d2129" stroke="#2a2f3a"/>
+<text x="500" y="668" text-anchor="middle" fill="#9aa3b2" font-size="10">MySQL · Redis</text>
+<text x="500" y="685" text-anchor="middle" fill="#9aa3b2" font-size="10">FunASR 本地识别（内存≥8GB 可选）</text>
+<rect x="770" y="520" width="230" height="190" rx="14" fill="#171a21" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="885" y="548" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="700">☁️ 云端 API（按需）</text>
+<text x="885" y="580" text-anchor="middle" fill="#9aa3b2" font-size="11">LLM：DeepSeek / Qwen / GLM-4-Flash</text>
+<text x="885" y="602" text-anchor="middle" fill="#9aa3b2" font-size="11">TTS：EdgeTTS（免费）</text>
+<text x="885" y="624" text-anchor="middle" fill="#9aa3b2" font-size="11">ASR：讯飞流式（免费额度）</text>
+<text x="885" y="656" text-anchor="middle" fill="#9aa3b2" font-size="10">或全部本地化（Ollama/FunASR/</text>
+<text x="885" y="673" text-anchor="middle" fill="#9aa3b2" font-size="10">FishSpeech），数据不出家门</text>
+<line x1="664" y1="600" x2="766" y2="600" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ap)"/>
+<text x="715" y="590" text-anchor="middle" fill="#9aa3b2" font-size="10">HTTPS</text>
+<rect x="20" y="575" width="230" height="90" rx="14" fill="#171a21" stroke="#2a2f3a"/>
+<text x="135" y="605" text-anchor="middle" fill="#e6e8ec" font-size="14" font-weight="700">📱 手机 / 💻 浏览器</text>
+<text x="135" y="627" text-anchor="middle" fill="#9aa3b2" font-size="11">配模型 · 查历史 · 设喜好</text>
+<text x="135" y="646" text-anchor="middle" fill="#9aa3b2" font-size="11">http://旧Mac:8002</text>
+<line x1="254" y1="620" x2="336" y2="620" stroke="#4f8cff" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="295" y="740" text-anchor="middle" fill="#9aa3b2" font-size="11">图例：<tspan fill="#31c48d">■</tspan> 音频/数据 <tspan fill="#4f8cff">■</tspan> 控制信号 <tspan fill="#ef5b5b">■</tspan> 电源 <tspan fill="#a78bfa">■</tspan> 无线网络（虚线）</text>
+</svg>
+</div>
+</div></section>
+
+<section id="software"><div class="wrap">
+<h2><span class="num">05</span>软件方案</h2>
+<p class="h2sub">两条路线：<b>方案 A</b> 基于开源项目 xiaozhi-esp32 快速落地（强烈推荐一期使用）；<b>方案 B</b> 全自研固件，二期需要深度定制时再切换。</p>
+
+<div class="grid2">
+<div class="card">
+<h3><span class="rec">方案 A（推荐）</span>：xiaozhi-esp32 开源生态</h3>
+<p>GitHub <b>78/xiaozhi-esp32</b>（MIT 协议），就是为你这个场景而生的：按键说话、Opus 流式传输、WebSocket / MQTT+UDP 双协议、OLED 表情、MCP 设备控制、Web 控制台配模型。</p>
+<ul>
+<li><b>固件</b>：ESP-IDF v6.0.1+ 编译，或直接刷免编译固件（138 种板型）</li>
+<li><b>音频</b>：ESP-SR 离线唤醒 + AEC + Opus 编解码，全部内置</li>
+<li><b>交互</b>：可配置为按键说话（PTT）模式，正好匹配你的按钮</li>
+<li><b>服务端两种选择</b>：
+  <ul>
+  <li>官方云 <code>xiaozhi.me</code>：注册即用，个人免费用 Qwen 实时模型，控制台可选模型/音色/记忆/角色</li>
+  <li>自建 <code>xinnan-tech/xiaozhi-esp32-server</code>：Python/Docker 一键部署，ASR/LLM/TTS 全可换，数据自己掌控</li>
+  </ul></li>
+<li><b>旋钮音量</b>：固件自带音量控制 MCP，EC11 映射为自定义输入即可</li>
+</ul>
+<p><span class="pill g">1~2 天出 demo</span><span class="pill b">免写协议层</span><span class="pill b">Web 控制台现成</span></p>
+</div>
+<div class="card">
+<h3>方案 B：全自研（Arduino / ESP-IDF）</h3>
+<p>自己掌控每一层，适合二期把功能做深（自定义 UI、本地缓存、私有协议）。</p>
+<ul>
+<li><b>固件</b>：ESP-IDF + I2S 驱动 + libopus 编码；PTT 按下开流、松开关流</li>
+<li><b>链路</b>：Wi-Fi → WebSocket → 自建网关（FastAPI / Node）</li>
+<li><b>ASR</b>：FunASR/Paraformer（自建，中文强）或云端（讯飞/阿里/Whisper）</li>
+<li><b>LLM</b>：任何 OpenAI 兼容 API：DeepSeek、Qwen、GPT、Gemini、Ollama 本地</li>
+<li><b>TTS</b>：Edge-TTS（免费）/ CosyVoice / MiniMax / 讯飞</li>
+<li><b>设备 Web</b>：ESP32 跑 HTTP Server（配网页 + REST + WebSocket 推送）+ mDNS（<code>esp32.local</code>）</li>
+</ul>
+<p><span class="pill w">工期 1~2 周</span><span class="pill p">完全可控</span><span class="pill w">需自己处理回声/断句/重连</span></p>
+</div>
+</div>
+
+<div class="note ok">✅ <b>建议路径</b>：一期用方案 A 最快跑通全链路，验证「按钮说话 → 大模型 → 播放」体验；同时把自建服务端 xiaozhi-esp32-server 跑起来，实现你要的"页面配置模型 + 历史记录 + 喜好"。二期若需硬件差异化（多台对讲互联、离线唤醒词定制），再基于方案 A 的协议做定制固件，成本远低于从零自研。</div>
+
+<div class="card">
+<h3>🖥 旧 Mac 服务端部署要点（本项目选型）</h3>
+<ul>
+<li><b>容器环境</b>：装 <b>OrbStack</b>（轻快，个人免费）或 Docker Desktop / Colima</li>
+<li><b>Intel Mac（x86）</b>：官方 Docker 镜像直接可用，零障碍</li>
+<li><b>Apple Silicon（M 系列）</b>：官方镜像只有 x86，需按 <code>docker-build.md</code> 自行构建 arm64 镜像；或直接源码部署（Python 3.10 + JDK21 + MySQL + Redis，arm64 包齐全）</li>
+<li><b>内存建议</b>：≥8GB → 全模块 + 本地 FunASR 识别；4GB → 全模块 + ASR 走云端 API</li>
+<li><b>macOS 设置</b>：系统设置关闭休眠（或 <code>caffeinate -s</code>）；路由器 DHCP 给 Mac 绑定静态 IP；开放 <code>8000</code>（WebSocket 音频）/ <code>8002</code>（智控台+OTA）端口</li>
+<li><b>固件写入的地址</b>：<code>ws://旧Mac-IP:8000/xiaozhi/v1/</code> 和 <code>http://旧Mac-IP:8002/xiaozhi/ota/</code></li>
+<li><b>成本</b>：旧 Mac 功耗 ~10-30W，常年开机每月电费几块钱，无云服务器费用</li>
+</ul>
+</div>
+</div></section>
+<section id="web"><div class="wrap">
+<h2><span class="num">06</span>Web 配置接口设计</h2>
+<p class="h2sub">设备端起一个轻量 Web Server（配网 + 本地设置），服务端控制台负责大模型 / 历史 / 喜好。方案 A 两者均为现成；方案 B 按下表自研。</p>
+
+<div class="card">
+<h3>设备端页面（http://esp32.local）</h3>
+<table>
+<tr><th>页面 / 接口</th><th>方法</th><th>功能</th></tr>
+<tr><td><code>/</code></td><td>GET</td><td>状态总览：Wi-Fi、信号、音量、固件版本、当前连接的服务端</td></tr>
+<tr><td><code>/wifi</code></td><td>GET/POST</td><td>扫描 + 配置 Wi-Fi（首次开机自动开热点配网，或 BluFi 蓝牙配网）</td></tr>
+<tr><td><code>/api/config</code></td><td>GET/PUT</td><td>读写：服务端地址、设备名、唤醒模式（唤醒词 / PTT / 实时对话）</td></tr>
+<tr><td><code>/api/audio</code></td><td>GET/PUT</td><td>音量、麦克风增益、播放测试音</td></tr>
+<tr><td><code>/api/button</code></td><td>GET/PUT</td><td>按键/旋钮行为映射（短按、长按、旋转）</td></tr>
+<tr><td><code>/api/ota</code></td><td>POST</td><td>上传固件 bin 升级，显示进度</td></tr>
+<tr><td><code>/ws/status</code></td><td>WS</td><td>实时推送：聆听中/思考中/播放中，页面动效同步</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>服务端控制台（选模型 / 历史 / 喜好）</h3>
+<table>
+<tr><th>功能模块</th><th>说明</th></tr>
+<tr><td><b>模型配置</b></td><td>选择 LLM（DeepSeek / Qwen / GPT / 本地 Ollama…）、ASR、TTS 音色，填 API Key，实时对话测试</td></tr>
+<tr><td><b>历史记录</b></td><td>按设备/时间检索对话记录（文字 + 音频回放），导出 JSON/CSV</td></tr>
+<tr><td><b>喜好 / 记忆</b></td><td>人设 Prompt（角色、语气、称呼）、长期记忆开关、偏好标签（如"回答简短""儿童模式"）</td></tr>
+<tr><td><b>多设备</b></td><td>一个账号绑定多台对讲机，各自独立配置与历史</td></tr>
+</table>
+<p class="muted">官方云 xiaozhi.me 控制台已包含以上全部功能；自建 xiaozhi-esp32-server 自带 Web 管理后台，模型走 OpenAI 兼容接口随意切换。</p>
+</div>
+</div></section>
+<section id="print"><div class="wrap">
+<h2><span class="num">07</span>3D 打印件（一期可选）</h2>
+<p class="h2sub">一期用面包板可完全裸跑；但你有 3D 打印机，建议打这几件小东西显著提升体验。FDM + PLA/PETG，0.2mm 层高即可。</p>
+<div class="grid3">
+<div class="card"><h3>① 面包板底座</h3><p class="muted">一块带卡槽的底板，固定面包板 + ESP32-S3 + 喇叭，预留走线槽。尺寸约 120×80×10mm。</p><span class="pill b">难度 ★</span></div>
+<div class="card"><h3>② EC11 旋钮帽</h3><p class="muted">D 型孔旋钮帽（内径 6mm），Fusion360 十分钟画完，或直接下载 Printables/Thingiverse 现成模型。</p><span class="pill b">难度 ★</span></div>
+<div class="card"><h3>③ 喇叭导音罩</h3><p class="muted">带蜂窝出音孔的小罩子，卡在 40mm 喇叭上，聚音 + 防尘。</p><span class="pill b">难度 ★★</span></div>
+<div class="card"><h3>④ PTT 按钮帽</h3><p class="muted">大号按压帽，红色更醒目；内嵌 M12 螺纹或直接卡扣。</p><span class="pill b">难度 ★</span></div>
+<div class="card"><h3>⑤ 二期整机外壳</h3><p class="muted">对讲机造型：上盖（麦克风孔 + 喇叭网）+ 下壳（电池仓 + Type-C 开孔）+ 侧面旋钮/开关/PTT 开孔。建议先 3D 扫描/测量面包板堆叠高度再建模。</p><span class="pill w">难度 ★★★</span></div>
+<div class="card"><h3>建模建议</h3><p class="muted">工具：Fusion360（个人免费）/ OpenSCAD / Tinkercad。模型站搜 "ESP32 enclosure" "rotary knob" "speaker grille" 有大量现成件可改。</p></div>
+</div>
+</div></section>
+<section id="plan"><div class="wrap">
+<h2><span class="num">08</span>实施流程 Checklist</h2>
+<p class="h2sub">六个阶段、26 步，每步含「做什么 → 预期效果」。勾选自动保存在浏览器本地（localStorage），刷新不丢；换电脑打开需重新勾选。</p>
+<div class="progwrap">
+<div class="progbar"><i id="progfill"></i></div>
+<div class="progtxt"><span id="progtxt">已完成 0 / 26 步</span><button class="resetbtn" id="resetprog">↺ 重置进度</button></div>
+</div>
+
+<div class="phase"><span class="ph">阶段 0</span>备料与环境准备 <span class="ph phcnt"></span><small>· 半天（含等快递）</small></div>
+<label class="chk"><input type="checkbox" id="ck-p0-1"><div class="tk"><b>0.1 按 BOM 下单全部元器件</b>
+<p class="do">📋 做什么：按第 02 节清单购买：ESP32-S3-DevKitC-1（N16R8，认准 8MB PSRAM）、INMP441、MAX98357A、4Ω3W 喇叭、12mm 按钮、EC11 旋钮、拨动开关、WS2812B 灯珠、面包板 + 杜邦线；可选 OLED/电池件。</p>
+<p class="eff">✅ 预期效果：快递到手，核对无漏件；主控板丝印标注 N16R8。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p0-2"><div class="tk"><b>0.2 注册大模型账号并拿到 API Key</b>
+<p class="do">📋 做什么：注册智谱 AI（open.bigmodel.cn，glm-4-flash 免费）或 DeepSeek（platform.deepseek.com，充值 ¥10 够用很久），创建 API Key 并保存。</p>
+<p class="eff">✅ 预期效果：在官网 Playground 里用 Key 发一句话能收到回复。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p0-3"><div class="tk"><b>0.3 旧 Mac 装好容器环境</b>
+<p class="do">📋 做什么：安装 OrbStack（或 Docker Desktop），终端执行 <code>docker -v</code> 和 <code>docker compose version</code> 验证；Apple Silicon 需按官方 docker-build.md 预构建 arm64 镜像。</p>
+<p class="eff">✅ 预期效果：两条命令都输出版本号，<code>docker run hello-world</code> 成功。</p></div></label>
+<div class="phase"><span class="ph">阶段 1</span>服务端部署（旧 Mac） <span class="ph phcnt"></span><small>· 半天～1 天</small></div>
+<label class="chk"><input type="checkbox" id="ck-p1-1"><div class="tk"><b>1.1 创建目录并下载文件</b>
+<p class="do">📋 做什么：新建 <code>xiaozhi-server/</code>，内含 <code>data/</code> 和 <code>models/SenseVoiceSmall/</code>；下载 <code>docker-compose_all.yml</code> 和 <code>config_from_api.yaml</code>（放入 data 并改名 <code>.config.yaml</code>）；如需本地 ASR，从阿里魔搭下载 SenseVoiceSmall 的 model.pt（~1GB）放入 models。目录结构见官方 Deployment_all.md。</p>
+<p class="eff">✅ 预期效果：<code>tree xiaozhi-server</code> 输出与官方文档的目录结构一致。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p1-2"><div class="tk"><b>1.2 启动全模块容器</b>
+<p class="do">📋 做什么：进入目录执行 <code>docker compose -f docker-compose_all.yml up -d</code>，再 <code>docker logs -f xiaozhi-esp32-server-web</code> 看日志。首次拉镜像较久；此时 8000 端口 server 报错先忽略。</p>
+<p class="eff">✅ 预期效果：日志出现 <code>Started AdminApplication</code>，浏览器打开 <code>http://127.0.0.1:8002</code> 出现智控台登录页。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p1-3"><div class="tk"><b>1.3 注册超级管理员</b>
+<p class="do">📋 做什么：在智控台注册第一个用户（自动成为超级管理员），登录。</p>
+<p class="eff">✅ 预期效果：能看到「参数管理 / 模型配置 / 设备管理」等顶部菜单。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p1-4"><div class="tk"><b>1.4 完成「三件重要的事情」</b>
+<p class="do">📋 做什么：① 参数管理 → 复制 <code>server.secret</code> 到 <code>data/.config.yaml</code> 的 secret 字段，url 改为 <code>http://xiaozhi-esp32-server-web:8002/xiaozhi</code>；② 模型配置 → 大语言模型 → 智谱AI → 填入 0.2 步的 API Key；③ 参数管理 → 填 <code>server.websocket</code>=<code>ws://旧Mac局域网IP:8000/xiaozhi/v1/</code>、<code>server.ota</code>=<code>http://旧Mac局域网IP:8002/xiaozhi/ota/</code>。</p>
+<p class="eff">✅ 预期效果：.config.yaml 内容正确，智控台里模型条目显示已配置密钥。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p1-5"><div class="tk"><b>1.5 重启 server 并验证在线测试</b>
+<p class="do">📋 做什么：<code>docker restart xiaozhi-esp32-server</code>，看日志出现 Websocket 地址；在智控台或 <code>/test/</code> 页面用浏览器麦克风发一句话测试。</p>
+<p class="eff">✅ 预期效果：日志显示 ws 地址；网页测试能得到 AI 文字+语音回复 → <b>服务端链路已通</b>。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p1-6"><div class="tk"><b>1.6 固定 IP + 防休眠</b>
+<p class="do">📋 做什么：路由器后台把 Mac 的 MAC 地址绑定静态 IP；系统设置关闭自动休眠（或终端 <code>caffeinate -s</code> 常驻）；关闭屏幕省电；防火墙放行 8000/8002。</p>
+<p class="eff">✅ 预期效果：手机连同一 Wi-Fi，浏览器访问 <code>http://旧Mac-IP:8002</code> 能打开智控台；Mac 合盖 1 小时后仍可访问。</p></div></label>
+<div class="phase"><span class="ph">阶段 2</span>固件编译与烧录 <span class="ph phcnt"></span><small>· 半天</small></div>
+<label class="chk"><input type="checkbox" id="ck-p2-1"><div class="tk"><b>2.1 安装 ESP-IDF v6.1</b>
+<p class="do">📋 做什么：按乐鑫官方文档安装 ESP-IDF v6.0.1+（推荐 v6.1），或 VSCode 装 ESP-IDF 插件一键配置；<code>. $HOME/esp/esp-idf/export.sh</code> 加载环境。</p>
+<p class="eff">✅ 预期效果：<code>idf.py --version</code> 输出 6.x 版本号。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p2-2"><div class="tk"><b>2.2 克隆固件并选择板型</b>
+<p class="do">📋 做什么：<code>git clone https://github.com/78/xiaozhi-esp32</code>；一期先用官方 <code>idf.py set-target esp32s3</code> + 面包板兼容板型（breadboard 类配置，引脚按第 03 节改：麦克风 4/5/6、功放 15/16/7、按钮 GPIO0、WS2812 GPIO17）；嫌麻烦可先刷虾哥编译好的通用固件。</p>
+<p class="eff">✅ 预期效果：<code>idf.py build</code> 编译通过，生成固件 bin。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p2-3"><div class="tk"><b>2.3 USB 连接并烧录</b>
+<p class="do">📋 做什么：USB-C 线连开发板（按住 BOOT 再按 RST 进下载模式，S3 一般免按），<code>idf.py -p /dev/cu.usbmodem* flash monitor</code>。</p>
+<p class="eff">✅ 预期效果：串口监视器滚动输出启动日志，无 boot loop。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p2-4"><div class="tk"><b>2.4 配网并指向自建服务端</b>
+<p class="do">📋 做什么：设备首次开机开热点（或 BluFi），手机连入配置家里 Wi-Fi；在设备 Web 页/编译配置里把 OTA 与 WebSocket 地址改为 <code>http://旧Mac-IP:8002/xiaozhi/ota/</code> 和 <code>ws://旧Mac-IP:8000/xiaozhi/v1/</code>，重启。</p>
+<p class="eff">✅ 预期效果：串口日志显示拿到 IP、OTA 检查成功、WebSocket 已连接；智控台「设备管理」里出现这台设备。</p></div></label>
+<div class="phase"><span class="ph">阶段 3</span>硬件组装（面包板） <span class="ph phcnt"></span><small>· 半天</small></div>
+<label class="chk"><input type="checkbox" id="ck-p3-1"><div class="tk"><b>3.1 接麦克风 + 功放 + 喇叭</b>
+<p class="do">📋 做什么：按第 03 节接线表飞线：INMP441（SCK→GPIO5、WS→GPIO4、SD→GPIO6、L/R→GND、VDD→3.3V）；MAX98357A（BCLK→GPIO15、LRC→GPIO16、DIN→GPIO7、VIN→5V）；喇叭接功放 OUT±。I2S 线尽量短（&lt;15cm）。</p>
+<p class="eff">✅ 预期效果：串口日志 I2S 初始化无错；对设备说话服务端能收到音频，播放 TTS 时喇叭出声、无持续爆音。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p3-2"><div class="tk"><b>3.2 接 PTT 按钮并验证按键说话</b>
+<p class="do">📋 做什么：按钮一端接 GPIO0、另一端接 GND（用固件内部上拉）；固件交互模式设为按键说话（PTT）。注意上电瞬间别按住按钮（GPIO0 是 Boot 脚）。</p>
+<p class="eff">✅ 预期效果：按住按钮说话 → 松开 → 2 秒左右喇叭播出 AI 回答；<b>核心体验达成</b>。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p3-3"><div class="tk"><b>3.3 接 EC11 旋钮映射音量</b>
+<p class="do">📋 做什么：A→GPIO11、B→GPIO12、SW→GPIO13、C→GND；固件里配置旋转编码器为音量输入（映射 Speaker MCP 的 set_volume），按压设为开始/停止对话。</p>
+<p class="eff">✅ 预期效果：转动旋钮音量实时增减（OLED/日志可见数值变化）；按下旋钮能发起对话。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p3-4"><div class="tk"><b>3.4 接 WS2812 三色指示灯并验证灯态</b>
+<p class="do">📋 做什么：DIN→GPIO17、VCC→5V、GND→GND；板级配置里设 LED 类型 WS2812 与引脚。绿=Listening、黄=Speaking 由固件状态机直接驱动；红灯故障态在固件断线/报错回调里补几行 <code>SetStatusLedColor(红)</code>（社区有现成 patch 可参考）。</p>
+<p class="eff">✅ 预期效果：按住按钮收音 → <b>🟢绿灯亮</b>；播放回答 → <b>🟡黄灯亮</b>；关掉路由器或停掉 Mac 服务端 → <b>🔴红灯闪烁</b>；恢复后自动回待机。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p3-5"><div class="tk"><b>3.5 接 OLED（可选）</b>
+<p class="do">📋 做什么：SDA→GPIO41、SCL→GPIO42、VCC→3.3V；固件开启显示，选表情主题。</p>
+<p class="eff">✅ 预期效果：屏幕显示表情/状态、Wi-Fi 图标、IP 地址；说话时表情切换。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p3-6"><div class="tk"><b>3.6 接入电源开关</b>
+<p class="do">📋 做什么：拨动开关串入 5V 正极（USB 供电时可用带开关的 USB 线替代）；如用电池：18650 → TP4056 充放电 → 开关 → 5V。</p>
+<p class="eff">✅ 预期效果：拨到 OFF 整机完全断电（灯灭），拨到 ON 自动开机并回连 Wi-Fi（约 3~5 秒）。</p></div></label>
+<div class="phase"><span class="ph">阶段 4</span>端到端联调与验收 <span class="ph phcnt"></span><small>· 半天</small></div>
+<label class="chk"><input type="checkbox" id="ck-p4-1"><div class="tk"><b>4.1 全链路对话压测</b>
+<p class="do">📋 做什么：连续对话 10 轮以上，计时从松开按钮到喇叭出声的延迟；试长句（30 秒）、快速连按、说话中途松开等边界情况。</p>
+<p class="eff">✅ 预期效果：首响延迟 &lt;2 秒（局域网）；无断连、无音频爆音、无内存崩溃重启。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p4-2"><div class="tk"><b>4.2 验证历史记录</b>
+<p class="do">📋 做什么：对话几轮后打开智控台 → 对话记录页面，按设备/时间检索。</p>
+<p class="eff">✅ 预期效果：每轮对话的用户语音转文字 + AI 回复完整可查。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p4-3"><div class="tk"><b>4.3 验证页面配置即时生效</b>
+<p class="do">📋 做什么：智控台切换 LLM 模型（如 glm-4-flash → DeepSeek）、修改人设 Prompt（如"回答不超过两句"）、更换 TTS 音色，然后直接对设备说话。</p>
+<p class="eff">✅ 预期效果：下一轮对话即按新模型/新人设/新音色回答，<b>无需重刷固件</b>。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p4-4"><div class="tk"><b>4.4 故障演练（红灯验收）</b>
+<p class="do">📋 做什么：依次模拟：停掉 Mac 上 Docker 容器、关闭路由器 Wi-Fi、填错 API Key；观察设备反应。</p>
+<p class="eff">✅ 预期效果：三种故障下均 🔴红灯闪烁（或伴随提示音），故障排除后自动恢复绿灯待机流程。</p></div></label>
+<div class="phase"><span class="ph">阶段 5</span>收尾与二期准备 <span class="ph phcnt"></span><small>· 半天</small></div>
+<label class="chk"><input type="checkbox" id="ck-p5-1"><div class="tk"><b>5.1 打印并安装 3D 打印件</b>
+<p class="do">📋 做什么：按第 07 节打印底座、EC11 旋钮帽、喇叭导音罩、按钮帽（FDM，PLA/PETG，0.2mm 层高）；装配到面包板。</p>
+<p class="eff">✅ 预期效果：器件固定不晃动，喇叭声音聚拢，旋钮手感顺滑。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p5-2"><div class="tk"><b>5.2 整理飞线加固</b>
+<p class="do">📋 做什么：I2S 短线化、杜邦线按功能分色（红=电源、绿=音频、蓝=信号）、关键接头热熔胶固定。</p>
+<p class="eff">✅ 预期效果：拿起设备移动时不掉线不断联；底噪无明显增加。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-p5-3"><div class="tk"><b>5.3 验收录像 + 二期需求清单</b>
+<p class="do">📋 做什么：录一段完整 demo（开机 → 按键说话 → 三色灯变化 → 播放回答 → 页面改配置）；整理二期需求：电池便携、整机外壳建模、多台对讲互联、4G 模块、离线唤醒词。</p>
+<p class="eff">✅ 预期效果：一期正式收官 🎉；demo 视频可直接用于分享/复盘，二期路线清晰。</p></div></label>
+</div></section>
+
+<section id="risk"><div class="wrap">
+<h2><span class="num">09</span>风险与注意事项</h2>
+<div class="grid2">
+<div class="card"><h3>⚠️ 硬件坑</h3>
+<ul>
+<li><b>PSRAM 是硬门槛</b>：必须买 <b>N16R8</b>（8MB Octal PSRAM），普通 N8R2 跑不动流式音频；R8 版 GPIO35~37 不可用（已在本方案避开）。</li>
+<li><b>供电</b>：功放音量大时峰值电流 ~500mA，USB 口供电即可；用电池务必加 TP4056 保护 + 粗电源线，避免复位。</li>
+<li><b>I2S 干扰</b>：杜邦线过长会引入底噪/爆音，麦克风线 &lt;15cm，必要时 SCK/WS 串 22Ω 电阻。</li>
+<li><b>回声（AEC）</b>：PTT 半双工模式下喇叭放音时麦克风不采集，天然回避回声，这正是一期用按钮方案的优势。</li>
+</ul></div>
+<div class="card"><h3>☁️ 服务与成本</h3>
+<ul>
+<li><b>官方云</b>：个人免费（Qwen 实时模型），但历史/数据在第三方；正式使用建议自建服务端。</li>
+<li><b>API 费用</b>：DeepSeek 极便宜（百万 token 级 ¥1~2）；TTS 用 Edge-TTS 免费或 CosyVoice 自建。</li>
+<li><b>网络依赖</b>：完全依赖 Wi-Fi，断网时设备播放本地提示音；二期可加 4G 模块（ML307，xiaozhi 已支持）。</li>
+<li><b>隐私</b>：自建服务端 + 本地 Ollama 可实现全链路数据不出门（ASR/TTS 也用自建模型）。</li>
+<li><b>旧 Mac 常开</b>：必须禁用休眠（合盖运行需接电源 + <code>caffeinate</code>/Amphetamine），路由器绑定静态 IP，否则设备找不到服务端亮红灯；建议关闭屏幕省电。</li>
+</ul></div>
+</div>
+
+<h3>关键资源链接</h3>
+<div class="card">
+<ul>
+<li>固件：<a href="https://github.com/78/xiaozhi-esp32">github.com/78/xiaozhi-esp32</a>（含面包板 DIY 教程、138 板型支持）</li>
+<li>自建服务端：<a href="https://github.com/xinnan-tech/xiaozhi-esp32-server">xinnan-tech/xiaozhi-esp32-server</a>（Python/Docker，带 Web 后台）</li>
+<li>官方云控制台：<a href="https://xiaozhi.me">xiaozhi.me</a></li>
+<li>新手刷机指南 & 百科：<a href="https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS">飞书文档</a></li>
+<li>音频芯片手册：INMP441（I2S MEMS 麦）、MAX98357A（I2S D 类功放）</li>
+</ul>
+</div>
+<div class="note">📌 <b>一句话总结</b>：买一块 ESP32-S3-DevKitC-1（N16R8）+ INMP441 + MAX98357A + 喇叭 + 按钮 + EC11 + 开关（约 ¥100），面包板飞线，刷 xiaozhi-esp32 固件（PTT 模式 + 三色状态灯：🟢收音/🟡播放/🔴故障），接旧 Mac 上 Docker 自建的 xiaozhi-esp32-server，Web 页面配模型/历史/喜好，3D 打印底座旋钮帽 —— 5 天内得到一台能对话的 AI 对讲机。</div>
+</div></section>
+
+<footer><div class="wrap">AI 语音对讲机 · ESP32-S3 一期硬件方案 · 生成于 2026 · 面包板验证，无需打板</div></footer>
+<script>
+(function(){
+  var KEY='ai-intercom-progress-v1';
+  var boxes=[].slice.call(document.querySelectorAll('.chk input[type=checkbox]'));
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  function refresh(){
+    var n=0,st={};
+    boxes.forEach(function(b){
+      st[b.id]=b.checked;
+      if(b.checked)n++;
+      b.closest('.chk').classList.toggle('done',b.checked);
+    });
+    localStorage.setItem(KEY,JSON.stringify(st));
+    var pct=boxes.length?Math.round(n/boxes.length*100):0;
+    document.getElementById('progfill').style.width=pct+'%';
+    document.getElementById('progtxt').textContent='已完成 '+n+' / '+boxes.length+' 步（'+pct+'%）'+(n===boxes.length&&n>0?' 🎉 全部完成，可以开机对话了！':'');
+    document.querySelectorAll('.phase').forEach(function(ph){
+      var total=0,done=0,el=ph.nextElementSibling;
+      while(el&&!el.classList.contains('phase')){
+        el.querySelectorAll('input[type=checkbox]').forEach(function(b){total++;if(b.checked)done++});
+        el=el.nextElementSibling;
+      }
+      var badge=ph.querySelector('.phcnt');
+      if(badge)badge.textContent=done+'/'+total;
+    });
+  }
+  boxes.forEach(function(b){
+    if(saved[b.id])b.checked=true;
+    b.addEventListener('change',refresh);
+  });
+  document.getElementById('resetprog').addEventListener('click',function(){
+    if(confirm('确定清空全部勾选进度？')){localStorage.removeItem(KEY);location.reload()}
+  });
+  refresh();
+})();
+</script>
+</body></html>

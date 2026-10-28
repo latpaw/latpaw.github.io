@@ -1,62 +1,127 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
 <head>
-  <title>Index - L</title>
-  <meta charset="utf-8" />
-  <meta name="author" content="latpaw" />
-
-  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
-  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
-  <link rel="stylesheet" href="/media/css/posts.css" type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>latpaw · AI</title>
+<meta name="author" content="latpaw">
+<link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
+<style>
+:root{
+  --bg:#0f1115;--card:#171a21;--card2:#1d2129;--line:#2a2f3a;
+  --text:#e6e8ec;--muted:#9aa3b2;--accent:#4f8cff;--purple:#a78bfa;
+  --mono:'SF Mono',Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  line-height:1.7;min-height:100vh;display:flex;flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+.glow{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 0%,rgba(79,140,255,.16),transparent),
+    radial-gradient(ellipse 45% 40% at 85% 12%,rgba(167,139,250,.13),transparent);
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px;width:100%}
+nav{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.82);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:6px;height:56px}
+nav .logo{font-weight:700;font-size:15px;letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+nav .spacer{flex:1}
+nav a.link{color:var(--muted);font-size:13px;padding:6px 12px;border-radius:9px;transition:.18s}
+nav a.link:hover{color:var(--text);background:var(--card2)}
+header{padding:88px 0 56px;text-align:center}
+.tag{display:inline-block;font-size:13px;color:var(--accent);
+  border:1px solid rgba(79,140,255,.4);padding:4px 14px;border-radius:99px;
+  margin-bottom:22px;background:rgba(79,140,255,.08);font-family:var(--mono)}
+h1{font-size:44px;line-height:1.2;margin-bottom:16px;font-weight:800;letter-spacing:-1px}
+h1 em{font-style:normal;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:16px;max-width:560px;margin:0 auto}
+main{flex:1;padding-bottom:80px}
+.section-label{display:flex;align-items:center;gap:12px;margin:8px 0 22px;
+  font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.5px}
+.section-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.section-label .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 4px rgba(79,140,255,.15)}
+.entries{display:flex;flex-direction:column;gap:16px}
+.entry{display:flex;align-items:center;gap:20px;padding:22px 24px;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  transition:transform .2s ease,border-color .2s ease,background .2s ease;position:relative;overflow:hidden}
+.entry::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--accent),var(--purple));
+  transform:scaleY(0);transform-origin:top;transition:transform .25s ease}
+.entry:hover{transform:translateY(-3px);border-color:rgba(79,140,255,.45);background:var(--card2)}
+.entry:hover::before{transform:scaleY(1)}
+.entry .icon{flex:0 0 auto;width:48px;height:48px;border-radius:12px;
+  display:grid;place-items:center;font-size:22px;
+  background:rgba(79,140,255,.1);border:1px solid rgba(79,140,255,.25)}
+.entry .body{flex:1;min-width:0}
+.entry .title{font-size:17px;font-weight:600;margin-bottom:4px}
+.entry .desc{font-size:13.5px;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.entry .arrow{flex:0 0 auto;color:var(--muted);font-size:20px;transition:.2s}
+.entry:hover .arrow{color:var(--accent);transform:translateX(4px)}
+.pill{display:inline-block;font-size:11px;font-family:var(--mono);
+  color:var(--purple);border:1px solid rgba(167,139,250,.35);
+  background:rgba(167,139,250,.08);padding:2px 9px;border-radius:99px;margin-left:8px}
+footer{text-align:center;color:var(--muted);font-size:13px;
+  padding:28px 0;border-top:1px solid var(--line)}
+footer a{color:var(--accent)}
+@media(max-width:600px){
+  h1{font-size:34px}
+  header{padding:64px 0 44px}
+  .entry{padding:18px}
+  .entry .icon{width:42px;height:42px;font-size:20px}
+}
+</style>
 </head>
-
-  <body class="container">
-<header id="header">
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
-        <div class="container-fluid">
-<div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">L</a>
-        </div>
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="/blog/">Blog</a></li>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/tags/">Tags</a></li>
-          <li><a href="https://github.com/latpaw">GitHub</a></li>
-        </ul>
-</div>
-</div>
-    </nav>
-</body>
+<div class="glow"></div>
+
+<nav>
+  <div class="wrap">
+    <span class="logo">latpaw</span>
+    <span class="spacer"></span>
+    <a class="link" href="https://github.com/latpaw">GitHub</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="tag">~/ai</span>
+    <h1>AI <em>项目目录</em></h1>
+    <p class="sub">这里收录了与 AI 相关的硬件与软件方案，持续更新中。</p>
+  </div>
 </header>
 
-<section id="content" role="main">
-    <div id="outline-container-sec-" class="row">
-        <div class="col-md-2"></div>
-            <h1>Index</h1>
-            <p>
-This is the home page of latpaw.
-</p>
+<main>
+  <div class="wrap">
+    <div class="section-label"><span class="dot"></span>PAGES</div>
+    <div class="entries">
 
-<p>
-<a href="http:/latpaw.html">latpaw</a>
-<a href="http:/duet.html">duet</a>
-</p>
+      <a class="entry" href="/ai/ai-intercom-plan.html">
+        <div class="icon">🎙️</div>
+        <div class="body">
+          <div class="title">AI 语音对讲机<span class="pill">ESP32-S3</span></div>
+          <div class="desc">ESP32-S3 AI 语音对讲机 · 硬件 + 软件完整方案</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
 
     </div>
-</section>
+  </div>
+</main>
 
-
-<footer id="footer">
-    <br />
+<footer>
+  <div class="wrap">© latpaw · powered by GitHub Pages</div>
 </footer>
 
-  </body>
+</body>
 </html>
