@@ -156,16 +156,16 @@ a{color:var(--accent)}
 <h3>核心必选件</h3>
 <table>
 <tr><th>器件</th><th>推荐型号</th><th>作用</th><th>参考价</th><th>备注</th></tr>
-<tr><td>主控板</td><td><b>ESP32-S3-DevKitC-1（N16R8）</b></td><td>Wi-Fi + 音频 + AI 推理入口</td><td>¥30~45</td><td class="rec">✔ 16MB Flash + 8MB PSRAM，xiaozhi 官方推荐配置；S3 双核 240MHz 跑 Opus 编解码无压力</td></tr>
-<tr><td>麦克风</td><td><b>INMP441</b>（I2S 数字麦）</td><td>拾音</td><td>¥4~8</td><td>信噪比 61dB，免 ADC；更安静环境可选 MSM261S4030H0</td></tr>
-<tr><td>功放</td><td><b>MAX98357A</b>（I2S 3W）</td><td>数字音频放大</td><td>¥5~9</td><td>免 DAC，I2S 直连，带静音脚</td></tr>
-<tr><td>喇叭</td><td>4Ω3W 或 8Ω2W 腔体喇叭（28~40mm）</td><td>放音</td><td>¥3~6</td><td>选带引线/焊片的，方便面包板夹线</td></tr>
+<tr><td>主控板</td><td><b>ESP32-S3-DevKitC-1（N16R8）</b> <span class="pill w">⏳ 手头有 ESP32，待确认型号</span></td><td>Wi-Fi + 音频 + AI 推理入口</td><td>¥30~45</td><td class="rec">✔ 16MB Flash + 8MB PSRAM，xiaozhi 官方推荐配置；S3 双核 240MHz 跑 Opus 编解码无压力。❗必须是 S3 且 ≥8MB PSRAM，普通 ESP32 不能跑 xiaozhi</td></tr>
+<tr><td>麦克风</td><td><b>INMP441</b>（I2S 数字麦） <span class="pill g">✔ 已备</span></td><td>拾音</td><td>¥4~8</td><td>信噪比 61dB，免 ADC；更安静环境可选 MSM261S4030H0</td></tr>
+<tr><td>功放</td><td><b>MAX98357A</b>（I2S 3W） <span class="pill g">✔ 已备</span></td><td>数字音频放大</td><td>¥5~9</td><td>免 DAC，I2S 直连，带静音脚</td></tr>
+<tr><td>喇叭</td><td>4Ω3W 或 8Ω2W 腔体喇叭（28~40mm） <span class="pill g">✔ 已备 8Ω3W 一对</span></td><td>放音</td><td>¥3~6</td><td>选带引线/焊片的，方便面包板夹线。8Ω3W 可用：单颗约 1.8W（音量稍小够用）；两颗并联=4Ω 可恢复约 3W 满功率</td></tr>
 <tr><td>PTT 按钮</td><td>12mm 大按钮 或 街机按钮（带 LED 更佳）</td><td>按住说话</td><td>¥1~5</td><td>常开型；LED 可做状态指示</td></tr>
 <tr><td>旋钮</td><td><b>EC11 旋转编码器</b>（带按压开关）</td><td>调音量</td><td>¥2~4</td><td>无限位旋转，A/B 相 + 按钮 3 脚；按压可复用为"确认/唤醒"</td></tr>
 <tr><td>电源开关</td><td>MSK-12C02 拨动开关 或船型开关</td><td>开机/关机</td><td>¥0.5~2</td><td>串在电池正极或 USB 5V 输入</td></tr>
 <tr><td>状态指示灯</td><td><b>WS2812B RGB 灯珠</b>（1 颗）</td><td>三色状态指示</td><td>¥1~2</td><td class="rec">🟢收音 / 🟡播放 / 🔴故障，接线见 03 节；也可用 3 颗单色 LED + 330Ω 电阻替代</td></tr>
-<tr><td>面包板</td><td>830 孔</td><td>一期搭建</td><td>¥5~8</td><td>—</td></tr>
-<tr><td>杜邦线</td><td>公对公/公对母若干</td><td>飞线</td><td>¥5~10</td><td>I2S 线尽量短（&lt;15cm），减少干扰</td></tr>
+<tr><td>面包板</td><td>830 孔 <span class="pill g">✔ 已备</span></td><td>一期搭建</td><td>¥5~8</td><td>—</td></tr>
+<tr><td>杜邦线</td><td>公对公/公对母若干 <span class="pill g">✔ 已备</span></td><td>飞线</td><td>¥5~10</td><td>I2S 线尽量短（&lt;15cm），减少干扰</td></tr>
 </table>
 <p class="muted">小计：<b>约 ¥57~99</b></p>
 </div>
@@ -174,7 +174,7 @@ a{color:var(--accent)}
 <table>
 <tr><th>器件</th><th>型号</th><th>作用</th><th>参考价</th></tr>
 <tr><td>状态屏</td><td>SSD1306 0.96" OLED（I2C）</td><td>显示表情/状态/音量/IP，xiaozhi 原生支持</td><td>¥9~13</td></tr>
-<tr><td>充电板</td><td>TP4056（Type-C，带保护）</td><td>锂电池充电，为二期便携做准备</td><td>¥2~4</td></tr>
+<tr><td>充电板</td><td>TP4056（Type-C，带保护） <span class="pill g">✔ 已备</span></td><td>锂电池充电，为二期便携做准备</td><td>¥2~4</td></tr>
 <tr><td>电池</td><td>18650（3000mAh）+ 电池盒</td><td>移动供电，续航 &gt;10 小时</td><td>¥15~25</td></tr>
 <tr><td>升压板</td><td>MT3608 或直接用 TP4056+保护 输出</td><td>电池 → 5V 给开发板</td><td>¥2~3</td></tr>
 </table>
@@ -457,7 +457,7 @@ a{color:var(--accent)}
 
 <div class="phase"><span class="ph">阶段 0</span>备料与环境准备 <span class="ph phcnt"></span><small>· 半天（含等快递）</small></div>
 <label class="chk"><input type="checkbox" id="ck-p0-1"><div class="tk"><b>0.1 按 BOM 下单全部元器件</b>
-<p class="do">📋 做什么：按第 02 节清单购买：ESP32-S3-DevKitC-1（N16R8，认准 8MB PSRAM）、INMP441、MAX98357A、4Ω3W 喇叭、12mm 按钮、EC11 旋钮、拨动开关、WS2812B 灯珠、面包板 + 杜邦线；可选 OLED/电池件。</p>
+<p class="do">📋 做什么：按第 02 节清单购买：12mm 按钮、EC11 旋钮、拨动开关、WS2812B 灯珠；可选 OLED/电池件。主控板待确认手头 ESP32 是否为 S3+8MB PSRAM（见下表）。<span class="pill g">✔ INMP441、MAX98357A、8Ω3W 喇叭、面包板、杜邦线、充电板已备，无需购买</span></p>
 <p class="eff">✅ 预期效果：快递到手，核对无漏件；主控板丝印标注 N16R8。</p></div></label>
 <label class="chk"><input type="checkbox" id="ck-p0-2"><div class="tk"><b>0.2 注册大模型账号并拿到 API Key</b>
 <p class="do">📋 做什么：注册智谱 AI（open.bigmodel.cn，glm-4-flash 免费）或 DeepSeek（platform.deepseek.com，充值 ¥10 够用很久），创建 API Key 并保存。</p>

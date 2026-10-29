@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客厅存在感应夜灯 · HLK-LD2410B + Home Assistant</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--card2:#1d2129;--line:#2a2f3a;--text:#e6e8ec;--muted:#9aa3b2;--accent:#4f8cff;--green:#31c48d;--warn:#f5a623;--danger:#ef5b5b;--purple:#a78bfa;--mono:'SF Mono',Consolas,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:4px;height:54px;overflow-x:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:5px 11px;border-radius:8px;white-space:nowrap}
+nav a:hover{color:var(--text);background:var(--card2)}
+nav .logo{font-weight:700;color:var(--text);margin-right:10px;font-size:14px}
+header{padding:64px 0 44px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(79,140,255,.15),transparent),radial-gradient(ellipse 50% 40% at 80% 10%,rgba(167,139,250,.12),transparent)}
+.tag{display:inline-block;font-size:13px;color:var(--accent);border:1px solid rgba(79,140,255,.4);padding:3px 12px;border-radius:99px;margin-bottom:18px;background:rgba(79,140,255,.08)}
+h1{font-size:38px;line-height:1.25;margin-bottom:14px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:16px;max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:36px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat b{display:block;font-size:24px;color:var(--accent)}
+.stat span{font-size:13px;color:var(--muted)}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-size:26px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+h2 .num{font-family:var(--mono);font-size:15px;color:var(--accent);border:1px solid var(--line);background:var(--card);border-radius:10px;padding:2px 10px}
+.h2sub{color:var(--muted);font-size:14px;margin-bottom:26px}
+h3{font-size:18px;margin:26px 0 12px;color:var(--text)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.pill{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin:2px 4px 2px 0}
+.pill.b{color:var(--accent);border-color:rgba(79,140,255,.4);background:rgba(79,140,255,.08)}
+.pill.g{color:var(--green);border-color:rgba(49,196,141,.4);background:rgba(49,196,141,.08)}
+.pill.w{color:var(--warn);border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.08)}
+.pill.p{color:var(--purple);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.08)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:13px;background:var(--card2)}
+td code,code{font-family:var(--mono);font-size:13px;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--accent)}
+pre{background:#0b0d11;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:10px 0}
+pre code{background:none;border:none;color:#c9d1d9;padding:0;font-size:13px;line-height:1.6}
+ul,ol{margin:8px 0 8px 22px}
+li{margin:5px 0}
+.muted{color:var(--muted)}
+.rec{color:var(--green);font-weight:600}
+hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:14px 0}
+.fnode{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;flex:1;min-width:130px;text-align:center}
+.fnode b{display:block;font-size:14px;color:var(--text)}
+.fnode span{font-size:12px;color:var(--muted)}
+.fnode.hl{border-color:rgba(79,140,255,.5);background:rgba(79,140,255,.08)}
+.fnode.hl2{border-color:rgba(49,196,141,.5);background:rgba(49,196,141,.08)}
+.farrow{align-self:center;color:var(--muted);font-size:18px;padding:0 2px}
+.steps{counter-reset:s}
+.step{display:flex;gap:16px;margin-bottom:14px}
+.step .dot{counter-increment:s;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--accent);font-size:14px}
+.step .dot::before{content:counter(s)}
+.step .body{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.step .body b{color:var(--text)}
+.step .body p{color:var(--muted);font-size:14px;margin-top:2px}
+.note{border-left:3px solid var(--accent);background:rgba(79,140,255,.06);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14px}
+.note.warn{border-color:var(--warn);background:rgba(245,166,35,.06)}
+.note.ok{border-color:var(--green);background:rgba(49,196,141,.06)}
+footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+.kbd{font-family:var(--mono);background:var(--card2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:12px}
+.chk{display:flex;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:10px;cursor:pointer;align-items:flex-start}
+.chk:hover{border-color:#3a4150}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.chk .tk{flex:1}
+.chk .tk b{font-size:14.5px}
+.chk .tk p{font-size:13px;color:var(--muted);margin-top:3px}
+.chk .tk .do{color:var(--text)}
+.chk .tk .eff{color:var(--green)}
+.chk.done{opacity:.5}
+.chk.done .tk b{text-decoration:line-through}
+.phase{margin:30px 0 12px;font-size:19px;display:flex;align-items:center;gap:10px}
+.phase .ph{font-family:var(--mono);font-size:12px;color:var(--purple);border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.08);border-radius:8px;padding:2px 8px}
+.phase small{font-size:12px;color:var(--muted);font-weight:400}
+.progwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:8px}
+.progbar{height:10px;background:var(--card2);border-radius:99px;overflow:hidden}
+.progbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0;transition:width .3s}
+.progtxt{font-size:13px;color:var(--muted);margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.resetbtn{background:none;border:1px solid var(--line);color:var(--muted);font-size:12px;border-radius:8px;padding:3px 10px;cursor:pointer}
+.resetbtn:hover{color:var(--danger);border-color:var(--danger)}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<span class="logo">💡 存在感应夜灯</span>
+<a href="#arch">架构</a><a href="#bom">硬件清单</a><a href="#wiring">接线</a><a href="#esphome">ESPHome</a><a href="#ha">HA 自动化</a><a href="#tune">灵敏度调优</a><a href="#install">安装位置</a><a href="#plan">实施计划</a><a href="#risk">风险</a>
+</div></nav>
+
+<header><div class="wrap">
+<span class="tag">全部器件已备 · 零采购 · 一个周末搞定</span>
+<h1>HLK-LD2410B <em>客厅存在感应夜灯</em><br>24GHz 毫米波 + Home Assistant</h1>
+<p class="sub">有人走进客厅 → 夜灯亮；人离开 5 分钟 → 夜灯灭。核心优势：24GHz 毫米波雷达能检测<b>静止存在</b>（呼吸级微动），人躺在沙发上看电视一动不动，灯也<b>不会灭</b>——这是普通 PIR 人体传感器做不到的。</p>
+<div class="stats">
+<div class="stat"><b>≈¥0</b><span>新增采购成本（器件全有）</span></div>
+<div class="stat"><b>24GHz</b><span>毫米波 · 可测呼吸微动</span></div>
+<div class="stat"><b>6m</b><span>最远探测距离（8 个门限）</span></div>
+<div class="stat"><b>2~4h</b><span>预计工期</span></div>
+</div>
+</div></header>
+
+<section id="arch"><div class="wrap">
+<h2><span class="num">01</span>方案架构</h2>
+<p class="h2sub">夜灯已接入 Home Assistant，所以本方案不碰灯具本身：LD2410B 只负责「有没有人」这一个信号，经 ESPHome 转成 HA 实体，联动逻辑全部放在 HA 自动化里——以后想改延迟时间、加夜间条件、联动别的灯，都不用动硬件。</p>
+
+<h3>信号流</h3>
+<div class="flow">
+<div class="fnode hl"><b>① 人在客厅</b><span>走动或静坐/躺着</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>② LD2410B 雷达</b><span>24GHz FMCW · 微动检测<br>UART 输出目标状态+距离</span></div>
+<div class="farrow">→</div>
+<div class="fnode"><b>③ ESP 小板（ESPHome）</b><span>UART 256000 波特读取<br>发布传感器到 HA</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl2"><b>④ Home Assistant</b><span>binary_sensor 存在实体</span></div>
+<div class="farrow">→</div>
+<div class="fnode hl2"><b>⑤ 自动化触发</b><span>light.turn_on / off<br>夜灯（已接入 HA）</span></div>
+</div>
+
+<h3>为什么用「存在」而不是「移动」做主信号</h3>
+<div class="grid2">
+<div class="card"><h3>🚶 移动目标（moving）</h3><p class="muted">检测走动、挥手等大幅动作，响应快，但人静坐约半分钟后就会丢失 → 单用它做夜灯，看电视时灯会反复熄灭。</p></div>
+<div class="card"><h3>🧘 静止目标（still）</h3><p class="muted">检测呼吸级微动，人坐着躺着都能持续保持 → 夜灯联动的正确主信号。LD2410B 的 <code>has_target</code>（移动 OR 静止）就是两者取或，直接用它最省心。</p></div>
+</div>
+<div class="note ok">✅ <b>和 PIR 的对比</b>：PIR（如小米人体传感器）只能测「红外变化」，人静止 1~2 分钟就判定无人，夜灯会在你看电视时突然熄灭。毫米波雷达测的是多普勒微动，睡着都能保持检出——这正是「待在客厅就开灯」需求的关键。</div>
+</div></section>
+
+<section id="bom"><div class="wrap">
+<h2><span class="num">02</span>硬件清单（BOM）</h2>
+<p class="h2sub">全部用手头已有器件，零采购。本项目对主控要求极低——<b>不需要 S3、不需要 PSRAM</b>，那块待确认的老 ESP32 甚至任意 ESP8266/C3 都能跑，正好物尽其用。</p>
+
+<div class="card">
+<table>
+<tr><th>器件</th><th>型号</th><th>作用</th><th>状态</th><th>备注</th></tr>
+<tr><td>雷达模块</td><td><b>HLK-LD2410B</b></td><td>24GHz 毫米波存在检测</td><td><span class="pill g">✔ 已备</span></td><td class="rec">B 版带蓝牙，可用手机 App（HLKRadarTool）直接调灵敏度</td></tr>
+<tr><td>主控板</td><td>任意 ESP32 / ESP8266 / C3 开发板</td><td>跑 ESPHome，桥接 UART → Wi-Fi</td><td><span class="pill g">✔ 已备</span></td><td>不吃算力，老款 ESP32-WROOM 完全够用</td></tr>
+<tr><td>杜邦线</td><td>母对母 4 根</td><td>雷达 ↔ 主控飞线</td><td><span class="pill g">✔ 已备</span></td><td>尽量短（&lt;20cm）</td></tr>
+<tr><td>USB 电源</td><td>5V/1A 充电头 + USB 线</td><td>常驻供电</td><td><span class="pill g">✔ 已备</span></td><td>整机功耗 &lt;1W，插客厅插座即可</td></tr>
+<tr><td>夜灯</td><td>（已接入 Home Assistant）</td><td>被控对象</td><td><span class="pill g">✔ 已接入</span></td><td>不改动灯具，只用 HA 里已有的 light 实体</td></tr>
+</table>
+<div class="note">💡 <b>可选</b>：3D 打印一个小外壳把 ESP + 雷达装在一起；或直接用双面胶把雷达贴在 ESP 板背面。裸板跑也完全没问题。</div>
+</div>
+</div></section>
+
+<section id="wiring"><div class="wrap">
+<h2><span class="num">03</span>接线表</h2>
+<p class="h2sub">LD2410B 只有几个焊盘，接 4 根线就能跑。以 ESP32 为例（其他板换对应引脚即可）。</p>
+<div class="card">
+<table>
+<tr><th>LD2410B 焊盘</th><th>接 ESP32</th><th>说明</th></tr>
+<tr><td><b>VCC</b></td><td>5V（VBUS/5V 脚）</td><td>⚠️ 建议 5V 供电，接 3.3V 会不稳定、探测距离缩水（板载 LDO 给雷达芯片供电）</td></tr>
+<tr><td><b>GND</b></td><td>GND</td><td>共地</td></tr>
+<tr><td><b>TX</b></td><td><code>GPIO 16</code>（ESP 的 RX）</td><td>交叉接：雷达 TX → ESP RX；3.3V 逻辑可直连，无需电平转换</td></tr>
+<tr><td><b>RX</b></td><td><code>GPIO 17</code>（ESP 的 TX）</td><td>交叉接：雷达 RX ← ESP TX；供调参/配置用，建议接上</td></tr>
+<tr><td><b>OUT（OT）</b></td><td>可不接</td><td>GPIO 高/低电平直出「有无目标」，本方案走 UART 拿更丰富的数据，用不到它</td></tr>
+</table>
+<div class="note warn">⚠️ <b>最容易踩的坑</b>：TX/RX 一定要<b>交叉</b>（雷达 TX 接 ESP 的 RX，雷达 RX 接 ESP 的 TX）。接反了 ESPHome 日志会一直刷「找不到雷达」。</div>
+<div class="note">📌 <b>波特率</b>：LD2410B 出厂 UART 固定 <b>256000</b>（不是常见的 9600/115200），ESPHome 里必须写对，下一节 YAML 已给出。</div>
+</div>
+</div></section>
+
+<section id="esphome"><div class="wrap">
+<h2><span class="num">04</span>ESPHome 固件配置</h2>
+<p class="h2sub">推荐用 <b>ESPHome Web 工具</b>（web.esphome.io）浏览器直刷，或在 HA 里装 ESPHome 加载项（推荐，改配置点一下就 OTA 升级）。</p>
+<div class="card">
+<h3>完整 YAML（living-room-presence.yaml）</h3>
+<pre><code>esphome:
+  name: living-room-presence
+  friendly_name: 客厅存在传感器
+
+esp32:            # ESP8266 板改成 esp8266: + board: esp01_1m
+  board: esp32dev
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:              # 配网失败时开热点兜底
+    ssid: "Presence Fallback"
+    password: "12345678"
+
+captive_portal:
+logger:
+api:
+ota:
+  - platform: esphome
+
+uart:
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 256000   # LD2410B 固定波特率
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+  id: ld2410_radar
+
+binary_sensor:
+  - platform: ld2410
+    has_target:            # 移动 OR 静止，主信号就用它
+      name: "客厅存在"
+    has_moving_target:
+      name: "客厅移动"
+    has_still_target:
+      name: "客厅静止"
+
+sensor:
+  - platform: ld2410
+    moving_distance:
+      name: "移动距离"
+    still_distance:
+      name: "静止距离"
+    moving_energy:
+      name: "移动能量"
+    still_energy:
+      name: "静止能量"
+    detection_distance:
+      name: "探测距离"
+
+  # 可选：板载温度/信号，便于排查
+  - platform: wifi_signal
+    name: "WiFi 信号"
+    update_interval: 60s
+</code></pre>
+<div class="note ok">✅ 刷完后 HA 里会<b>自动发现</b>这台 ESPHome 设备（设置 → 设备与服务 → 发现）。点「配置」即可，<code>binary_sensor.客厅存在</code> 等实体全部自动生成，无需手写 MQTT。</div>
+<div class="note">💡 只要主信号的话，<code>sensor:</code> 那几行距离/能量可以删掉，但留着方便在 HA 里画曲线调灵敏度，建议先保留。</div>
+</div>
+</div></section>
+
+<section id="ha"><div class="wrap">
+<h2><span class="num">05</span>Home Assistant 自动化</h2>
+<p class="h2sub">核心逻辑：<b>检测到人 → 立即开灯；连续 5 分钟无人 → 关灯</b>。一个自动化搞定，YAML 模式直接粘贴（设置 → 自动化 → 新建 → 右上角切换到 YAML 编辑）。</p>
+<div class="card">
+<h3>automation.yaml</h3>
+<pre><code>alias: 客厅夜灯 · 人来灯亮人走灯灭
+description: LD2410B 存在感应联动夜灯
+mode: restart
+trigger:
+  - platform: state
+    entity_id: binary_sensor.ke_ting_cun_zai   # 客厅存在
+    to: "on"
+    id: enter
+  - platform: state
+    entity_id: binary_sensor.ke_ting_cun_zai
+    to: "off"
+    for: "00:05:00"        # 无人持续 5 分钟才关灯
+    id: leave
+condition: []
+action:
+  - choose:
+      - conditions: "{{ trigger.id == 'enter' }}"
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.living_room_night_light  # 换成你的夜灯实体
+      - conditions: "{{ trigger.id == 'leave' }}"
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light.living_room_night_light
+</code></pre>
+<div class="note warn">⚠️ <code>entity_id</code> 要换成你 HA 里实际的实体名：存在传感器刷完后可能是拼音（如上），夜灯实体去「开发者工具 → 状态」里搜 <code>light.</code> 确认。</div>
+</div>
+<div class="card">
+<h3>可选增强：只在夜间生效</h3>
+<p class="muted">白天客厅有自然光，夜灯没必要亮。把 <code>condition: []</code> 换成：</p>
+<pre><code>condition:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"   # 仅日落后到日出前生效
+</code></pre>
+<p class="muted">也可以用时间段（如 18:00~次日 7:00），或加一个 <code>input_boolean</code> 总开关方便临时停用。</p>
+</div>
+<div class="card">
+<h3>调延迟不用改自动化</h3>
+<p class="muted">「离开多久关灯」的 <code>for: 00:05:00</code> 就是缓冲期。毫米波本身有约 2~3 秒的无人延迟判定（下节可调），加上这个 5 分钟，基本不会出现「人还在灯先灭」的尴尬。嫌保守可缩到 2~3 分钟。</p>
+</div>
+</div></section>
+
+<section id="tune"><div class="wrap">
+<h2><span class="num">06</span>灵敏度调优</h2>
+<p class="h2sub">LD2410B 出厂默认参数就能用，但客厅场景建议花 10 分钟调一下。两条路：手机 App 走蓝牙（B 版专属，最方便），或 HA 里用 ESPHome 的 number 实体调。</p>
+<div class="grid2">
+<div class="card"><h3>📱 方式一：HLKRadarTool App（推荐）</h3>
+<ol>
+<li>手机装 <b>HLKRadarTool</b>（Android/iOS 均有，官方免费）</li>
+<li>雷达上电后 App 扫描蓝牙直连（不需要 ESP 参与）</li>
+<li>可视化界面里调：<b>移动/静止灵敏度</b>（每个距离门 0~100）、<b>无人延迟</b>（0~65535 秒，建议 5~15）、<b>最大探测距离门</b></li>
+<li>调完点写入，参数存进雷达掉电不丢</li>
+</ol>
+<p class="muted">注：调参时雷达 RX 必须接着 ESP（或 USB 转 TTL），App 通过蓝牙发配置指令。</p></div>
+<div class="card"><h3>🏠 方式二：ESPHome number 实体</h3>
+<p class="muted">在上面 YAML 的 <code>ld2410:</code> 下面加几行，HA 里就会出现滑条，不用碰手机：</p>
+<pre><code>number:
+  - platform: ld2410
+    timeout:
+      name: "无人延迟"
+    max_move_distance_gate:
+      name: "最大移动距离门"
+    max_still_distance_gate:
+      name: "最大静止距离门"
+    still_sensitivity:
+      name: "静止灵敏度"
+    moving_sensitivity:
+      name: "移动灵敏度"
+</code></pre></div>
+</div>
+<div class="card">
+<h3>客厅场景调参建议</h3>
+<table>
+<tr><th>参数</th><th>建议值</th><th>原因</th></tr>
+<tr><td>距离门（gate）</td><td>开到 4~5 门（约 3~3.75m）</td><td>每门 0.75m；把覆盖范围限制在客厅内，避免隔着墙/走廊误触发</td></tr>
+<tr><td>移动灵敏度</td><td>60~70（默认 50 起调）</td><td>走动检出更快</td></tr>
+<tr><td>静止灵敏度</td><td>50~60</td><td>太高会把风扇/窗帘当人；太低人静坐会丢</td></tr>
+<tr><td>无人延迟</td><td>5~10 秒</td><td>HA 自动化里已有 5 分钟缓冲，这里不用太长</td></tr>
+</table>
+<div class="note">🎯 <b>调试技巧</b>：在 HA 里把「静止能量」「移动能量」两个传感器加到仪表盘，人坐在沙发上观察能量值——数值稳定高于阈值 = 灵敏度合适；时掉时回 = 调高静止灵敏度一档。</div>
+</div>
+</div></section>
+
+<section id="install"><div class="wrap">
+<h2><span class="num">07</span>安装位置与朝向</h2>
+<p class="h2sub">毫米波雷达是「锥形波束」探测，装对位置比调参数更重要。24GHz 能穿透木板/石膏板/薄窗帘，但会被金属和厚墙挡住。</p>
+<div class="grid2">
+<div class="card"><h3>✅ 推荐装法</h3>
+<ul>
+<li><b>客厅对角天花板角落</b>：波束斜向下覆盖全屋，探测最均匀（首选）</li>
+<li><b>墙面 2~2.4m 高</b>：朝人常待的区域（沙发/餐桌）斜向下 30~45°</li>
+<li>正对主要活动区，中间无大家具/绿植遮挡</li>
+<li>用双面胶或 3D 打印支架固定，避免晃动</li>
+</ul></div>
+<div class="card"><h3>❌ 避开这些</h3>
+<ul>
+<li><b>正对电风扇/空调出风口/摇摆的窗帘</b>：周期性运动会误触发（最常见误报源）</li>
+<li><b>正对门口/走廊</b>：路过的人会被算进客厅 → 用「距离门」裁掉远处，或调朝向</li>
+<li>金属板/镜子正后方或正前方</li>
+<li>紧贴大型家电（冰箱/电视背面），电磁干扰 + 遮挡</li>
+</ul></div>
+</div>
+<div class="note">💡 <b>先裸板验证再固定</b>：接线后用杜邦线临时引出来，拿在手里在客厅各处走一圈，看 HA 里「存在」实体是否跟着亮，确定最佳点位再上胶固定。</div>
+</div></section>
+
+<section id="plan"><div class="wrap">
+<h2><span class="num">08</span>实施计划</h2>
+<p class="h2sub">共 8 步，总耗时 2~4 小时。勾选会自动保存在浏览器本地，随时回来接着干。</p>
+<div class="progwrap">
+<div class="progbar"><i id="progfill"></i></div>
+<div class="progtxt"><span id="progtxt">已完成 0 / 8 步</span><button class="resetbtn" id="resetprog">清空进度</button></div>
+</div>
+
+<div class="phase"><span class="ph">阶段 1</span>硬件与固件 <span class="ph phcnt"></span><small>· 1 小时</small></div>
+<label class="chk"><input type="checkbox" id="ck-n1-1"><div class="tk"><b>1.1 接线</b>
+<p class="do">📋 做什么：按第 03 节接 4 根线：VCC→5V、GND→GND、雷达 TX→GPIO16、雷达 RX→GPIO17。USB 上电。</p>
+<p class="eff">✅ 预期效果：雷达板上电源灯亮，无发热异味。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-n1-2"><div class="tk"><b>1.2 安装 ESPHome 并写入配置</b>
+<p class="do">📋 做什么：HA 加载项商店装 ESPHome（或浏览器打开 web.esphome.io）；新建设备，粘贴第 04 节 YAML，改 wifi 密钥；首次用 USB 刷入，之后全程 OTA。</p>
+<p class="eff">✅ 预期效果：设备日志显示连上 Wi-Fi，无 UART 报错刷屏。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-n1-3"><div class="tk"><b>1.3 验证雷达数据</b>
+<p class="do">📋 做什么：看 ESPHome 日志或 HA 实体：在雷达前走动 / 静坐，观察「客厅存在」「移动距离」「静止能量」数值变化。</p>
+<p class="eff">✅ 预期效果：人进探测范围 1 秒内存在变 on；静坐 2 分钟不掉线。<b>若一直 off：检查 TX/RX 是否接反、波特率是否 256000。</b></p></div></label>
+<label class="chk"><input type="checkbox" id="ck-n1-4"><div class="tk"><b>1.4 接入 Home Assistant</b>
+<p class="do">📋 做什么：HA「设置 → 设备与服务 → 发现」里点配置，把 ESPHome 设备加进来；给实体改成好记的名字。</p>
+<p class="eff">✅ 预期效果：HA 里能看到全套实体（存在/移动/静止/距离/能量）。</p></div></label>
+
+<div class="phase"><span class="ph">阶段 2</span>自动化联动 <span class="ph phcnt"></span><small>· 30 分钟</small></div>
+<label class="chk"><input type="checkbox" id="ck-n2-1"><div class="tk"><b>2.1 创建自动化</b>
+<p class="do">📋 做什么：粘贴第 05 节 YAML，替换两个 entity_id（存在传感器 + 夜灯）。</p>
+<p class="eff">✅ 预期效果：走进客厅 → 夜灯 1~2 秒内亮；离开 5 分钟 → 自动灭。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-n2-2"><div class="tk"><b>2.2 静坐压测（关键验收）</b>
+<p class="do">📋 做什么：人躺沙发上看 20 分钟视频一动不动，观察灯是否全程保持。</p>
+<p class="eff">✅ 预期效果：灯全程不灭——这就是毫米波相对 PIR 的核心价值。若中途灭：调高静止灵敏度（第 06 节）。</p></div></label>
+
+<div class="phase"><span class="ph">阶段 3</span>调优与安装 <span class="ph phcnt"></span><small>· 1~2 小时</small></div>
+<label class="chk"><input type="checkbox" id="ck-n3-1"><div class="tk"><b>3.1 灵敏度与距离门调优</b>
+<p class="do">📋 做什么：用 HLKRadarTool 或 HA 滑条，按第 06 节建议值调：距离门 4~5、静止灵敏度 50~60、无人延迟 5~10 秒；开着风扇/窗帘场景验证不误触发。</p>
+<p class="eff">✅ 预期效果：客厅全覆盖、静坐不丢、风扇窗帘不误报。</p></div></label>
+<label class="chk"><input type="checkbox" id="ck-n3-2"><div class="tk"><b>3.2 定点安装 + 收尾</b>
+<p class="do">📋 做什么：按第 07 节选定天花板角落/墙面点位固定；理线；（可选）加夜间 condition、3D 打印外壳。</p>
+<p class="eff">✅ 预期效果：安装牢固不晃，走线隐蔽，全链路稳定运行 🎉。</p></div></label>
+</div></section>
+
+<section id="risk"><div class="wrap">
+<h2><span class="num">09</span>风险与注意事项</h2>
+<div class="grid2">
+<div class="card"><h3>⚠️ 硬件坑</h3>
+<ul>
+<li><b>供电必须稳</b>：雷达对电源纹波敏感，别和功放类大功率器件共用一个 USB 口；本项目整机 &lt;1W，普通充电头没问题。</li>
+<li><b>TX/RX 交叉</b>：接反不烧板子，但完全无数据；日志刷「uart error」先查这里。</li>
+<li><b>波特率 256000</b>：非常规值，手抄 YAML 时最容易写错成 115200。</li>
+<li><b>杜邦线接触不良</b>：雷达模块焊盘小，长期部署建议焊接或热熔胶固定杜邦头。</li>
+</ul></div>
+<div class="card"><h3>🏠 使用场景坑</h3>
+<ul>
+<li><b>误触发源</b>：风扇、空调摆风、飘动窗帘、宠物——毫米波对任何周期性微动都会响应。靠朝向 + 距离门 + 灵敏度三板斧压制。</li>
+<li><b>隔墙探测</b>：24GHz 能穿透石膏板/木门，装在客厅却可能探测到隔壁房间的人 → 距离门裁短或换朝向。</li>
+<li><b>金属遮挡</b>：雷达不能装在金属盒/金属贴膜后面，波束被完全屏蔽。</li>
+<li><b>HA 依赖</b>：自动化在 HA 里跑，HA 重启/挂掉期间夜灯不联动（灯本身不受影响）。追求高可用可把逻辑下放：雷达 OUT 脚 + 智能开关本地联动，二期再考虑。</li>
+<li><b>隐私</b>：雷达只输出「有无目标 + 距离 + 能量」，不采集任何图像/声音，卧室客厅均可放心用。</li>
+</ul></div>
+</div>
+
+<h3>关键资源链接</h3>
+<div class="card">
+<ul>
+<li>ESPHome LD2410 组件文档：<a href="https://esphome.io/components/ld2410">esphome.io/components/ld2410</a>（YAML 全参数）</li>
+<li>HA 自动化文档：<a href="https://www.home-assistant.io/docs/automation/">home-assistant.io/docs/automation</a></li>
+<li>调参 App：<b>HLKRadarTool</b>（各应用商店搜索，海凌科官方）</li>
+<li>协议逆向与工具集：<a href="https://github.com/limengdu/ld2410B-Bluetooth-gateway">github 上的 LD2410 社区仓库</a>（帧格式 0xF4F3F2F1...0xF8F7F6F5）</li>
+<li>姊妹篇：<a href="/ai/ai-intercom-plan.html">AI 语音对讲机 · ESP32-S3 硬件方案</a></li>
+</ul>
+</div>
+<div class="note ok">📌 <b>一句话总结</b>：LD2410B（已有）+ 任意 ESP 板（已有）+ 4 根杜邦线（已有），刷一份 ESPHome YAML，HA 里粘一条自动化——零采购、一个周末，得到「人在灯亮、人静灯不灭、人走灯灭」的客厅夜灯。</div>
+</div></section>
+
+<footer><div class="wrap">客厅存在感应夜灯 · HLK-LD2410B + ESPHome + Home Assistant · 生成于 2026 · 全部器件已备</div></footer>
+<script>
+(function(){
+  var KEY='ai-presence-light-progress-v1';
+  var boxes=[].slice.call(document.querySelectorAll('.chk input[type=checkbox]'));
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  function refresh(){
+    var n=0,st={};
+    boxes.forEach(function(b){
+      st[b.id]=b.checked;
+      if(b.checked)n++;
+      b.closest('.chk').classList.toggle('done',b.checked);
+    });
+    localStorage.setItem(KEY,JSON.stringify(st));
+    var pct=boxes.length?Math.round(n/boxes.length*100):0;
+    document.getElementById('progfill').style.width=pct+'%';
+    document.getElementById('progtxt').textContent='已完成 '+n+' / '+boxes.length+' 步（'+pct+'%）'+(n===boxes.length&&n>0?' 🎉 全部完成，人来灯亮！':'');
+    document.querySelectorAll('.phase').forEach(function(ph){
+      var total=0,done=0,el=ph.nextElementSibling;
+      while(el&&!el.classList.contains('phase')){
+        el.querySelectorAll('input[type=checkbox]').forEach(function(b){total++;if(b.checked)done++});
+        el=el.nextElementSibling;
+      }
+      var badge=ph.querySelector('.phcnt');
+      if(badge)badge.textContent=done+'/'+total;
+    });
+  }
+  boxes.forEach(function(b){
+    if(saved[b.id])b.checked=true;
+    b.addEventListener('change',refresh);
+  });
+  document.getElementById('resetprog').addEventListener('click',function(){
+    if(confirm('确定清空全部勾选进度？')){localStorage.removeItem(KEY);location.reload()}
+  });
+  refresh();
+})();
+</script>
+</body></html>
