@@ -1,0 +1,17 @@
+{
+  "name": "rubik-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D Rubik's cube playground, tutor and mechanism lab (2x2 / 3x3)",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "test": "node test/core.test.mjs && node test/nets.test.mjs && node test/solver2.test.mjs 200 && node test/solver3.test.mjs 150"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.180.0"
+  }
+}
