@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="一张有性格的中文互动元素周期表：探索118种元素的常见形态、特性、生活踪迹与趣味知识。">
+  <meta name="theme-color" content="#f5f3ec">
+  <title>元素有性格｜走进奇妙的元素周期表</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#explorer">跳到元素周期表</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="元素有性格首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="4"/><ellipse cx="20" cy="20" rx="17" ry="7"/><ellipse cx="20" cy="20" rx="17" ry="7" transform="rotate(60 20 20)"/><ellipse cx="20" cy="20" rx="17" ry="7" transform="rotate(120 20 20)"/></svg>
+      <span>元素有性格<small>ELEMENTS, EXPLAINED</small></span>
+    </a>
+    <nav class="main-nav" aria-label="页面导航">
+      <a href="#explorer">探索元素</a>
+      <a href="#guide">读懂周期表</a>
+      <a href="#book">关于本书</a>
+    </nav>
+    <span class="edition">科普可视化 · 001</span>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> 《走进奇妙的元素周期表》可视化笔记</p>
+        <h1 id="hero-title">元素，<br>有自己的<span class="accent-word">性格。</span></h1>
+        <p class="hero-intro">有的活泼，有的沉静；有的构成身体，有的点亮城市。<br>从电子层到铁锈与石膏，读懂 118 位“居民”的立体性格。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#explorer">开始探索 <span aria-hidden="true">↘</span></a>
+          <button class="button button-quiet" id="random-element" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3c5 0 6 10 11 10h4M17 13l4 4-4 4M3 17h3c2 0 3-1 4-3M14 7c1-1 2-1 3-1h4M17 2l4 4-4 4"/></svg>
+            随机认识一种
+          </button>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>118</dt><dd>种已知元素</dd></div>
+          <div><dt>7</dt><dd>个周期</dd></div>
+          <div><dt>18</dt><dd>个族</dd></div>
+        </dl>
+      </div>
+      <div class="hero-visual" aria-label="碳、氧、铁三种元素的卡片插画">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="hero-card hero-card-main">
+          <span class="hero-card-number">06</span><span class="hero-card-state">固态</span>
+          <strong>C</strong><h2>碳</h2><p>柔软石墨，也能成为坚硬钻石。</p>
+          <svg viewBox="0 0 180 90" aria-hidden="true"><path d="m25 55 38-30 43 18 42-26M63 25l8 47 35-29 16 32M25 55l46 17 51 3M106 43l16 32" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor"><circle cx="25" cy="55" r="7"/><circle cx="63" cy="25" r="7"/><circle cx="106" cy="43" r="7"/><circle cx="148" cy="17" r="7"/><circle cx="71" cy="72" r="7"/><circle cx="122" cy="75" r="7"/></g></svg>
+        </div>
+        <div class="mini-element mini-oxygen"><span>08</span><strong>O</strong><small>氧 · 生命的气息</small></div>
+        <div class="mini-element mini-iron"><span>26</span><strong>Fe</strong><small>铁 · 文明的骨架</small></div>
+        <div class="hero-note">不是背诵清单，<br>而是一张世界地图。</div>
+      </div>
+    </section>
+
+    <section class="explorer" id="explorer" aria-labelledby="explorer-title">
+      <div class="section-heading">
+        <div><p class="section-kicker">THE PERIODIC TABLE</p><h2 id="explorer-title">一张表，认出整个世界</h2></div>
+        <p>颜色代表元素家族，小圆点标记常温物态。<br>点击任意元素，继续看电子排布、化合物、焰色与元素关系。</p>
+      </div>
+
+      <div class="controls" aria-label="元素搜索与筛选">
+        <div class="search-row">
+          <label class="search-box" for="element-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+            <input id="element-search" type="search" autocomplete="off" placeholder="试试“氧”“Fe”“石膏”或“不锈钢”" aria-label="搜索元素" aria-describedby="search-hint">
+            <kbd aria-hidden="true">/</kbd>
+          </label>
+          <div class="state-filter" role="group" aria-label="按常温物态筛选">
+            <button type="button" class="is-active" data-state="all" aria-pressed="true">全部物态</button>
+            <button type="button" data-state="solid" aria-pressed="false"><i class="state-dot solid"></i>固体</button>
+            <button type="button" data-state="liquid" aria-pressed="false"><i class="state-dot liquid"></i>液体</button>
+            <button type="button" data-state="gas" aria-pressed="false"><i class="state-dot gas"></i>气体</button>
+            <button type="button" data-state="unknown" aria-pressed="false"><i class="state-dot unknown"></i>未知</button>
+          </div>
+        </div>
+        <p class="sr-only" id="search-hint">可以按中文名称、元素符号、原子序数、形态、特性或用途搜索。</p>
+        <div class="category-filter" id="category-filter" role="group" aria-label="按元素家族筛选"></div>
+      </div>
+
+      <div class="table-meta">
+        <p id="result-count" role="status" aria-live="polite">正在准备元素…</p>
+        <p><span class="desktop-hint">横向浏览完整表格 · </span>点击元素卡片查看详情</p>
+      </div>
+      <div class="periodic-scroll" tabindex="0" aria-label="元素周期表，可横向滚动">
+        <div class="group-labels" id="group-labels" aria-hidden="true"></div>
+        <div class="periodic-table" id="periodic-table" role="group" aria-label="118种元素"></div>
+      </div>
+      <div class="empty-state" id="empty-state" hidden>
+        <strong>没有找到这位“居民”</strong><p>换个关键词，或清除筛选后再看看。</p><button type="button" id="reset-filters">清除全部筛选</button>
+      </div>
+      <noscript><p class="noscript-note">请启用 JavaScript，以显示和探索完整元素周期表。</p></noscript>
+    </section>
+
+    <section class="guide" id="guide" aria-labelledby="guide-title">
+      <div class="section-heading light-heading">
+        <div><p class="section-kicker">HOW TO READ IT</p><h2 id="guide-title">周期表为什么“周期”？</h2></div>
+        <p>别被格子吓到。把它想成一座城市：<br>位置，早已透露了居民的性格。</p>
+      </div>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <span class="guide-number">01</span>
+          <div class="proton-visual" aria-hidden="true"><b>+</b><b>+</b><b>+</b><b>−</b><b>−</b><b>−</b></div>
+          <h3>序号，是元素的身份证</h3>
+          <p>原子核里有几个质子，就是几号元素。氢有 1 个，碳有 6 个，金有 79 个；质子数一变，就换了元素。</p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">02</span>
+          <div class="column-visual" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>同一列，往往脾气相近</h3>
+          <p>最外层电子排布会影响化学性质。锂、钠、钾排在同一族，都是活泼金属；氦、氖、氩则都不爱反应。</p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">03</span>
+          <div class="row-visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <h3>同一行，电子层逐渐住满</h3>
+          <p>从左到右，质子与电子逐个增加。相似性质会在新周期再次出现，这就是“周期律”，不是背表格口诀。</p>
+        </article>
+      </div>
+
+      <div class="body-elements">
+        <div class="body-copy"><p class="section-kicker">YOU ARE STARDUST</p><h3>你，也是元素的集合</h3><p>人的身体不是“化学之外”的存在。氧、碳、氢、氮构成水、蛋白质与遗传物质，钙和磷等则参与骨骼、牙齿与生命活动。</p><small>按成人体重大致质量占比；数值因个体与统计口径略有差异。</small></div>
+        <div class="composition" aria-label="人体主要元素质量占比示意：氧约65%，碳约18%，氢约10%，氮约3%，钙约1.5%，其他约2.5%">
+          <div class="composition-bar" aria-hidden="true"><span class="body-o" style="--share:65%"></span><span class="body-c" style="--share:18%"></span><span class="body-h" style="--share:10%"></span><span class="body-n" style="--share:3%"></span><span class="body-ca" style="--share:1.5%"></span><span class="body-other" style="--share:2.5%"></span></div>
+          <ul><li><i class="body-o"></i><b>O 氧</b><span>约 65%</span></li><li><i class="body-c"></i><b>C 碳</b><span>约 18%</span></li><li><i class="body-h"></i><b>H 氢</b><span>约 10%</span></li><li><i class="body-n"></i><b>N 氮</b><span>约 3%</span></li><li><i class="body-ca"></i><b>Ca 钙</b><span>约 1.5%</span></li><li><i class="body-other"></i><b>其他</b><span>约 2.5%</span></li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="book" id="book" aria-labelledby="book-title">
+      <div class="book-visual" aria-hidden="true"><div class="book-spine"></div><span>ELEMENTS</span><strong>走进奇妙的<br>元素周期表</strong><div class="book-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>吉田隆嘉 · 科普阅读</small></div>
+      <div class="book-copy">
+        <p class="section-kicker">FROM BOOK TO MAP</p><h2 id="book-title">从一条街，读懂一张表</h2>
+        <p class="book-lead">《走进奇妙的元素周期表》把周期表比作京都的街道：每一列像一条街，相邻元素像邻居。顺着这张地图，作者把看似抽象的元素带进宇宙、人体与生命。</p>
+        <ol class="book-themes"><li><span>01</span><div><b>先找到“位置感”</b><p>用家族与周期理解元素之间的关系，而不是孤立背诵名称。</p></div></li><li><span>02</span><div><b>再发现“元素性格”</b><p>从活泼、稳定、轻重与形态，理解物质世界为什么如此多样。</p></div></li><li><span>03</span><div><b>最后回到生命与宇宙</b><p>看见恒星、地球、身体和日常生活中的元素，其实彼此相连。</p></div></li></ol>
+        <p class="book-disclaimer">本页提炼书中的科普视角并补充现代元素资料，不是原书章节的复刻。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="brand footer-brand"><span>元素有性格<small>STAY CURIOUS. LOOK CLOSER.</small></span></div><p>为好奇心而做 · 118 种元素，一个相连的世界</p><a href="#top">回到顶部 ↑</a></footer>
+
+  <dialog class="element-dialog encyclopedia-dialog" id="element-dialog" aria-labelledby="detail-name">
+    <button class="dialog-close" id="dialog-close" type="button" aria-label="关闭元素详情"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
+    <header class="detail-header">
+      <div class="detail-title"><strong id="detail-symbol"></strong><div><p class="detail-index" id="detail-index"></p><h2 id="detail-name"></h2><p id="detail-english"></p></div></div>
+      <div class="detail-tags"><span id="detail-category"></span><span id="detail-state"></span></div>
+    </header>
+    <div class="detail-tabs" role="tablist" aria-label="元素百科视角">
+      <button type="button" role="tab" id="tab-overview" data-tab="overview" aria-controls="panel-overview" aria-selected="true">概览</button>
+      <button type="button" role="tab" id="tab-structure" data-tab="structure" aria-controls="panel-structure" aria-selected="false" tabindex="-1">原子结构</button>
+      <button type="button" role="tab" id="tab-compounds" data-tab="compounds" aria-controls="panel-compounds" aria-selected="false" tabindex="-1">化合物与反应</button>
+      <button type="button" role="tab" id="tab-relations" data-tab="relations" aria-controls="panel-relations" aria-selected="false" tabindex="-1">关系与故事</button>
+    </div>
+    <div class="detail-panels">
+      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+        <div class="overview-grid">
+          <div class="detail-visual"><div id="detail-illustration"></div><p class="illustration-note">常见形态示意 · 非等比例实物图</p></div>
+          <div class="overview-content">
+            <dl class="detail-facts"><div><dt>常见形态</dt><dd id="detail-form"></dd></div><div><dt>关键特性</dt><dd id="detail-property"></dd></div><div><dt>在哪里遇见</dt><dd id="detail-use"></dd></div></dl>
+            <div class="fun-fact"><span>有意思的一点</span><p id="detail-fact"></p></div>
+          </div>
+        </div>
+        <div class="status-grid">
+          <article class="status-card"><span>化学活泼性</span><p id="detail-reactivity"></p></article>
+          <article class="status-card" id="nuclear-card"><span>核稳定性</span><p id="detail-nuclear"></p><small id="detail-nuclear-text"></small></article>
+          <article class="status-card flame-card"><span>焰色反应</span><div class="flame-title"><i id="flame-swatch"></i><p id="detail-flame"></p></div><small id="detail-flame-text"></small></article>
+        </div>
+        <dl class="physical-grid"><div><dt>相对原子质量</dt><dd id="detail-mass"></dd></div><div><dt>熔点</dt><dd id="detail-melting"></dd></div><div><dt>密度</dt><dd id="detail-density"></dd></div></dl>
+        <p class="safety-note" id="detail-safety" hidden>放射性元素需要专业设施与严格防护，本页仅作科学认识。</p>
+      </section>
+      <section id="panel-structure" role="tabpanel" aria-labelledby="tab-structure" hidden>
+        <div class="structure-grid"><div class="electron-model" id="electron-shells"></div><div class="structure-content"><p class="section-kicker">INSIDE THE ATOM</p><h3>电子，也有自己的楼层</h3><dl class="structure-facts"><div><dt>电子排布式</dt><dd id="detail-config"></dd></div><div><dt>各层电子数</dt><dd id="detail-shells"></dd></div><div><dt>常见氧化态</dt><dd id="detail-oxidation"></dd></div></dl><p class="science-note">周期与价电子排布密切相关，但电子层数不能机械等同于周期；钯等元素存在例外，应以具体基态排布为准。过渡金属和超重元素的排布还可能有例外或预测。</p></div></div>
+        <details class="electron-theory" id="electron-theory">
+          <summary><span>看懂电子层</span><small>容量和实际数量不是一回事</small></summary>
+          <div class="theory-content">
+            <p class="theory-lead">圆圈旁的 2、8、14……是这个元素<strong>实际拥有的电子数</strong>，不是每层的最大容量。可以把轨道想成房间：每个轨道最多住 2 个电子，s、p、d、f 轨道分别有 1、3、5、7 个，所以最多住 2、6、10、14 个电子。</p>
+            <div class="capacity-grid" aria-label="前四层电子容量">
+              <div><span>第 1 层 K</span><strong>2</strong><small>只有 1s</small></div>
+              <div><span>第 2 层 L</span><strong>8</strong><small>2s + 2p</small></div>
+              <div><span>第 3 层 M</span><strong>18</strong><small>3s + 3p + 3d</small></div>
+              <div><span>第 4 层 N</span><strong>32</strong><small>4s + 4p + 4d + 4f</small></div>
+            </div>
+            <div class="theory-columns">
+              <section><h4>容量为什么有规律？</h4><p>把各层轨道容量相加，就得到第 n 层最多容纳 2n² 个电子。这里说的是量子状态的数量，不是电子之间会互相“挤占房间”。</p></section>
+              <section><h4>为什么没有住满？</h4><p>电子主要按轨道能量填充，并非装满一层才换下一层。钙的第 3 层只有 8 个电子，因为 3d 还空着；铁则是 3s²、3p⁶、3d⁶，所以第 3 层实际有 14 个。</p></section>
+              <section><h4>这是严格证明的吗？</h4><p>量子力学和泡利不相容原理有大量光谱等实验支持，但多电子排布是近似模型与实验的综合结果。电子层图不是原子照片；超重元素的预测性质会另外标明，不把猜测写成事实。</p></section>
+            </div>
+          </div>
+        </details>
+      </section>
+      <section id="panel-compounds" role="tabpanel" aria-labelledby="tab-compounds" hidden>
+        <div class="panel-intro"><p class="section-kicker">BEYOND THE ELEMENT</p><h3>元素，如何变成身边的物质？</h3><p id="detail-compound-note"></p></div>
+        <div class="compound-grid" id="compound-cards"></div>
+        <article class="reaction-card" id="reaction-card"><span>一幕化学反应</span><strong id="detail-equation"></strong><p id="detail-reaction"></p></article>
+      </section>
+      <section id="panel-relations" role="tabpanel" aria-labelledby="tab-relations" hidden>
+        <div class="panel-intro"><p class="section-kicker">A CONNECTED WORLD</p><h3>没有一种元素是孤岛</h3><p>点击关系卡片，跳到另一种元素继续探索。</p></div>
+        <div class="relation-grid" id="relation-cards"></div>
+        <article class="story-card"><span>书本之外，再多知道一点</span><p id="detail-story"></p></article>
+      </section>
+    </div>
+    <div class="detail-nav"><button type="button" id="previous-element">← <span>上一种</span></button><span id="detail-position"></span><button type="button" id="next-element"><span>下一种</span> →</button></div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="logic.js"></script>
+  <script src="illustration.js"></script>
+  <script src="chemistry-data/elements-001-030.js"></script>
+  <script src="chemistry-data/elements-031-060.js"></script>
+  <script src="chemistry-data/elements-061-090.js"></script>
+  <script src="chemistry-data/elements-091-118.js"></script>
+  <script src="chemistry-data.js"></script>
+  <script src="chemistry-view.js"></script>
+  <script src="encyclopedia.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
