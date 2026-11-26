@@ -1008,7 +1008,7 @@ body[data-theme="dark"] .flow-path-bg {
 
 .fact-callout-box {
   position: absolute;
-  left: 20px;
+  left: 136px;
   max-width: 440px;
   background: var(--bg-elevated);
   border: 2px solid var(--accent);
@@ -1235,6 +1235,7 @@ body[data-theme="dark"] .flow-path-bg {
   border-radius: 5px;
   cursor: pointer;
   color: var(--text-secondary);
+  white-space: nowrap;
   transition: all 0.14s;
 }
 
@@ -1356,6 +1357,183 @@ body[data-theme="dark"] .map-water-label {
 .map-desc {
   color: var(--text-secondary);
   margin-top: 3px;
+}
+
+/* Name Origin (Etymology) Card */
+.name-origin-card {
+  background: linear-gradient(135deg, var(--gold-soft), var(--bg-surface) 75%);
+  border: 1px solid rgba(184, 131, 35, 0.36);
+  border-left: 3.5px solid var(--gold);
+  border-radius: 9px;
+  padding: 10px 12px;
+}
+
+.name-origin-label {
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+
+.name-origin-text {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Strategic Passes & Geographic Landmarks */
+.landmarks-box {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.landmarks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.landmarks-hint {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.landmarks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.landmark-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+  padding: 7px 9px;
+  cursor: pointer;
+  transition: border-color 0.14s, background 0.14s;
+}
+
+.landmark-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.landmark-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.landmark-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.landmark-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.landmark-desc {
+  font-size: 11.5px;
+  line-height: 1.48;
+  color: var(--text-secondary);
+}
+
+.map-landmark-group {
+  cursor: help;
+}
+
+body[data-theme="dark"] .map-landmark-group rect {
+  fill: rgba(24, 28, 38, 0.92);
+}
+
+/* Interesting Events & Linked Facts in Drawer */
+.fun-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fun-event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.fun-event-bullet {
+  color: var(--accent);
+  font-size: 10px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.linked-fact-btn {
+  text-align: left;
+  background: linear-gradient(90deg, var(--accent-soft), var(--bg-surface) 80%);
+  border: 1px solid rgba(155, 61, 38, 0.34);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.14s;
+}
+
+.linked-fact-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.linked-fact-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.linked-fact-tag {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.linked-fact-action {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.linked-fact-title {
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
 }
 
 .drawer-text {
@@ -1609,6 +1787,7 @@ body[data-theme="dark"] .map-water-label {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .toggle-inline {
@@ -1618,6 +1797,7 @@ body[data-theme="dark"] .map-water-label {
   font-size: 12px;
   cursor: pointer;
   color: var(--text-secondary);
+  white-space: nowrap;
 }
 
 .flow-selector-list {

@@ -9,6 +9,8 @@
   const ERAS = window.HISTORY_ERAS;
   const LENSES = window.RELIGION_LENSES;
   const EMPIRES = window.HISTORY_EMPIRES;
+  const ENRICHMENTS = window.EMPIRE_ENRICHMENTS || {};
+  const LANDMARKS = window.GEO_LANDMARKS || {};
   const FLOWS = window.HISTORY_FLOWS;
   const FACTS = window.HISTORY_FACTS;
 
@@ -63,7 +65,8 @@
     stageHeight: 5200,
     mapViewMode: 'region', // 'region' | 'world'
     mapShowRivers: true,
-    mapShowBorders: true
+    mapShowBorders: true,
+    mapShowLandmarks: true
   };
 
   // DOM References
@@ -117,6 +120,8 @@
     drawerSubtitle: document.getElementById('drawerSubtitle'),
     drawerCompareBtn: document.getElementById('drawerCompareBtn'),
     drawerCloseBtn: document.getElementById('drawerCloseBtn'),
+    nameOriginSection: document.getElementById('nameOriginSection'),
+    drawerNameOrigin: document.getElementById('drawerNameOrigin'),
     periodTabsSection: document.getElementById('periodTabsSection'),
     periodTabs: document.getElementById('periodTabs'),
     periodSpanBadge: document.getElementById('periodSpanBadge'),
@@ -127,6 +132,8 @@
     mapViewBadge: document.getElementById('mapViewBadge'),
     mapCapitalValue: document.getElementById('mapCapitalValue'),
     mapTerritoryDesc: document.getElementById('mapTerritoryDesc'),
+    drawerLandmarksWrap: document.getElementById('drawerLandmarksWrap'),
+    drawerLandmarks: document.getElementById('drawerLandmarks'),
 
     // High-res Map Modal
     mapModal: document.getElementById('mapModal'),
@@ -134,6 +141,7 @@
     mapModalSub: document.getElementById('mapModalSub'),
     modalMapRegionBtn: document.getElementById('modalMapRegionBtn'),
     modalMapWorldBtn: document.getElementById('modalMapWorldBtn'),
+    modalLandmarksToggle: document.getElementById('modalLandmarksToggle'),
     modalRiversToggle: document.getElementById('modalRiversToggle'),
     modalBordersToggle: document.getElementById('modalBordersToggle'),
     closeMapModalBtn: document.getElementById('closeMapModalBtn'),
@@ -144,6 +152,8 @@
     drawerCivilization: document.getElementById('drawerCivilization'),
     drawerReligionTags: document.getElementById('drawerReligionTags'),
     drawerReligionDetail: document.getElementById('drawerReligionDetail'),
+    drawerFunEventsSection: document.getElementById('drawerFunEventsSection'),
+    drawerFunEvents: document.getElementById('drawerFunEvents'),
     drawerFigures: document.getElementById('drawerFigures'),
     drawerMigrationsSection: document.getElementById('drawerMigrationsSection'),
     drawerMigrations: document.getElementById('drawerMigrations'),
@@ -238,6 +248,26 @@
 
   function getEmpireById(id) {
     return EMPIRES.find((e) => e.id === id);
+  }
+
+  function getEmpireEnrichment(id) {
+    return ENRICHMENTS[id] || null;
+  }
+
+  function getEmpireLandmarks(id) {
+    const enrich = getEmpireEnrichment(id);
+    if (!enrich || !enrich.landmarks) return [];
+    return enrich.landmarks.map((lid) => LANDMARKS[lid]).filter(Boolean);
+  }
+
+  function getLandmarkTypeColor(type) {
+    switch (type) {
+      case '关隘山口': return '#c23b22';
+      case '黄金水道': return '#1f7a8c';
+      case '战略走廊': return '#b8761c';
+      case '天然屏障': return '#52647a';
+      default: return '#9b3d26';
+    }
   }
 
   /* ------------------------------------------------------------------------
@@ -468,7 +498,9 @@
           block.appendChild(pin);
         }
 
-        block.title = `${emp.name} (${formatSpan(emp.startYear, emp.endYear)})\n势力范围：${emp.sphere}\n点击查看各时期版图、人物与文明特征`;
+        const empLandmarks = getEmpireLandmarks(emp.id);
+        const lmHint = empLandmarks.length ? `\n标志性关隘/地形：${empLandmarks.map((l) => l.shortName).join('、')}` : '';
+        block.title = `${emp.name} (${formatSpan(emp.startYear, emp.endYear)})\n势力范围：${emp.sphere}${lmHint}\n点击查看名号释义、版图关隘、人物与趣史`;
         block.addEventListener('click', (ev) => {
           ev.stopPropagation();
           openEmpireDrawer(emp.id);
@@ -546,6 +578,38 @@
     els.drawerTitle.textContent = emp.name;
     els.drawerSubtitle.textContent = `${emp.enName} · ${formatSpan(emp.startYear, emp.endYear)}（约 ${Math.max(1, emp.endYear - emp.startYear)} 年）`;
 
+    const enrich = getEmpireEnrichment(emp.id);
+    if (enrich && enrich.nameOrigin) {
+      els.nameOriginSection.hidden = false;
+      els.drawerNameOrigin.textContent = enrich.nameOrigin;
+    } else {
+      els.nameOriginSection.hidden = true;
+    }
+
+    // Iconic Passes & Strategic Landmarks
+    const empLandmarks = getEmpireLandmarks(emp.id);
+    if (empLandmarks.length) {
+      els.drawerLandmarksWrap.hidden = false;
+      els.drawerLandmarks.innerHTML = '';
+      empLandmarks.forEach((lm) => {
+        const item = document.createElement('div');
+        item.className = 'landmark-item';
+        const badgeColor = getLandmarkTypeColor(lm.type);
+        item.innerHTML = `
+          <div class="landmark-item-top">
+            <span class="landmark-name">▲ ${lm.name}</span>
+            <span class="landmark-type-badge" style="background:${badgeColor}18;color:${badgeColor};border-color:${badgeColor}55;">${lm.type}</span>
+          </div>
+          <div class="landmark-desc">${lm.desc}</div>
+        `;
+        item.title = '点击打开高清大地图查看关隘位置';
+        item.addEventListener('click', openMapModal);
+        els.drawerLandmarks.appendChild(item);
+      });
+    } else {
+      els.drawerLandmarksWrap.hidden = true;
+    }
+
     // Period Tabs
     const periods = emp.periods && emp.periods.length ? emp.periods : [{
       id: 'default', name: '全时期', startYear: emp.startYear, endYear: emp.endYear,
@@ -571,6 +635,40 @@
     els.drawerReligionTags.innerHTML = (emp.religionTags || [])
       .map((t) => `<span class="tag-chip">${t}</span>`)
       .join('');
+
+    // Interesting Events & Linked Counter-Intuitive Facts
+    const funList = (enrich && enrich.funEvents) ? enrich.funEvents : [];
+    const linkedFacts = FACTS.filter((f) => f.highlightIds.includes(emp.id));
+    if (funList.length || linkedFacts.length) {
+      els.drawerFunEventsSection.hidden = false;
+      els.drawerFunEvents.innerHTML = '';
+
+      funList.forEach((txt) => {
+        const div = document.createElement('div');
+        div.className = 'fun-event-item';
+        div.innerHTML = `<span class="fun-event-bullet">◆</span><span>${txt}</span>`;
+        els.drawerFunEvents.appendChild(div);
+      });
+
+      linkedFacts.forEach((fact) => {
+        const btn = document.createElement('button');
+        btn.className = 'linked-fact-btn';
+        btn.innerHTML = `
+          <div class="linked-fact-top">
+            <span class="linked-fact-tag">✦ ${fact.tag}</span>
+            <span class="linked-fact-action">在时空图定位 →</span>
+          </div>
+          <div class="linked-fact-title">${fact.title}</div>
+        `;
+        btn.addEventListener('click', () => {
+          openFactsPanel();
+          activateFact(fact.id);
+        });
+        els.drawerFunEvents.appendChild(btn);
+      });
+    } else {
+      els.drawerFunEventsSection.hidden = true;
+    }
 
     els.drawerFigures.innerHTML = (emp.keyFigures || []).map((f) => `
       <div class="figure-item">
@@ -614,6 +712,7 @@
       viewMode: state.mapViewMode,
       showRivers: state.mapShowRivers,
       showBorders: state.mapShowBorders,
+      showLandmarks: state.mapShowLandmarks,
       idSuffix: 'drawer'
     });
 
@@ -794,6 +893,7 @@
       : '';
 
     // Capital city pin (scaled cleanly to current viewBox!)
+    const placedBoxes = [];
     let capSvg = '';
     if (capXY) {
       const [cx, cy] = capXY;
@@ -806,6 +906,8 @@
       const offsetX = cx + 10 * s + tagW > vb.x + vb.w ? -(tagW + 9 * s) : 9 * s;
       const tagX = cx + offsetX;
       const tagY = cy - tagH / 2;
+      placedBoxes.push({ x: tagX, y: tagY, w: tagW, h: tagH });
+      placedBoxes.push({ x: cx - 7 * s, y: cy - 7 * s, w: 14 * s, h: 14 * s });
 
       capSvg = `
         <g>
@@ -817,6 +919,62 @@
           <text x="${(tagX + 7 * s).toFixed(1)}" y="${(cy + 5.2 * s).toFixed(1)}" font-size="${fontSz}" font-weight="700" fill="#fff">★ ${capitalName}</text>
         </g>
       `;
+    }
+
+    // Strategic Passes, Valleys, Straits & Geographic Landmarks Layer
+    let landmarksSvg = '';
+    if (opts.showLandmarks !== false) {
+      const empLandmarks = getEmpireLandmarks(emp.id);
+      const boxesOverlap = (a, b) =>
+        !(a.x + a.w + 2 * s < b.x || b.x + b.w + 2 * s < a.x || a.y + a.h + 2 * s < b.y || b.y + b.h + 2 * s < a.y);
+      const inView = (box) =>
+        box.x >= vb.x + 2 * s && box.x + box.w <= vb.x + vb.w - 2 * s && box.y >= vb.y + 2 * s && box.y + box.h <= vb.y + vb.h - 2 * s;
+
+      landmarksSvg = empLandmarks.map((lm) => {
+        const [lx, ly] = window.projectLonLat(lm.lon, lm.lat);
+        if (lx < vb.x - 10 * s || lx > vb.x + vb.w + 10 * s || ly < vb.y - 10 * s || ly > vb.y + vb.h + 10 * s) {
+          return '';
+        }
+        const pinColor = getLandmarkTypeColor(lm.type);
+        const triSize = 5.2 * s;
+        const triPoints = `${lx.toFixed(1)},${(ly - triSize).toFixed(1)} ${(lx - triSize * 0.92).toFixed(1)},${(ly + triSize * 0.72).toFixed(1)} ${(lx + triSize * 0.92).toFixed(1)},${(ly + triSize * 0.72).toFixed(1)}`;
+        const fontSz = 11.8 * s;
+        const tagH = 18.5 * s;
+        const labelText = lm.shortName;
+        const tagW = Math.max(46, labelText.length * 12.6 + 16) * s;
+
+        const candidates = [
+          { x: lx + 8 * s, y: ly - tagH / 2 },
+          { x: lx - tagW - 8 * s, y: ly - tagH / 2 },
+          { x: lx - tagW / 2, y: ly + 8 * s },
+          { x: lx - tagW / 2, y: ly - tagH - 8 * s },
+          { x: lx + 8 * s, y: ly + 6 * s },
+          { x: lx - tagW - 8 * s, y: ly - tagH - 6 * s }
+        ];
+        let chosen = candidates[0];
+        for (const c of candidates) {
+          const box = { x: c.x, y: c.y, w: tagW, h: tagH };
+          if (inView(box) && !placedBoxes.some((pb) => boxesOverlap(box, pb))) {
+            chosen = c;
+            break;
+          }
+        }
+        const finalX = Math.max(vb.x + 2 * s, Math.min(vb.x + vb.w - tagW - 2 * s, chosen.x));
+        const finalY = Math.max(vb.y + 2 * s, Math.min(vb.y + vb.h - tagH - 2 * s, chosen.y));
+        placedBoxes.push({ x: finalX, y: finalY, w: tagW, h: tagH });
+        placedBoxes.push({ x: lx - triSize, y: ly - triSize, w: triSize * 2, h: triSize * 2 });
+
+        const safeTitle = `${lm.name}（${lm.type}）：${lm.desc}`.replace(/"/g, '&quot;');
+        return `
+          <g class="map-landmark-group">
+            <title>${safeTitle}</title>
+            <line x1="${lx.toFixed(1)}" y1="${ly.toFixed(1)}" x2="${(finalX + tagW / 2).toFixed(1)}" y2="${(finalY + tagH / 2).toFixed(1)}" stroke="${pinColor}" stroke-width="${(0.9 * s).toFixed(2)}" stroke-dasharray="${(2 * s).toFixed(1)} ${(1.5 * s).toFixed(1)}" opacity="0.65" />
+            <polygon points="${triPoints}" fill="${pinColor}" stroke="#fff" stroke-width="${(1.5 * s).toFixed(2)}" stroke-linejoin="round" />
+            <rect x="${finalX.toFixed(1)}" y="${finalY.toFixed(1)}" width="${tagW.toFixed(1)}" height="${tagH.toFixed(1)}" rx="${(4 * s).toFixed(1)}" fill="rgba(251,249,244,0.93)" stroke="${pinColor}" stroke-width="${(1.1 * s).toFixed(2)}" />
+            <text x="${(finalX + 6 * s).toFixed(1)}" y="${(finalY + tagH * 0.72).toFixed(1)}" font-size="${fontSz.toFixed(2)}" font-weight="700" fill="${pinColor}">▲ ${labelText}</text>
+          </g>
+        `;
+      }).join('');
     }
 
     svg.innerHTML = `
@@ -842,6 +1000,7 @@
       </g>
       <path d="${window.WORLD_LAND_PATH}" fill="none" stroke="var(--map-land-stroke)" stroke-width="${(0.75 * s).toFixed(2)}" opacity="0.75" />
       ${focusRectSvg}
+      ${landmarksSvg}
       ${capSvg}
     `;
   }
@@ -868,6 +1027,7 @@
       viewMode: state.mapViewMode,
       showRivers: state.mapShowRivers,
       showBorders: state.mapShowBorders,
+      showLandmarks: state.mapShowLandmarks,
       idSuffix: 'drawer'
     });
     if (!els.mapModal.hidden) {
@@ -912,6 +1072,7 @@
       viewMode: state.mapViewMode,
       showRivers: state.mapShowRivers,
       showBorders: state.mapShowBorders,
+      showLandmarks: state.mapShowLandmarks,
       idSuffix: 'modal'
     });
   }
@@ -1318,15 +1479,21 @@
         </div>
       </div>
       <div class="compare-columns">
-        ${[a, b].map((emp) => `
+        ${[a, b].map((emp) => {
+          const enrich = getEmpireEnrichment(emp.id);
+          const lms = getEmpireLandmarks(emp.id);
+          return `
           <div class="compare-col">
             <h4 style="border-left:4px solid ${emp.color};padding-left:8px;">${emp.name}</h4>
+            ${enrich && enrich.nameOrigin ? `<div class="compare-row"><strong>名称由来与释义</strong>${enrich.nameOrigin}</div>` : ''}
             <div class="compare-row"><strong>势力范围与都城</strong>${emp.sphere}（代表都城：${emp.capital}）</div>
+            ${lms.length ? `<div class="compare-row"><strong>标志性关隘与地形</strong>${lms.map((l) => `${l.name}（${l.type}）`).join('；')}</div>` : ''}
             <div class="compare-row"><strong>文明与科技成就</strong>${emp.civilization}</div>
             <div class="compare-row"><strong>宗教与思想</strong>${emp.religionDetail}</div>
             <div class="compare-row"><strong>核心人物</strong>${(emp.keyFigures || []).map((f) => f.name).join('、')}</div>
           </div>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     `;
   }
@@ -1389,8 +1556,13 @@
     }
 
     const matches = EMPIRES.filter((e) => {
+      const enrich = getEmpireEnrichment(e.id);
+      const lms = getEmpireLandmarks(e.id);
       const hay = [
         e.name, e.enName, e.sphere, e.summary, e.civilization, e.religionDetail,
+        enrich && enrich.nameOrigin ? enrich.nameOrigin : '',
+        ...(enrich && enrich.funEvents ? enrich.funEvents : []),
+        ...lms.map((l) => `${l.name} ${l.type} ${l.desc}`),
         ...(e.religionTags || []),
         ...(e.keyFigures || []).map((f) => `${f.name} ${f.note}`),
         ...(e.periods || []).map((p) => `${p.name} ${p.territoryDesc}`)
@@ -1403,7 +1575,7 @@
     els.searchDropdown.hidden = false;
 
     if (!matches.length) {
-      els.searchDropdown.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--text-muted)">未找到匹配的历史政权或人物，试试“西汉”“匈奴”“凯撒”“佛教”</div>';
+      els.searchDropdown.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--text-muted)">未找到匹配的历史政权、关隘或名号释义，试试“开伯尔”“函谷关”“独孤”“西汉”“凯撒”</div>';
       return;
     }
 
@@ -1520,6 +1692,10 @@
     els.closeMapModalBtn.addEventListener('click', () => { els.mapModal.hidden = true; });
     els.mapModal.addEventListener('click', (e) => {
       if (e.target === els.mapModal) els.mapModal.hidden = true;
+    });
+    els.modalLandmarksToggle.addEventListener('change', (e) => {
+      state.mapShowLandmarks = e.target.checked;
+      refreshCurrentEmpireMap();
     });
     els.modalRiversToggle.addEventListener('change', (e) => {
       state.mapShowRivers = e.target.checked;

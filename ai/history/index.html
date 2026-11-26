@@ -24,7 +24,7 @@
         <input
           type="text"
           id="searchInput"
-          placeholder="搜索帝国、君主、人物、宗教... (按 / )"
+          placeholder="搜索帝国、关隘、君主、名号由来... (按 / )"
           autocomplete="off"
         />
         <button class="search-clear" id="searchClear" title="清除搜索" hidden>×</button>
@@ -57,7 +57,7 @@
 
       <!-- Feature Drawers -->
       <button id="factsToggleBtn" class="btn-accent" title="查看普通人意想不到的真实历史同期与反直觉冷知识">
-        <span class="sparkle">✦</span> 反直觉真相 <span class="badge" id="factsCountBadge">13</span>
+        <span class="sparkle">✦</span> 反直觉真相 <span class="badge" id="factsCountBadge">23</span>
       </button>
 
       <button id="flowsToggleBtn" class="btn-outline" title="显示或追踪匈奴西迁、印欧迁徙、丝绸之路、突厥西迁等文明脉络">
@@ -175,6 +175,14 @@
       </div>
 
       <div class="drawer-body" id="drawerBody">
+        <!-- Civilization / Empire Name Etymology -->
+        <section class="drawer-section" id="nameOriginSection" hidden>
+          <div class="name-origin-card">
+            <div class="name-origin-label">🏷 名称由来与释义</div>
+            <p class="name-origin-text" id="drawerNameOrigin"></p>
+          </div>
+        </section>
+
         <!-- Period Selector Tabs -->
         <section class="drawer-section" id="periodTabsSection">
           <div class="section-header">
@@ -205,6 +213,13 @@
             <div class="map-caption">
               <div><strong id="mapCapitalLabel">都城：</strong><span id="mapCapitalValue">—</span></div>
               <div class="map-desc" id="mapTerritoryDesc"></div>
+              <div class="landmarks-box" id="drawerLandmarksWrap" hidden>
+                <div class="landmarks-header">
+                  <span>⛰ 标志性关隘与战略地形</span>
+                  <span class="landmarks-hint">地图 ▲ 标注可悬停查看</span>
+                </div>
+                <div class="landmarks-list" id="drawerLandmarks"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -224,6 +239,15 @@
               <p id="drawerReligionDetail"></p>
             </div>
           </div>
+        </section>
+
+        <!-- Interesting Events & Counter-Intuitive Trivia -->
+        <section class="drawer-section" id="drawerFunEventsSection" hidden>
+          <div class="section-header">
+            <h3>✦ 趣史与意想不到的事件</h3>
+            <span class="section-hint">打破刻板印象</span>
+          </div>
+          <div class="fun-events-list" id="drawerFunEvents"></div>
         </section>
 
         <!-- Key Monarchs & Historical Figures -->
@@ -342,6 +366,10 @@
             <button id="modalMapWorldBtn" class="mini-seg-btn">世界全景</button>
           </div>
           <label class="toggle-inline">
+            <input type="checkbox" id="modalLandmarksToggle" checked />
+            <span>关隘与地形</span>
+          </label>
+          <label class="toggle-inline">
             <input type="checkbox" id="modalRiversToggle" checked />
             <span>大河</span>
           </label>
@@ -366,6 +394,7 @@
   <script src="data-worldmap.js"></script>
   <script src="data-regions.js"></script>
   <script src="data-empires.js"></script>
+  <script src="data-enrichments.js"></script>
   <script src="data-flows.js"></script>
   <script src="app.js"></script>
 </body>

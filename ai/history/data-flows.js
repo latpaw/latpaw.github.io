@@ -145,6 +145,54 @@ window.HISTORY_FLOWS = [
 
 window.HISTORY_FACTS = [
   {
+    id: 'tang_capital_fallen',
+    tag: '盛唐另一面',
+    title: '强如大唐，国都长安竟被攻陷6次、皇帝9次逃难！',
+    shortDesc: '唐朝289年间，京师长安先后沦陷于安禄山、吐蕃、朱泚、黄巢等6次，玄宗至昭宗共9次出逃！',
+    detail: '很多人以为“强汉盛唐”无往不胜，其实盛唐极盛之后极富戏剧性：756年安禄山破潼关入长安（玄宗奔蜀）、763年吐蕃竟然攻占长安15天还另立伪帝（代宗逃陕州）、783年泾原兵变朱泚称帝（德宗奔奉天）、881年黄巢入长安建大齐（僖宗奔蜀），算上885年李克用与886年朱玫之乱，京师六陷、天子九逃！但更震撼的是大唐竟屡仆屡起、国祚绵延近三百年！',
+    focusYear: 763,
+    bandStart: 755,
+    bandEnd: 886,
+    highlightIds: ['tang', 'gokturk_uyghur'],
+    recommendLinear: false
+  },
+  {
+    id: 'guanlong_relatives',
+    tag: '超级连襟团',
+    title: '北周、隋朝、唐朝三个帝国的开国家族，全是一门亲戚！',
+    shortDesc: '西魏名将“独孤信”的三个女儿，分别做了北周皇后、隋朝皇后和唐高祖李渊的亲生母亲！',
+    detail: '结束中国三百年南北大分裂的北周、隋、唐，幕后竟是同一个“关陇亲戚朋友圈”！独孤信长女嫁北周明帝宇文毓（北周皇后），七女独孤伽罗嫁隋文帝杨坚（隋朝开国皇后），四女嫁李昞生下唐高祖李渊！算一算：隋文帝杨坚是李渊的亲姨父，隋炀帝杨广和李渊是亲表兄弟，唐太宗李世民按辈分还得叫隋炀帝一声“表叔”！',
+    focusYear: 581,
+    bandStart: 557,
+    bandEnd: 626,
+    highlightIds: ['sixteen_north_dynasties', 'sui', 'tang'],
+    recommendLinear: false
+  },
+  {
+    id: 'liubang_qinshihuang',
+    tag: '年龄错觉',
+    title: '刘邦其实是正宗战国人，只比秦始皇小3岁！',
+    shortDesc: '秦始皇生于前259年，刘邦生于前256年——秦灭六国时，刘邦已经35岁了！',
+    detail: '人们常误以为秦始皇是“老前辈”、刘邦是“下一代创业青年”，其实两人完全是同龄人！秦始皇统一天下（前221年）时刘邦早已35岁，在战国乱世里活了大半辈子，年轻时还狂热崇拜战国四公子之一的信陵君！他48岁才在芒砀山起兵，54岁击败小他24岁的项羽登基称帝，堪称史诗级大器晚成！',
+    focusYear: -221,
+    bandStart: -259,
+    bandEnd: -195,
+    highlightIds: ['spring_warring', 'qin', 'west_han'],
+    recommendLinear: false
+  },
+  {
+    id: 'khyber_pass_gate',
+    tag: '地理宿命',
+    title: '印度西北那条“开伯尔山谷”，三千年被同一剧本攻破十余次！',
+    shortDesc: '雅利安人、亚历山大、贵霜、突厥、帖木儿、莫卧儿……几乎所有陆路征服者全从开伯尔山口涌入印度！',
+    detail: '南亚次大陆背靠喜马拉雅山、三面环海，看似铁桶一块，却在西北兴都库什山脉留出一道53公里长的天然豁口——开伯尔山口（Khyber Pass）。从公元前1500年雅利安人、前326年亚历山大、贵霜、嚈哒，到德里苏丹国与1526年莫卧儿巴布尔，每一次北印王朝更迭几乎都是中亚强敌顺着这条山谷长驱直入！点开任意印度政权可在地图上查看山口坐标。',
+    focusYear: 1526,
+    bandStart: -1500,
+    bandEnd: 1550,
+    highlightIds: ['vedic_mahajanapadas', 'alexander_empire', 'kushan_sogdia', 'chola_medieval_india', 'mughal'],
+    recommendLinear: false
+  },
+  {
     id: 'western_han_bce',
     tag: '公元前错觉',
     title: '西汉几乎整个王朝都在公元前！',
@@ -287,6 +335,78 @@ window.HISTORY_FACTS = [
     bandEnd: -1250,
     highlightIds: ['sumer_akkad', 'egypt_old', 'shang'],
     recommendLinear: true
+  },
+  {
+    id: 'han_rome_ganying',
+    tag: '擦肩而过',
+    title: '东汉与罗马差一步直接建交：甘英在波斯湾被安息商人劝返！',
+    shortDesc: '公元97年班超派甘英出使“大秦”（罗马），走到波斯湾被垄断丝绸差价的安息人用“渡海要三年”唬了回去！',
+    detail: '公元97年，西域都护班超派副使甘英一路西行，穿过帕提亚（安息）抵达条支大海（波斯湾），离罗马叙利亚行省只差最后一段路！但靠转卖汉朝丝绸赚取暴利的安息人故意吓唬甘英说“海水广大，顺风三月、逆风三年，多有思土而死者”，甘英信以为真遗憾返航。不过公元166年，罗马皇帝马可·奥勒留（安敦）的使者还是从海路抵达了洛阳！',
+    focusYear: 97,
+    bandStart: 97,
+    bandEnd: 166,
+    highlightIds: ['east_han', 'seleucid_parthia', 'roman_empire'],
+    recommendLinear: false
+  },
+  {
+    id: 'three_kingdoms_short',
+    tag: '时长错觉',
+    title: '打得天昏地暗的三国时代只有60年，还没康熙一个人在位久！',
+    shortDesc: '正统三国（220—280）仅60年、蜀汉仅42年；同期罗马正陷入“三世纪危机”，50年狂换26位皇帝！',
+    detail: '《三国演义》让人觉得三国绵延数百年，但从220年曹丕称帝到280年西晋灭吴，正统三国总共只有60年（甚至比康熙在位61年还短！），蜀汉更只存在了42年。更巧的是，诸葛亮北伐与司马懿斗法之际，万里之外的罗马帝国正深陷“三世纪危机”（235—284），50年走马灯似地换了26位皇帝！',
+    focusYear: 235,
+    bandStart: 220,
+    bandEnd: 280,
+    highlightIds: ['three_kingdoms_wei', 'three_kingdoms_shu', 'three_kingdoms_wu', 'roman_empire'],
+    recommendLinear: false
+  },
+  {
+    id: 'greek_buddha',
+    tag: '文明混血',
+    title: '最早的人形佛像，竟是亚历山大留下的古希腊雕塑教印度雕的！',
+    shortDesc: '佛教诞生头四百年原本没有佛像！直到贵霜帝国融合希腊太阳神阿波罗造型，才诞生犍陀罗佛像！',
+    detail: '佛教早期只用佛脚印、法轮或菩提树象征佛陀，严禁雕成人像。直到亚历山大东征把古希腊雕塑传统留在阿富汗巴克特里亚，公元1—2世纪由西迁大月氏建立的贵霜帝国工匠，借用古希腊阿波罗的深目高鼻、波浪卷发与托加长袍褶皱，雕出了人类最早的具象佛像（犍陀罗艺术），并沿河西走廊东传云冈、龙门与日本！',
+    focusYear: 120,
+    bandStart: -326,
+    bandEnd: 200,
+    highlightIds: ['alexander_empire', 'kushan_sogdia', 'east_han', 'maurya'],
+    recommendLinear: false
+  },
+  {
+    id: 'mongol_stops',
+    tag: '帝国边界',
+    title: '横扫欧亚的蒙古铁骑，竟栽在埃及奴隶兵、越南雨林和日本台风手里！',
+    shortDesc: '1260年阿音札鲁特败给埃及马穆鲁克、1274/1281年两次征日遇“神风”、三次南征大越折戟白藤江！',
+    detail: '13世纪蒙古骑兵几乎打遍欧亚无敌手，却在三种地形面前戛然而止：在叙利亚沙漠边缘败给埃及“奴隶骑兵”马穆鲁克，止步非洲；在越南湿热雨林与白藤江暗桩阵三战受挫；在对马海峡两度被超级台风（“神风”）吹沉舰队。连蒙古帝国也证明了地形与气候才是历史的终极裁判。',
+    focusYear: 1260,
+    bandStart: 1258,
+    bandEnd: 1288,
+    highlightIds: ['mongol_empire', 'fatimid_mamluk', 'heian_goryeo_shogun', 'khmer_se_asia'],
+    recommendLinear: false
+  },
+  {
+    id: 'mongol_taj_mahal',
+    tag: '血脉奇缘',
+    title: '修筑印度泰姬陵的莫卧儿帝国，名字其实就是波斯语的“蒙古”！',
+    shortDesc: '莫卧儿（Mughal）= Mongol！开国君主巴布尔是帖木儿五世孙兼成吉思汗后裔，经开伯尔山口入主印度！',
+    detail: '很多人以为泰姬陵是纯粹本土古印度文明的产物，其实修建它的沙贾汗是莫卧儿帝国皇帝——莫卧儿就是波斯语“蒙古”的音译！开国之君巴布尔1526年带着火枪与大炮从中亚翻越开伯尔山口杀入印度，将波斯穹顶美学、突厥—蒙古血脉与印度白色大理石工匠融合成人类建筑奇迹！',
+    focusYear: 1526,
+    bandStart: 1526,
+    bandEnd: 1653,
+    highlightIds: ['mughal', 'timurid_steppe', 'mongol_empire'],
+    recommendLinear: false
+  },
+  {
+    id: 'washington_qianlong',
+    tag: '同年落幕',
+    title: '美国独立那年是乾隆四十一年；华盛顿和乾隆居然同一年去世！',
+    shortDesc: '1776年《独立宣言》发表时乾隆正编《四库全书》；1799年，88岁乾隆与67岁华盛顿同年辞世！',
+    detail: '1776年北美十三州宣告独立建立现代共和国时，大洋彼岸的大清乾隆正处于“十全武功”与编修《四库全书》的盛世晚景。更巧的是，1799年2月太上皇乾隆驾崩，同年12月美国国父华盛顿亦逝世——两位分别象征传统皇权巅峰与现代宪政开端的历史巨人，竟完整度过了同一个世纪！',
+    focusYear: 1799,
+    bandStart: 1776,
+    bandEnd: 1799,
+    highlightIds: ['qing', 'usa'],
+    recommendLinear: false
   },
   {
     id: 'qin_hairline_modern_slice',
