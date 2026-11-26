@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>世界文明与帝国时空全景图 · World History Atlas (3500 BCE – 2026 CE)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-theme="archival">
+  <!-- Top Command Bar -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-brand">
+      <div class="brand-emblem" aria-hidden="true">❖</div>
+      <div class="brand-text">
+        <h1>世界文明与帝国时空全景图</h1>
+        <span class="brand-sub">3500 BCE — 2026 CE · 纵向时间 · 横向疆域 · 文明迁徙</span>
+      </div>
+    </div>
+
+    <div class="topbar-controls">
+      <!-- Search -->
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="搜索帝国、君主、人物、宗教... (按 / )"
+          autocomplete="off"
+        />
+        <button class="search-clear" id="searchClear" title="清除搜索" hidden>×</button>
+        <div class="search-dropdown" id="searchDropdown" hidden></div>
+      </div>
+
+      <!-- Time Machine Year Jumper -->
+      <div class="year-jumper" title="输入公元年份（负数表示公元前，如 -202 或 1453）并回车">
+        <span class="jumper-label">时空定位</span>
+        <input type="text" id="yearJumpInput" placeholder="如 -140 / 755" />
+        <button id="yearJumpBtn" class="btn-chip">定位</button>
+      </div>
+
+      <!-- Scale Mode Switcher -->
+      <div class="segmented-control" role="group" aria-label="时间比例尺">
+        <button id="scaleAdaptiveBtn" class="seg-btn active" title="按时代密度自适应展开，兼顾上古与近现代可读性">
+          视觉比例
+        </button>
+        <button id="scaleLinearBtn" class="seg-btn" title="1:1 严格线性时间：直观感受古埃及的漫长、西汉全在公元前、现代史之短暂 (快捷键 L)">
+          1:1 线性真实
+        </button>
+      </div>
+
+      <!-- Zoom -->
+      <div class="zoom-controls" title="垂直时间轴缩放">
+        <button id="zoomOutBtn" class="icon-btn" aria-label="缩小">−</button>
+        <span id="zoomLabel" class="zoom-label">1.0×</span>
+        <button id="zoomInBtn" class="icon-btn" aria-label="放大">+</button>
+      </div>
+
+      <!-- Feature Drawers -->
+      <button id="factsToggleBtn" class="btn-accent" title="查看普通人意想不到的真实历史同期与反直觉冷知识">
+        <span class="sparkle">✦</span> 反直觉真相 <span class="badge" id="factsCountBadge">13</span>
+      </button>
+
+      <button id="flowsToggleBtn" class="btn-outline" title="显示或追踪匈奴西迁、印欧迁徙、丝绸之路、突厥西迁等文明脉络">
+        ⟿ 迁徙与脉络
+      </button>
+
+      <button id="compareToggleBtn" class="btn-outline" title="对比两个帝国或文明的存续时间、版图与文明特征">
+        ⇄ 对比 <span class="badge subtle" id="compareCountBadge" hidden>0</span>
+      </button>
+
+      <button id="themeToggleBtn" class="icon-btn" title="切换典藏羊皮纸 / 暗夜星图主题">◐</button>
+    </div>
+  </header>
+
+  <!-- Secondary Strip: Era Jumps + Religion Lens + Active Status -->
+  <nav class="subbar" aria-label="时代导航与文明滤镜">
+    <div class="era-nav" id="eraNav">
+      <span class="subbar-label">时代跳转</span>
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="lens-nav" id="lensNav">
+      <span class="subbar-label">信仰/文明滤镜</span>
+      <!-- Populated by JS -->
+    </div>
+  </nav>
+
+  <!-- Active Scale Banner (shown in 1:1 Linear mode) -->
+  <div class="linear-banner" id="linearBanner" hidden>
+    <span>📏 当前为 <strong>1:1 严格线性真实时间比例</strong>（每100年占据完全相同的高度）—— 试着滚动感受：古埃及长达3000年，西汉几乎全在公元前，秦朝细如发丝，工业革命至今仅占最底部极薄一层。</span>
+    <button id="backToAdaptiveBtn" class="btn-chip">切回视觉比例</button>
+  </div>
+
+  <!-- Main Workspace -->
+  <main class="workspace">
+    <!-- Left Vertical Minimap (Quick Overview & Scroll Indicator) -->
+    <aside class="minimap" id="minimap" title="点击或拖动快速穿越 5500 年历史">
+      <div class="minimap-track" id="minimapTrack">
+        <div class="minimap-bc-line" id="minimapBcLine" title="公元元年 (BC/CE 分界)"></div>
+        <div class="minimap-viewport" id="minimapViewport"></div>
+      </div>
+      <div class="minimap-ticks">
+        <span>-3500</span>
+        <span>0</span>
+        <span>2026</span>
+      </div>
+    </aside>
+
+    <!-- Scrollable Chart Viewport -->
+    <div class="chart-viewport" id="chartViewport">
+      <div class="chart-frame" id="chartFrame">
+        <!-- Sticky Top Column Headers -->
+        <div class="region-header-row" id="regionHeaderRow">
+          <div class="corner-cell">
+            <span class="corner-title">公元纪年</span>
+            <span class="corner-sub" id="scaleIndicatorText">自适应比例</span>
+          </div>
+          <div class="region-headers" id="regionHeaders">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Main Body: Sticky Left Axis + Canvas Stage -->
+        <div class="chart-body" id="chartBody">
+          <!-- Sticky Left Year Axis -->
+          <div class="time-axis" id="timeAxis">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Grid & Empires Stage -->
+          <div class="timeline-stage" id="timelineStage">
+            <!-- Background Era Bands & Grid Lines -->
+            <div class="stage-grid" id="stageGrid"></div>
+
+            <!-- BC / CE Golden Divider Line -->
+            <div class="bc-ce-divider" id="bcCeDivider">
+              <span class="bc-ce-tag">⚡ 公元元年分界线 · 1 BCE / 1 CE（上方全为公元前 · 西汉此时已存续 202 年！）</span>
+            </div>
+
+            <!-- Empire Blocks Layer -->
+            <div class="empires-layer" id="empiresLayer"></div>
+
+            <!-- Migration & Connection SVG Overlay -->
+            <svg class="flows-svg" id="flowsSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+            <!-- Mind-Blowing Fact Spotlight Overlay -->
+            <div class="fact-spotlight-layer" id="factSpotlightLayer"></div>
+
+            <!-- Interactive Horizontal Chrono-Slice Scanner -->
+            <div class="chrono-scanner" id="chronoScanner" hidden>
+              <div class="scanner-year-pill" id="scannerYearPill">公元 1 年</div>
+            </div>
+            <div class="chrono-scanner pinned" id="pinnedScanner" hidden>
+              <div class="scanner-year-pill pinned-pill" id="pinnedYearPill">📌 公元前 140 年</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sliding Inspector Drawer: Empire & Period Detail -->
+    <aside class="detail-drawer" id="detailDrawer" aria-hidden="true">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <div class="drawer-color-dot" id="drawerColorDot"></div>
+          <div>
+            <h2 id="drawerTitle">帝国名称</h2>
+            <p class="drawer-subtitle" id="drawerSubtitle">English Name · 年份</p>
+          </div>
+        </div>
+        <div class="drawer-actions">
+          <button id="drawerCompareBtn" class="btn-chip" title="加入双帝国对比">⇄ 对比</button>
+          <button id="drawerCloseBtn" class="icon-btn" aria-label="关闭详情">✕</button>
+        </div>
+      </div>
+
+      <div class="drawer-body" id="drawerBody">
+        <!-- Period Selector Tabs -->
+        <section class="drawer-section" id="periodTabsSection">
+          <div class="section-header">
+            <h3>时期切换</h3>
+            <span class="section-hint">点击查看该时期版图与特征</span>
+          </div>
+          <div class="period-tabs" id="periodTabs"></div>
+        </section>
+
+        <!-- Interactive SVG World / Regional Territory Map -->
+        <section class="drawer-section">
+          <div class="section-header">
+            <h3>势力版图</h3>
+            <div class="map-toolbar">
+              <div class="mini-seg" role="group" aria-label="地图视角">
+                <button id="mapModeRegionBtn" class="mini-seg-btn active" title="自动聚焦政权所在区域地图">区域地图</button>
+                <button id="mapModeWorldBtn" class="mini-seg-btn" title="切换世界全景视图">世界全景</button>
+              </div>
+              <button id="mapExpandBtn" class="btn-chip" title="打开高清大地图与缩放浏览">⤢ 放大</button>
+              <span class="section-badge" id="periodSpanBadge"></span>
+            </div>
+          </div>
+          <div class="mini-map-card">
+            <div class="mini-map-stage">
+              <svg id="territoryMapSvg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+              <div class="map-scale-pill" id="mapViewBadge">区域聚焦</div>
+            </div>
+            <div class="map-caption">
+              <div><strong id="mapCapitalLabel">都城：</strong><span id="mapCapitalValue">—</span></div>
+              <div class="map-desc" id="mapTerritoryDesc"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Period / Empire Overview -->
+        <section class="drawer-section">
+          <h3>文明概览与制度特征</h3>
+          <p class="drawer-text" id="drawerSummary"></p>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-label">🏛 文明、科技与制度</div>
+              <p id="drawerCivilization"></p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-label">☸ 宗教与思想信仰</div>
+              <div class="tag-list" id="drawerReligionTags"></div>
+              <p id="drawerReligionDetail"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Monarchs & Historical Figures -->
+        <section class="drawer-section">
+          <h3>代表君主与历史人物</h3>
+          <div class="figures-list" id="drawerFigures"></div>
+        </section>
+
+        <!-- Related Migrations & Connections -->
+        <section class="drawer-section" id="drawerMigrationsSection" hidden>
+          <h3>关联的迁徙与文明脉络</h3>
+          <div class="related-flows-list" id="drawerMigrations"></div>
+        </section>
+
+        <!-- Contemporary World Snapshot -->
+        <section class="drawer-section">
+          <div class="section-header">
+            <h3>同期世界上的其他文明</h3>
+            <span class="section-hint">点击直接跳转</span>
+          </div>
+          <div class="contemporaries-list" id="drawerContemporaries"></div>
+        </section>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Floating Bottom Panel: Contemporary Chrono-Slice Ribbon -->
+  <div class="chrono-ribbon" id="chronoRibbon">
+    <div class="ribbon-left">
+      <button id="pinYearBtn" class="btn-chip pin-btn" title="点击时间轴或按此键锁定当前年份切片">📌 移动鼠标扫描同期世界</button>
+      <span class="ribbon-year" id="ribbonYear">公元前 140 年</span>
+      <span class="ribbon-era-name" id="ribbonEraName">古典帝国时代</span>
+    </div>
+    <div class="ribbon-empires" id="ribbonEmpires">
+      <!-- Populated dynamically on mousemove / pin -->
+    </div>
+    <button id="unpinYearBtn" class="icon-btn small" title="取消锁定" hidden>✕</button>
+  </div>
+
+  <!-- Floating Panel: Migration Chain Explorer -->
+  <section class="floating-panel flows-panel" id="flowsPanel" hidden>
+    <div class="panel-header">
+      <div>
+        <h3>⟿ 种族迁徙与文明脉络</h3>
+        <p class="panel-sub">选择一条脉络，在时空图上高亮其跨地域因果链条</p>
+      </div>
+      <div class="panel-header-actions">
+        <label class="toggle-inline">
+          <input type="checkbox" id="showAllFlowsCheckbox" />
+          <span>同时显示全部</span>
+        </label>
+        <button id="closeFlowsPanelBtn" class="icon-btn">✕</button>
+      </div>
+    </div>
+    <div class="flow-selector-list" id="flowSelectorList"></div>
+    <div class="flow-story-box" id="flowStoryBox" hidden>
+      <div class="flow-story-top">
+        <strong id="flowStoryTitle"></strong>
+        <div class="flow-step-controls">
+          <button id="flowPrevStepBtn" class="btn-chip">← 上一节点</button>
+          <span id="flowStepCounter" class="step-counter">1 / 5</span>
+          <button id="flowNextStepBtn" class="btn-chip">下一节点 →</button>
+        </div>
+      </div>
+      <p class="flow-story-summary" id="flowStorySummary"></p>
+      <div class="flow-steps-timeline" id="flowStepsTimeline"></div>
+    </div>
+  </section>
+
+  <!-- Floating Panel: Mind-Blowing Counter-Intuitive Facts -->
+  <section class="floating-panel facts-panel" id="factsPanel" hidden>
+    <div class="panel-header">
+      <div>
+        <h3>✦ 普通人意想不到的真实历史</h3>
+        <p class="panel-sub">点击任意卡片，时空图将自动定位并高亮相关帝国与时间对比</p>
+      </div>
+      <div class="panel-header-actions">
+        <button id="prevFactBtn" class="btn-chip">← 上一条</button>
+        <button id="nextFactBtn" class="btn-chip">下一条 →</button>
+        <button id="closeFactsPanelBtn" class="icon-btn">✕</button>
+      </div>
+    </div>
+    <div class="facts-grid" id="factsGrid"></div>
+  </section>
+
+  <!-- Modal: Side-by-Side Empire Comparison -->
+  <div class="modal-backdrop" id="compareModal" hidden>
+    <div class="modal-card compare-modal-card">
+      <div class="panel-header">
+        <div>
+          <h3>⇄ 双帝国时空对比</h3>
+          <p class="panel-sub">对比存续跨度、时间重叠/间隔、版图、信仰与代表人物</p>
+        </div>
+        <button id="closeCompareModalBtn" class="icon-btn">✕</button>
+      </div>
+      <div class="compare-selectors">
+        <select id="compareSelectA"></select>
+        <span class="vs-badge">VS</span>
+        <select id="compareSelectB"></select>
+      </div>
+      <div class="compare-content" id="compareContent"></div>
+    </div>
+  </div>
+
+  <!-- Modal: High-Res Interactive Territory Map -->
+  <div class="modal-backdrop" id="mapModal" hidden>
+    <div class="modal-card map-modal-card">
+      <div class="panel-header">
+        <div>
+          <h3 id="mapModalTitle">势力版图详图</h3>
+          <p class="panel-sub" id="mapModalSub">自然地球 50m 海岸线 · 支持切换时期、区域聚焦与世界全景</p>
+        </div>
+        <div class="panel-header-actions">
+          <div class="mini-seg">
+            <button id="modalMapRegionBtn" class="mini-seg-btn active">区域聚焦</button>
+            <button id="modalMapWorldBtn" class="mini-seg-btn">世界全景</button>
+          </div>
+          <label class="toggle-inline">
+            <input type="checkbox" id="modalRiversToggle" checked />
+            <span>大河</span>
+          </label>
+          <label class="toggle-inline">
+            <input type="checkbox" id="modalBordersToggle" checked />
+            <span>现代国界参考</span>
+          </label>
+          <button id="closeMapModalBtn" class="icon-btn">✕</button>
+        </div>
+      </div>
+      <div class="map-modal-periods" id="mapModalPeriods"></div>
+      <div class="map-modal-canvas">
+        <svg id="modalTerritoryMapSvg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="map-modal-footer">
+        <span id="mapModalCaption"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts loaded sequentially for both local file:// and GitHub Pages compatibility -->
+  <script src="data-worldmap.js"></script>
+  <script src="data-regions.js"></script>
+  <script src="data-empires.js"></script>
+  <script src="data-flows.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
