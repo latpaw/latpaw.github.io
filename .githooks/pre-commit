@@ -1,0 +1,14 @@
+#!/bin/sh
+# 本地提交前自动扫描 ai/ 下的新页面并更新根目录 index.html
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT="$REPO_ROOT/scripts/update-index.mjs"
+
+if [ -f "$SCRIPT" ] && command -v node >/dev/null 2>&1; then
+  node "$SCRIPT"
+  if ! git diff --quiet -- "$REPO_ROOT/index.html"; then
+    git add "$REPO_ROOT/index.html"
+    echo "[pre-commit] 已自动将更新后的 index.html 加入本次提交"
+  fi
+fi
