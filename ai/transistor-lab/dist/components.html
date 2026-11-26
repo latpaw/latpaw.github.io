@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>元器件内部 · 15 种工作原理</title><style>
+:root{--bg:#101518;--card:#192126;--ink:#e7edf0;--muted:#9aaeb8;--line:#33434c;--n:#2a626e;--p:#745846;--e:#86e0f0;--h:#ffc38e;--accent:#cce9a3}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 system-ui,sans-serif}main,header,footer{max-width:1240px;margin:auto;padding:24px 32px}header{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);font:12px monospace;letter-spacing:2px;color:var(--muted)}h1{font-size:clamp(34px,5vw,62px);line-height:1.2;letter-spacing:-2px;margin:20px 0}h1 em{color:var(--accent);font-style:normal}.lead{color:var(--muted);max-width:800px}.eyebrow{color:var(--accent);font:12px monospace;letter-spacing:2px}.top{padding:20px 0 28px}.switch{display:flex;gap:10px;flex-wrap:wrap}button{font:inherit;cursor:pointer;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;padding:10px 18px}button:hover{border-color:var(--accent)}button[aria-pressed=true]{color:#172019;background:var(--accent);border-color:var(--accent)}button:focus-visible,input:focus-visible{outline:2px solid var(--e);outline-offset:4px}.experiment{margin-top:24px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}.iso-plate{min-width:0;background:radial-gradient(ellipse at 45% 50%,#26333b,transparent 70%)}.figtop,.figbottom{display:flex;justify-content:space-between;padding:18px 22px;font-size:12px;color:var(--muted);gap:12px}.figtop{border-bottom:1px solid var(--line)}.figbottom{border-top:1px solid var(--line)}#readout{color:var(--accent)}svg{display:block;width:100%;height:auto}aside{padding:25px;border-left:1px solid var(--line)}h2{font-size:26px;line-height:1.3;margin:8px 0 15px}h3{font-size:18px;margin:0 0 10px}.explain{color:var(--muted);min-height:110px}.fact{padding:15px;border:1px solid var(--line);border-radius:8px;font-size:13px;margin-top:16px}.fact strong{color:var(--accent);display:block}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;padding:0 22px 18px;color:var(--muted)}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--e)}.legend .hole{background:var(--h)}.legend .dep{border-radius:2px;background:#c3d1db55}.legend .channel{background:var(--accent)}.controls{padding:24px 0}.timeline-label{display:flex;justify-content:space-between;font-size:13px}.timeline{width:100%;accent-color:var(--accent);margin:20px 0 8px}.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.stages button{padding:8px 4px;font-size:12px}.playrow{display:flex;align-items:center;gap:16px;margin-top:20px}.note{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0}.card{border:1px solid var(--line);padding:24px;border-radius:12px}.card p{color:var(--muted);font-size:14px}.card b{color:var(--ink)}.table{overflow:auto}table{width:100%;min-width:750px;border-collapse:collapse;font-size:14px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:17px 15px;vertical-align:top}th{color:var(--accent)}section{margin-bottom:30px}.caution{border-left:3px solid var(--accent);padding:12px 24px;background:var(--card)}a{color:var(--e)}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line)}.svg-label{font:13px system-ui;fill:#f2f6f7;paint-order:stroke;stroke:#162128;stroke-width:3;stroke-linejoin:round}.svg-small{font:11px monospace;fill:#b5c7d0}.region{stroke:#bbd2dc88;stroke-width:1}.carrier{stroke:#102028;stroke-width:1.2}.path{fill:none;stroke-width:1.4;stroke-dasharray:4 6;opacity:.35}.mono{font:12px monospace;color:var(--accent)}body.light{--bg:#edf0ed;--card:#fff;--ink:#213139;--muted:#566c76;--line:#c3cecf;--accent:#48652b}.light .iso-plate{background:radial-gradient(ellipse at 50% 55%,#c5d2d5,transparent 75%)}.light .svg-label{stroke:#18252b}.light .svg-small{fill:#516973}@media(max-width:780px){main,header,footer{padding:20px}.experiment{grid-template-columns:1fr}aside{border-left:0;border-top:1px solid var(--line)}.explain{min-height:0}.grid{grid-template-columns:1fr}.stages{gap:4px}.stages button{font-size:11px}.figtop,.figbottom{padding:13px}.playrow{align-items:flex-start;flex-wrap:wrap}.legend{padding:0 13px 15px;gap:10px}h1{letter-spacing:-1px}}
+</style></head><body><header><span>◈ SILICON ANATOMY / 元器件内部观察台</span><button id="theme" style="padding:2px 9px;font-size:11px" aria-pressed="false">浅色</button></header><main><div class="top"><span class="eyebrow">看见内部 / FIGURE SERIES 01—15</span><h1>电、磁、光与运动，<br><em>内部发生了什么？</em></h1><p class="lead">从内部结构出发，观察载流子、电场、磁场和机械运动。15 种元器件各有自己的工作过程，不能全部用“导通／关断”解释。</p></div><nav class="switch" aria-label="选择剖面"><button data-device="bjt" aria-pressed="true">01 / BJT 三极管</button><button data-device="mos" aria-pressed="false">02 / MOS 管</button><button data-device="igbt" aria-pressed="false">03 / IGBT</button></nav>
+<section class="experiment"><div class="iso-plate"><div class="figtop"><span id="figure">FIG 01</span><span>实体切片 / 示意剖面，非按比例</span></div><svg id="specimen" viewBox="0 0 760 490" role="img" aria-labelledby="svgtitle svgdesc"><title id="svgtitle"></title><desc id="svgdesc"></desc><defs><linearGradient id="metal" x2="0" y2="1"><stop stop-color="#899ba4"/><stop offset=".5" stop-color="#3d515b"/><stop offset="1" stop-color="#273943"/></linearGradient><pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 9L9 0" stroke="#c7d9e8" stroke-opacity=".3"/></pattern><filter id="shadow"><feGaussianBlur stdDeviation="8"/></filter></defs><g id="fixture"></g><g id="structure"></g><g id="depletion"></g><g id="channel"></g><g id="tracks"></g><g id="population"></g><g id="particles"></g><g id="labels"></g></svg><div class="legend"><span><i></i>电子 −</span><span><i class="hole"></i>空穴 +</span><span><i class="dep"></i>耗尽区</span><span><i class="channel"></i>反型沟道</span></div><div class="figbottom"><span>拖动下方时间轴 · 可逐步观察</span><span id="readout"></span></div></div><aside><span class="eyebrow" id="deviceSub"></span><h2 id="deviceName"></h2><p id="architecture" class="lead"></p><div class="mono" id="phase"></div><h2 id="phaseName"></h2><p class="explain" id="explanation" aria-live="polite"></p><div class="fact"><strong>此刻看哪里</strong><span id="look"></span></div><div class="fact"><strong>驱动与主电流</strong><span id="electrical"></span></div></aside></section>
+<section class="controls"><div class="timeline-label"><label for="timeline">导通 → 稳态 → 撤去驱动 → 关断</label><output id="timeValue">0%</output></div><input class="timeline" id="timeline" type="range" min="0" max="100" step=".1" value="0" aria-label="过程时间轴"><div class="stages"><button data-step="0">① 截止</button><button data-step="25">② 正在导通</button><button data-step="48">③ 稳态导通</button><button data-step="72">④ 正在关断</button><button data-step="100">⑤ 完成关断</button></div><div class="playrow"><button id="play" aria-pressed="false">▶ 播放全过程</button><button id="replay">↺ 回到起点</button><span class="note">过程放慢展示；时间轴没有物理时间单位，不能据此比较真实开关速度。</span></div></section>
+<section><div class="eyebrow">跟着载流子读图</div><div class="grid"><article class="card"><h3>01 / BJT：穿过薄基区</h3><p><b>发射区 N+ → 薄基区 P → 集电区 N。</b>发射结正偏时注入电子；大部分电子扩散穿过基区，再由集电结电场扫入集电区。少部分在基区复合，对应基极电流的一部分。</p><p>本例开关导通到饱和，关断时先抽走存储电荷。若一直工作在放大区，存储效应与这里不同。</p></article><article class="card"><h3>02 / MOS：栅下出现一条路</h3><p><b>栅压 → 表面反型 → 连通 N+ 源区与 N− 漂移区。</b>电子从源区沿 P 体区表面的沟道进入漂移区，最后到背面漏极。电子不穿过栅氧化层。</p><p>关断时栅电荷被移走，沟道消失。没有 IGBT 式少数载流子拖尾，但仍存在栅电荷、寄生电容与电路换流过程。</p></article><article class="card"><h3>03 / IGBT：两种载流子合作</h3><p><b>上方发射极供给电子，下方 P+ 集电区注入空穴。</b>漂移区电子与空穴浓度升高，形成电导调制，改善高压区域的导电能力。</p><p>撤去栅压后沟道先消失，漂移区存储电荷仍需抽取或复合，因此留下拖尾。不是把两个分立晶体管简单串联。</p></article></div></section>
+<section><h2>把“控制方式”和“内部机制”分开看</h2><div class="table"><table><thead><tr><th></th><th>BJT</th><th>功率 MOSFET</th><th>IGBT</th></tr></thead><tbody><tr><th>控制端</th><td>B 基极；导通需基极电流</td><td>G 栅极；控制 VGS</td><td>G 栅极；控制 VGE</td></tr><tr><th>主电流方向</th><td>常规电流 C → E；主要电子 E → C</td><td>常规电流 D → S；电子 S → D</td><td>常规电流 C → E；电子向 C，空穴向 E</td></tr><tr><th>关断需要清掉什么</th><td>基区等处的过剩电荷；饱和时更明显</td><td>栅电荷与沟道电荷；另有寄生电容影响</td><td>栅电荷 + 漂移区存储的双极载流子</td></tr><tr><th>典型优势</th><td>模拟放大、小信号处理</td><td>快速开关；低压低导通电阻</td><td>高压大电流下的导通性能</td></tr></tbody></table></div></section>
+<section class="caution"><h3>这张图如何简化真实器件？</h3><p class="note">BJT 使用一维 NPN 概念切片；MOSFET 与 IGBT 使用平面栅、垂直导电的半单元切片，源极／发射极金属同时短接 P 体区。实际器件包含大量并联单元，且可能采用沟槽栅、场截止等结构。区域厚度、耗尽层宽度、载流子数量和速度均不按比例；粒子代表过剩载流子流或存储电荷，不代表全部微观运动。忽略漏电、击穿、温度、米勒平台细节与外部负载换流。MOS 的体二极管不在本次正向导通过程演示中。</p><p class="note">BJT 的“饱和”与 MOS 的“饱和区”含义不同。MOS 低阻开关通常工作在欧姆区，栅阈值电压仅表示开始导通。</p></section><section class="note"><h3>官方参考</h3><a href="https://toshiba.semicon-storage.com/us/semiconductor/knowledge/faq/mosfet_common/are-transistors-driven-by-current-or-voltage.html">Toshiba · 驱动与控制</a> · <a href="https://toshiba.semicon-storage.com/us/semiconductor/knowledge/faq/mosfet_igbt/igbt-002.html">Toshiba · MOSFET / IGBT 内部导电与拖尾</a><p>单文件离线网页 · 无外部脚本、字体或图片依赖；参考链接需联网。</p></section></main><footer>ANATOMY / 实体剖面 × 载流子路径 × 过程观察</footer>
+<script>
+const $=s=>document.getElementById(s), clamp=x=>Math.max(0,Math.min(1,x)), mix=(a,b,t)=>a+(b-a)*t;
+const NS='http://www.w3.org/2000/svg';
+const rect=(x,y,w,h,fill,extra='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" '+extra+'/>';
+const label=(x,y,t,cls='svg-label')=>'<text x="'+x+'" y="'+y+'" class="'+cls+'">'+t+'</text>';
+function block(x,y,w,h,color){return (y===335?'':'<path d="M'+x+' '+y+'l28 -20h'+w+'l-28 20Z" fill="'+color+'" stroke="#bad2dc66"/>')+'<path d="M'+(x+w)+' '+y+'l28 -20v'+h+'l-28 20Z" fill="#203b48" stroke="#bad2dc66"/>'+rect(x,y,w,h,color,'class="region"');}
+function fixture(){let out='<ellipse cx="379" cy="420" rx="285" ry="27" fill="#000" opacity=".3" filter="url(#shadow)"/>';for(const x of [124,577])for(const y of [380,406])out+=rect(x,y,36,18,'#17232a','rx="4"');out+=block(95,378,560,26,'#30404b');out+=rect(108,382,532,10,'#263640','rx="3"');for(const x of [116,630]){out+='<circle cx="'+x+'" cy="390" r="5" fill="#6f848d"/><path d="M'+(x-3)+' 390h6" stroke="#24343b"/>';}for(const x of [117,625]){out+=block(x,142,10,232,'#394f5b');for(let y=155;y<370;y+=18)out+=rect(x,y,5,1,'#a9bbc4');}out+=block(108,365,529,11,'#566c76');return out;}
+$('fixture').innerHTML=fixture();
+const info={bjt:{name:'BJT / NPN 三极管',sub:'INJECTION & DIFFUSION',architecture:'横向概念切片：高掺杂发射区、很薄的基区、集电区。以进入饱和的开关过程为例。',steps:[['发射结尚未正偏','无持续电子注入，集电结耗尽区承担阻断。图中省略微小漏电流。','观察 P 基区与 N 集电区之间的耗尽区。'],['电子注入薄基区','基极驱动使发射结正偏。电子由 N+ 发射区注入 P 基区，大部分扩散穿过基区，再被集电结电场收集。','蓝色电子从左向右；少部分在基区复合。'],['进入饱和，电荷积累','驱动继续增强，发射结与集电结均正偏。主电流受负载限制，基区等处积累过剩载流子。','基区亮点表示过剩电荷；IC ≈ βIB 已不适用。'],['抽取存储电荷','撤去并反向抽取基极驱动后，存储电荷先被清除。器件可能暂时仍导电，之后集电结恢复阻断。','先看到基区电荷减少，再看到主电流停止。'],['恢复截止','过剩电荷清除，集电结耗尽区重新扩展。实际关断速度取决于饱和程度与驱动电路。','蓝色定向流停止；耗尽区恢复。']]},mos:{name:'MOSFET / N 沟道功率管',sub:'FIELD EFFECT & INVERSION',architecture:'垂直功率 MOS 半单元：顶部源极，底部漏极。金属栅与硅之间有绝缘氧化层。',steps:[['栅压为零，通道中断','P 体区隔开 N+ 源区与 N− 漂移区；体区与漂移区的反偏结支撑漏源电压。','栅下尚无反型沟道；氧化层始终绝缘。'],['栅下形成反型沟道','栅极充电后，电场排斥空穴并吸引电子。表面先耗尽，再反型成 N 型沟道，将源区连到漂移区。','黄绿色细带位于氧化层下方；电子不进入栅极。'],['电子由源极流向漏极','充分增强后，电子从 N+ 源区沿沟道进入 N− 漂移区，再向下流入背面漏极。','蓝色电子路径向下；常规电流方向相反。'],['栅放电，沟道消失','驱动器移走栅电荷，栅压下降，反型沟道消退，源区不再持续向漂移区供电子。','沟道与电子流同步衰减；没有 IGBT 式双极存储拖尾。'],['恢复阻断','沟道消失，体区／漂移区耗尽层恢复。真实电路仍要处理输出电容与负载电流换流。','栅电压低，源漏间不再有本图所示的导通通路。']]},igbt:{name:'IGBT / N 沟道绝缘栅双极管',sub:'INJECTION & CHARGE STORAGE',architecture:'上部类似 MOS 栅控结构，底部增加 P+ 集电区；电子与空穴共同参与漂移区导电。',steps:[['无沟道，阻断电压','栅压为零，P 体区下方的耗尽区支撑正向集射电压，集电极侧没有持续双极注入。','下方 P+ 层是区别于 MOSFET 的关键。'],['沟道打开，双极注入建立','栅压形成反型沟道，发射极供给电子；底部 P+ 集电区向漂移区注入空穴。','蓝色电子向下，橙色空穴向上。'],['漂移区发生电导调制','电子与空穴浓度升高，使轻掺杂漂移区更易导电。这是 IGBT 在高压大电流应用中的重要优势。','漂移区出现成对过剩载流子；数量为概念示意。'],['沟道先关，存储电荷后清','撤去栅压后，电子供给通道先被切断；漂移区存储载流子仍被抽取或复合，形成关断拖尾电流。','沟道已经消失，但漂移区仍有载流子，主电流尚未完全为零。'],['拖尾结束，恢复阻断','漂移区过剩载流子清除后，电流尾部消失，器件恢复阻断能力。','最后消失的是漂移区存储电荷。']]}};
+// Each specimen has its own process: never force passive or feedback devices
+// into a transistor's on/off model. Geometry and captions share one phase state.
+const make=(name,sub,architecture,stages,steps,electrical,formula,caveat,uses)=>({name,sub,architecture,stages,steps,electrical,formula,caveat,uses});
+const extra={
+resistor:make('电阻 / 金属膜电阻','SCATTERING → HEAT','切开展示陶瓷基体上的电阻膜及两端金属电极；微观窗口放大载流子与晶格作用。',['无外加电压','施加电压','稳定电流','撤去电压','余热散去'],[
+['无定向漂移','导电材料内的电子仍有热运动，但没有外电场造成的净漂移。','蓝点代表电子；规则点阵代表晶格背景，不是电子停止运动。'],
+['电场建立，出现净漂移','电子在热运动上叠加定向漂移，与晶格振动、杂质等发生散射。电源持续提供能量。','电子净漂移向右，对应常规电流向左。'],
+['电能转化为内能','在近似欧姆条件下，电流与电压成正比；能量经散射传给材料，并以热传向环境。','橙色晶格振动幅度强调加热，振幅不按比例。'],
+['电流停止，温度仍高','撤去外加电压后，净漂移迅速消失，但电阻尚有余热。热运动不会因此停止。','电流变化与冷却不是同一个时间尺度。'],
+['接近环境温度','余热散去，回到初始热平衡。电阻不是储存并释放电荷的元件。','材料和温度会改变电阻值。']],
+'近似欧姆、固定温度条件；电子漂移与常规电流反向。','I = V/R；P = I²R','只画一种金属膜结构；散射示意不是电子沿规定折线逐个碰撞原子的真实轨迹。','限流、分压、偏置'),
+capacitor:make('电容 / 平行板模型','CHARGE SEPARATION → ELECTRIC FIELD','两块金属电极之间夹绝缘介质；外部经电阻接电源充电，再切换到电阻负载放电。',['未充电','经 R 充电','充电完成','经 R 放电','放电完成'],[
+['两极板无净电荷差','初始电压为零。这里展示理想电容，不考虑漏电和介质吸收。','两侧电极由介质隔开，没有穿过介质的电子通道。'],
+['电源使两侧电荷分离','电子从左极板被移走，并通过外部电路补到右极板。左侧带正电，右侧带负电，介质中建立电场。','电子只经外部导线移动；介质中的场变化对应位移电流。'],
+['电压接近电源电压','直流充电电流趋近零，极板仍保持分离的电荷，能量储存在电场中。','“有电压”不等于“持续有直流电流穿过介质”。'],
+['改接负载，释放场能','断开充电电源并接上电阻负载。右极板的过剩电子经外部负载流向左极板，电场逐渐减弱。','外部电子流反向；介质仍绝缘。'],
+['两侧电荷差消失','极板间电压趋近零，储存的电场能量主要在放电电阻中转成热。','动画终点以零近似；理想 RC 指数衰减在有限时间不严格到零。']],
+'充电与放电均有外接电阻限流；不演示带电电容短路。','Q = CV；W = ½CV²；τ = RC','平行板是通用概念模型，实际陶瓷、薄膜、电解电容结构和极性要求不同。','去耦、滤波、耦合、定时'),
+inductor:make('电感 / 绕线线圈','CURRENT → MAGNETIC ENERGY','绕线线圈及其磁场；外部为受控供电回路，断开电源时保留二极管与电阻组成的续流路径。',['电流为零','电流上升','电流近稳态','闭路续流','磁能释放完'],[
+['尚无电流','初始线圈电流为零，忽略残磁。磁场图显示的是线圈产生的增量磁场。','线圈是连续导线；图中铜色线圈不是电荷容器。'],
+['电流增长，建立磁场','外加电压使电流上升。感应电压反抗电流的变化，输入能量逐渐转为磁场能。','磁力线逐渐增强，不表示磁场只在线圈内部存在。'],
+['电流近稳态','在直流电压及串联电阻作用下，电流趋近稳态；理想电感两端电压趋近零，但仍有磁场能。','实际绕组有电阻，持续电流仍会产生铜损。'],
+['电源撤去，原方向续流','电流不能突变；线圈端电压反向以维持原方向电流。能量经二极管、电阻闭路释放，电流下降。','续流时电流方向不反转，电压极性反转。'],
+['电流衰减至近零','储存的磁能耗散后，增量磁场消失。若没有续流或钳位通路，断流可能产生很高的电压。','终点以零近似，不暗示可以随意开路带电电感。']],
+'展示闭路续流；以常规电流箭头标方向。','vL = L·di/dt；W = ½LI²','忽略磁饱和、寄生电容及磁滞；磁力线是场的示意，不是粒子轨道。','电源储能、滤波、扼流'),
+transformer:make('变压器 / 双绕组铁芯','CHANGING FLUX → INDUCED VOLTAGE','闭合铁芯上有相互绝缘的原、副边绕组；原边接交流源，副边接电阻负载。示例匝数比 N₂/N₁ = 1/2。',['从零磁通起','磁通上升','磁通正峰值','磁通反向变化','回到零磁通'],[
+['交流周期的起点','选择磁通 Φ = 0、向正方向变化的时刻。此时感应电压并非零；电压取决于磁通变化率。','“磁通为零”与“电压为零”不是同一件事。'],
+['变化的磁通耦合两组线圈','原边交变电压建立变化的磁通，穿过副边的磁通变化产生感应电压，带动负载电流。','两组铜线没有电连接，耦合通过磁场发生。'],
+['磁通峰值，变化率为零','磁通到达正峰值瞬间，dΦ/dt = 0，所以理想感应电压在这一瞬间过零。','磁场强，不等于此刻感应电压大。'],
+['磁通下降并转向负值','磁通变化率变为负，感应电压极性反转；副边电阻负载中的电流也反向。','箭头表示有符号的磁通方向，不表示电子穿过铁芯。'],
+['一个磁通周期完成','磁通回到零并继续上升，交流过程重复。持续直流不能维持这种变压过程，反而可能使铁芯饱和和过热。','本过程是周期，不是“关断”。']],
+'理想变压器、电阻负载；绕组方向按同名端约定。','v = N·dΦ/dt；V₂/V₁ ≈ N₂/N₁','忽略漏磁、磁滞、励磁电流与损耗。窗口给出有符号 Φ 和 dΦ/dt，不能仅凭流动点快慢读电压。','交流变压、隔离、阻抗变换'),
+relay:make('继电器 / 常开电磁继电器','MAGNETIC FORCE → CONTACT MOTION','线圈绕在铁芯上，衔铁带动常开触点；复位弹簧在断电后把衔铁拉回。线圈侧与触点负载侧电气隔离。',['线圈未通电','磁力吸合','触点闭合','退磁与释放','触点断开'],[
+['常开触点分离','弹簧使衔铁保持在释放位置，常开触点不接通负载回路。','线圈电路与触点电路是两套电路。'],
+['电磁力克服弹簧力','线圈电流建立磁场，铁芯吸引衔铁，衔铁带动动触点接近静触点。','上方衔铁移动；没有电子从线圈跳到触点。'],
+['触点接通负载回路','动、静触点接触，负载电流经金属触点流动。线圈持续通电维持吸合。','线圈用小控制功率操纵独立的触点回路。'],
+['线圈断电，弹簧复位','本例使用抑制回路释放线圈磁能。磁力降低后，弹簧拉开衔铁和触点；释放具有机械延迟。','不是一撤电触点就瞬间分开；续流二极管还可能延长释放时间。'],
+['恢复常开','触点分离，负载回路断开。实际机械触点可能出现弹跳、磨损及拉弧。','这里只画常开单稳态继电器，不包含磁保持型。']],
+'线圈有钳位／续流保护；负载供电与线圈供电独立。','线圈电流 → 磁力 → 衔铁位移','不模拟触点弹跳、拉弧或精确吸合阈值；负载额定值需查手册。','电气隔离、负载切换'),
+crystal:make('石英晶体 / 无源谐振器','PIEZOELECTRICITY ↔ MECHANICAL RESONANCE','石英薄片的两面镀电极；示例为 AT 切厚度剪切模态。片层相对横移被放大，以展示电—机械耦合。',['无外部激励','交流电场激励','共振响应','撤去激励','振铃衰减'],[
+['热平衡状态','没有外部驱动，未形成可见的宏观受迫振动。石英晶体本身不提供持续振荡所需能量。','这是无源晶体，不是内部自带振荡电路的有源晶振模块。'],
+['电场引起剪切形变','交流电压通过逆压电效应驱动晶体机械变形；反过来，机械变形也通过压电效应产生电信号。','上下片层相对横移，电极没有相互穿过。'],
+['接近机械谐振频率','在合适频率下，周期驱动与机械模态耦合，形成显著响应。振幅由驱动及损耗决定，不是无限增大。','实际形变量很小；图中夸张放大，不展示真实频率。'],
+['撤去交流激励','输入能量停止，晶体仍可短暂振铃，机械能与电能继续交换并逐渐耗散。','撤驱动后不是立刻完全静止。'],
+['振动逐步消失','阻尼使振幅衰减。持续时钟需要外部放大器和反馈电路补偿损耗。','图示终点将很小振幅近似为零。']],
+'只展示无源晶体的受迫响应与振铃，不是自激振荡电路。','压电耦合；常用等效模型为 Rm–Lm–Cm 支路并联 C₀','真实模态取决于切型和尺寸；此处不计算频率，不把石英形变解释成导电电流穿透介质。','时钟选频、频率基准'),
+diode:make('二极管 / 硅 PN 结','BARRIER & CARRIER INJECTION','左 P 区为阳极 A，右 N 区为阴极 K；从正向偏置切到反向偏置，观察耗尽层和注入载流子。',['零偏置','正偏增加','正向导通','切换反偏','反向阻断'],[
+['结内已有内建势垒','P、N 区接触后发生扩散，留下固定离子形成耗尽层。平衡时漂移与扩散电流相互抵消。','零外加电压不代表没有结电场。'],
+['势垒降低，注入增强','阳极电势高于阴极时，势垒降低。电子由 N 注入 P，空穴由 P 注入 N。','两种载流子方向相反，却产生同向常规电流 A → K。'],
+['持续正向电流','电子与空穴在结两侧注入、扩散并复合。电流随电压连续变化，没有统一的理想硬阈值。','外部必须限流；0.7V 不是所有二极管的固定开关点。'],
+['反向恢复清除存储电荷','切成反偏后，原有注入电荷需被抽取或复合，普通 PN 二极管可能短暂流过反向恢复电流。','此段的反向载流子运动不是稳态反向导通。'],
+['反偏耗尽层扩展','存储电荷清除后，耗尽层变宽，阻断反向电压；仍有小漏电，过高电压可引发击穿。','本例不进入击穿，也不代表肖特基二极管的恢复机制。']],
+'正向经过电阻限流；随后外部电路施加低于击穿的反向电压。','ID ≈ IS·(exp(VD/nVT) − 1)','PN 结理想关系不覆盖全部大电流、温度和瞬态行为；粒子只表示净注入流。','整流、续流、防反接'),
+zener:make('稳压二极管 / 反向击穿','REVERSE BREAKDOWN WITH CURRENT LIMIT','左 P 阳极、右 N 阴极，阴极接较高电势。外部串联电阻限制反向电流。',['低反偏','接近击穿','击穿稳压','减小电源','退出击穿'],[
+['反偏但未击穿','耗尽层支撑反向电压，电流很小。稳压二极管依然是 PN 结。','阴极 K 为正，阳极 A 为负。'],
+['结内电场增强','反向电压升高，结内电场增强，接近器件的击穿工作区。','不是所有稳压管都靠同一种微观机制。'],
+['反向电流明显增加','可由隧穿、雪崩或二者共同造成击穿；在规定电流区间，电流明显改变时电压仅相对小幅改变。','本图仅画反向载流子收集，不把两种击穿机制混为一幅微观碰撞图。'],
+['反向电流减小','减小输入电源后，串联电阻电流下降。低于稳压工作区时，稳定电压的效果变差。','稳压不是无限钳住任意电源，必须满足电流及功耗范围。'],
+['回到微小漏电区','反向电压降低到击穿以下，恢复小电流状态；额定范围内的击穿可重复工作。','离开击穿不等于 PN 结消失或永久损坏。']],
+'仅讨论有串联限流、额定功耗内的反向工作。','PZ = VZ·IZ；IZ 由外部限流网络决定','击穿电压随电流和温度变化；低压常以隧穿为主，高压常以雪崩为主，不能一概而论。','基准、限幅、过压钳位'),
+led:make('LED / 发光二极管','INJECTION → RADIATIVE RECOMBINATION','以直接带隙材料的 PN 发光有源区为模型；电子与空穴注入后复合，部分能量以光子释放。',['未正偏','载流子注入','复合发光','撤去驱动','发光停止'],[
+['没有持续注入','未施加足够正向驱动时，没有显著的电致发光。','左 P 阳极，右 N 阴极；不是灯丝加热。'],
+['电子和空穴进入有源区','正向偏置降低势垒，使电子由 N 侧、空穴由 P 侧进入发光区域。','蓝色电子与橙色空穴向有源区靠近。'],
+['辐射复合释放光子','电子与空穴复合，部分能量变为光。也有非辐射复合和热损耗；颜色主要由材料带隙决定。','黄色波纹代表向外传播的光子，不是电荷离开芯片。'],
+['注入结束，剩余载流子复合','驱动电流减小后，剩余过剩载流子继续复合，发光随之衰减。','实际响应时间取决于器件与驱动；白光荧光粉响应还可能不同。'],
+['回到无明显发光','不再持续供应载流子，电致发光停止。','需要限流驱动；不默认 LED 能承受较高反向电压。']],
+'正向限流驱动，不演示反向击穿。','光子能量 E = hν ≈ Eg（概念近似）','实际 LED 常为异质结／量子阱；本图为能量转换概念模型，不是所有 LED 的真实层结构。','指示、照明、光通信'),
+photodiode:make('光电二极管 / 反偏 PN 模型','PHOTON → ELECTRON–HOLE PAIR','光照进入结区；以适度反偏的 PN 光电二极管为例，结电场把光生电子与空穴分离。',['暗态反偏','入射光增强','产生光电流','遮断光照','恢复暗态'],[
+['有反偏，无入射光','反偏耗尽层已存在，电场方向由 N 区指向 P 区。实际器件仍有暗电流。','不能把反偏暗态画成耗尽层消失。'],
+['吸收光子产生载流子','合适能量的光子被半导体吸收，产生电子—空穴对；不是每个入射光子都被吸收并收集。','光子向内，电子与空穴在吸收位置生成。'],
+['电场分离并收集电荷','电子向 N 侧移动，空穴向 P 侧移动，产生从阴极到阳极的常规反向光电流。','电子向右、空穴向左，方向与正向注入相反。'],
+['光源撤去，响应衰减','新光生载流子减少，已生成的载流子被收集或复合；结电容及外部电路也影响响应。','反向偏置保持存在，不等于把电源关掉。'],
+['剩余暗电流','光电流回到暗态基线，耗尽层仍支撑反偏电压。','本例省略小暗电流；不表示光照停止后结内没有电场。']],
+'反向偏置保持、低于击穿；PN 模型也适用于理解 PIN 的收集原理。','Iph ≈ Rλ·Popt（在线性响应范围）','光也可能在耗尽区外被吸收，载流子扩散进入收集区；本图仅强调结区产生与分离。','光传感、光通信、测光'),
+scr:make('SCR / 普通单向晶闸管','PNPN → REGENERATIVE LATCH','沿主电流方向为 P–N–P–N 四层，门极接近阴极的 P 层。以外部电路控制电流、完成换流。',['正向阻断','门极触发','建立自锁','撤门极仍导通','外部换流关断'],[
+['正向电压，尚未触发','A 相对 K 为正，中央结反偏并支撑正向阻断电压；未达到击穿触发条件。','并非四层都是同向导通的 PN 结。'],
+['门极注入启动再生','正的门极电流向阴极侧 P 层注入，内部等效 PNP 与 NPN 的相互作用形成再生正反馈。','门极只需启动过程，但脉冲需满足器件触发要求。'],
+['主电流达到锁定条件','若阳极电流在触发期间达到锁定电流条件，内部再生维持导电。主电流由外部负载限制。','门极不负责持续供应整个阳极电流。'],
+['撤去门极，仍然导通','普通 SCR 已锁定，且阳极电流高于维持电流时，撤去门极电流不能关断。','此处图仍保持导通，避免把 SCR 当成 MOS 管。'],
+['电流降至维持值以下并清荷','外部换流使阳极电流降到维持电流以下，并留足器件恢复时间，清除存储电荷后恢复阻断。','关断依赖主电路条件；不是门极发一个“关”信号。']],
+'普通 SCR；外部换流关断，不适用于 GTO 等可关断晶闸管。','触发需满足锁定条件；关断需 IA < IH 且恢复完成','PNPN 为概念切片；不展示全部载流子注入细节。锁定电流 IL 与维持电流 IH 含义不同。','可控整流、调功、保护'),
+opamp:make('运算放大器 / 电压跟随器','DIFFERENTIAL GAIN + NEGATIVE FEEDBACK','这是内部功能结构图，不冒充芯片剖面：差分输入级 → 高增益级 → 输出级。输出直接反馈到反相输入，双电源持续供电。',['输入为零','输入向上阶跃','反馈建立','输入回到零','重新平衡'],[
+['闭环处于平衡','在输入与输出范围内，反馈使反相端接近同相端。此处输入为零，输出近零；放大器仍通电。','蓝色是信号路径，橙色是反馈；不是电子穿过几个盒子的轨迹。'],
+['差分误差驱动输出','同相端输入升高，瞬间出现 V+ − V− 的差，差分级和增益级推动输出升高。','输出能量来自电源，输入信号只控制输出。'],
+['负反馈使误差减小','输出升高并反馈到反相端，缩小输入差。在稳定线性工作条件下，电压跟随器输出接近输入。','V+ ≈ V− 是反馈结果，不是两个输入端被短接。'],
+['输入回零，输出跟随下降','输入降低后误差变负，输出级把输出拉低；带宽、压摆率和负载影响过渡过程。','“回零”不是断电，电源轨始终存在。'],
+['重新接近平衡','输出回到近零，仍存在失调、偏置电流和噪声。实际不能把输入差当作严格为零。','没有负反馈或超出范围时，虚短近似不成立。']],
+'选择单位增益稳定的电压反馈运放；工作点在输入共模、输出摆幅和负载允许范围内。','Vout = Aol·(V+ − V−)；闭环跟随器 Vout ≈ Vin','通用功能图不是某一型号的晶体管级电路；省略补偿细节，不保证任意运放／负载都稳定。','缓冲、放大、有源滤波')
+};
+const extraKeys=Object.keys(extra);
+const nav=document.querySelector('.switch');
+extraKeys.forEach((key,i)=>{const b=document.createElement('button');b.dataset.device=key;b.setAttribute('aria-pressed','false');b.textContent=String(i+4).padStart(2,'0')+' / '+extra[key].name.split(' / ')[0];nav.append(b);});
+// Additional explanations remain beside the specimen; the original BJT/MOS/IGBT
+// material below is explicitly retained as a dedicated semiconductor chapter.
+const chapter=document.querySelector('.grid').parentElement;
+chapter.querySelector('.eyebrow').textContent='晶体管专题 / 原有三种器件的补充说明';
+document.querySelector('.caution h3').textContent='三种晶体管剖面的模型边界';
+const sources=document.querySelector('main > section:last-child');
+const moreSources=document.createElement('p');moreSources.innerHTML='<a href="https://www.ia.omron.com/support/guide/36/introduction.html">OMRON · 电磁继电器</a> · <a href="https://www.hamamatsu.com/eu/en/news/featured-products_and_technologies/2024/photodiodes-exposed-unlocking-the-characteristics-of-these-crucial-sensors.html">Hamamatsu · 光电二极管</a> · <a href="https://www.st.com.cn/resource/en/application_note/an4607-basics-on-the-thyristor-scr-structure-and-its-application-stmicroelectronics.pdf">ST · SCR 结构及触发</a> · <a href="https://corporate.murata.com/en-global/technology/techmag/metamorphosis19/appnote/01">Murata · 石英厚度剪切模态</a> · <a href="https://www.ti.com/lit/an/sboa092b/sboa092b.pdf">TI · 运放与负反馈</a> · <a href="https://toshiba.semicon-storage.com/ap-en/semiconductor/knowledge/faq/diode/what-are-the-characteristics-zener-voltage.html">Toshiba · 稳压二极管</a>';sources.append(moreSources);
+const study=document.createElement('section');study.id='component-notes';study.className='caution';study.innerHTML='<h3 id="extra-title"></h3><p id="extra-formula" class="mono"></p><p id="extra-caveat" class="note"></p><p id="extra-uses" class="note"></p>';
+document.querySelector('.controls').after(study);study.hidden=true;
+const legendOriginal=document.querySelector('.legend').innerHTML;
+const stageOriginal=[...document.querySelectorAll('[data-step]')].map(x=>x.textContent);
+const conditionTitle=$('electrical').previousElementSibling;
+const processTitle=document.querySelector('label[for=timeline]');
+const standardFigure=document.querySelector('.figtop').lastElementChild;
+function resetLabels(){study.hidden=true;document.querySelector('.legend').innerHTML=legendOriginal;conditionTitle.textContent='驱动与主电流';processTitle.textContent='导通 → 稳态 → 撤去驱动 → 关断';standardFigure.textContent='实体切片 / 示意剖面，非按比例';document.querySelectorAll('[data-step]').forEach((b,i)=>{b.textContent=stageOriginal[i];b.dataset.step=[0,25,48,72,100][i];});}
+const stroke=(d,c='#a8bdc8',w=2,extraAttrs='')=>'<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w+'" '+extraAttrs+'/>';
+const circ=(x,y,r,c,attrs='')=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'" '+attrs+'/>';
+const sign=(x,y,s,c)=>circ(x,y,7,c)+label(x-4,y+4,s,'charge-label');
+const fieldArrow=(x,y,toX,toY,c)=>{const len=Math.hypot(toX-x,toY-y)||1,ux=(toX-x)/len,uy=(toY-y)/len;return stroke('M'+x+' '+y+'L'+toX+' '+toY,c,2)+stroke('M'+(toX-6*ux+4*uy)+' '+(toY-6*uy-4*ux)+'L'+toX+' '+toY+'L'+(toX-6*ux-4*uy)+' '+(toY-6*uy+4*ux),c,2);};
+const addStyle=document.createElement('style');addStyle.textContent='.charge-label{fill:#16313c;font:bold 13px monospace}.legend{min-height:38px}.extra-category{color:var(--muted)}#component-notes[hidden]{display:none}#component-notes{margin-bottom:40px}.switch button{padding:8px 13px;font-size:13px}.light .svg-small{fill:#b5c7d0}.svg-small{paint-order:stroke;stroke:#1c2e38;stroke-width:2px}';document.head.append(addStyle);
+function extraModel(kind,t){const p=phase(t),up=clamp((t-10)/28),down=clamp((100-t)/35);let level=t<10?0:t<38?up:t<65?1:down;if(kind==='scr')level=t<10?0:t<38?up:t<97?1:0;if(kind==='transformer')return {p:t===0?0:t<24?1:t<=26?2:t<99?3:4,level:1,flux:Math.sin(t/100*Math.PI*2),voltage:Math.cos(t/100*Math.PI*2)};if(kind==='opamp')level=t<10?0:t<38?1-Math.exp(-(t-10)/7):t<65?1:Math.exp(-(t-65)/7);return {p,level};}
+window.componentModel=extraModel;
+function extraSetup(){const d=extra[type];study.hidden=false;$('extra-title').textContent=d.name+' · 模型边界';$('extra-formula').textContent=d.formula;$('extra-caveat').textContent=d.caveat;$('extra-uses').textContent='常见用途：'+d.uses;$('deviceName').textContent=d.name;$('deviceSub').textContent=d.sub;$('architecture').textContent=d.architecture;$('figure').textContent='FIG '+String(extraKeys.indexOf(type)+4).padStart(2,'0');$('svgtitle').textContent=d.name+'工作原理';$('svgdesc').textContent=d.architecture;conditionTitle.textContent='外部条件与方向';processTitle.textContent=d.stages.join(' → ');standardFigure.textContent=type==='opamp'?'功能结构 / 非芯片物理剖面':'内部结构 / 示意图，非按比例';document.querySelectorAll('[data-step]').forEach((b,i)=>{b.textContent=(i+1)+' / '+d.stages[i];b.dataset.step=(type==='transformer'?[0,12.5,25,62.5,100]:[0,25,48,72,100])[i];});for(const id of ['structure','depletion','channel','tracks','population','particles','labels'])$(id).innerHTML='';extraRender();}
+function extraRender(){const d=extra[type],m=extraModel(type,time),p=m.p,a=m.level;const st=d.steps[p];$('phase').textContent='STAGE 0'+(p+1)+' / 05';$('phaseName').textContent=st[0];$('explanation').textContent=st[1];$('look').textContent=st[2];$('electrical').textContent=d.electrical;$('readout').textContent=d.stages[p];$('timeline').value=time;$('timeValue').textContent=Math.round(time)+'%';document.querySelectorAll('[data-step]').forEach((b,i)=>b.setAttribute('aria-pressed',String(p===i)));let s='',v='',l='',legend='';const e='#86e0f0',h='#ffc38e',g='#cce9a3';
+if(['diode','zener','led','photodiode'].includes(type)){
+ s=block(165,188,215,158,'#795a48')+block(380,188,215,158,'#335f70')+rect(142,237,23,55,'url(#metal)')+rect(595,237,23,55,'url(#metal)');l=label(210,225,'P 区 / 阳极 A')+label(420,225,'N 区 / 阴极 K');
+ const reverse=type==='zener'||type==='photodiode'||type==='diode'&&p>=3;
+ const dep=type==='diode'?(reverse?25+40*(1-a):35-25*a):type==='led'?35-25*a:type==='zener'?35+10*a:55;
+ v+=rect(380-dep,188,dep*2,158,'url(#hatch)');
+ l+=label(245,160,reverse?'A −             外加反向偏置             K +':p===0?'零外加偏置 / 内建势垒仍存在':'A +             外加正向偏置             K −','svg-small');
+ const flow=type==='diode'&&p===3?a: type==='diode'&&p===4?0:a;
+ if(type==='photodiode'||type==='zener'){
+  for(let i=0;i<7;i++){const u=(i/7+motionClock*.23)%1;v+='<g opacity="'+flow+'">'+sign(380+u*184,266,'−',e)+sign(380-u*184,300,'+',h)+'</g>';}
+  if(type==='photodiode'){v+='<g opacity="'+a+'">'+stroke('M340 95l20 18l-10 18l20 18l-9 18l19 22','#f5db7e',3)+label(390,140,'入射光子','svg-small')+'</g>';l+=label(220,326,'空穴 ←      内建电场 N → P      → 电子','svg-small');}
+  else l+=label(223,326,'反向电流 K → A · 外部串联 R 限流','svg-small');
+ }else{
+  const recovery=type==='diode'&&p===3;
+  for(let i=0;i<7;i++){const u=(i/7+motionClock*.23)%1;const ex=recovery?220+u*330:type==='led'?560-u*180:560-u*350,hx=recovery?550-u*330:type==='led'?200+u*180:200+u*350;v+='<g opacity="'+flow+'">'+sign(ex,type==='led'?266+6*u:266,'−',e)+sign(hx,type==='led'?300-28*u:300,'+',h)+'</g>';}
+  if(type==='led'){v+='<g opacity="'+a+'">'+circ(380,272,16,'#fae59d','opacity=".6"')+stroke('M380 260l18 -14l-4 -18l18 -14l-4 -18l18 -14','#f5db7e',3)+label(430,157,'出射光子','svg-small')+'</g>';l+=label(225,326,'有源区复合发光 · 外部限流','svg-small');}
+  else l+=label(212,326,recovery?'反偏清除注入电荷 · 恢复后阻断':'电子 N → P；空穴 P → N','svg-small');
+ }
+ legend='蓝色 −：电子；橙色 +：空穴；斜线：耗尽区'+(type.includes('diode')||type==='led'?'；黄色波纹：光（有光时）':'');
+}else if(type==='resistor'){
+ s=block(165,240,170,72,'#475d64')+rect(165,240,170,10,'#a17d5d')+rect(148,248,17,52,'url(#metal)')+rect(335,248,17,52,'url(#metal)')+rect(385,205,210,140,'#20343f','rx="5" stroke="#a8bdc8"');l=label(170,226,'金属电阻膜')+label(177,335,'陶瓷基体')+label(390,191,'膜层微观放大窗')+label(385,365,'电子在膜中，不在陶瓷中','svg-small')+label(180,155,p>0&&p<3?'左端 −       电场 ←       右端 +':'无外加电压','svg-small');
+ const heat=p===0?0:p===1?a*.5:p===2?1:p===3?a:.03;
+ for(let i=0;i<24;i++){const x=405+(i%6)*33,y=227+Math.floor(i/6)*30;v+=circ(x+Math.sin(motionClock*4+i)*heat*2.5,y+Math.cos(motionClock*3+i)*heat*2.5,4,'#ffc38e');}
+ for(let i=0;i<12;i++){const x=400+((i*17+(p===1||p===2?motionClock*60:0))%180),y=235+(i%3)*40+Math.sin(i+motionClock*4)*4;v+=sign(x,y,'−',e);}
+ l+=label(174,360,'薄膜结构 / 右侧仅放大膜层','svg-small');legend='右侧蓝色 −：电子；橙色点：膜层晶格（夸张振动）';
+}else if(type==='capacitor'){
+ s=block(270,165,30,190,'#6d8996')+block(460,165,30,190,'#6d8996')+rect(302,166,156,189,'#547064','opacity=".55"');l=label(300,150,'绝缘介质')+label(206,195,'左极板')+label(505,195,'右极板');
+ const q=time<10?0:time<38?1-Math.exp(-(time-10)/7):time<65?1:Math.exp(-(time-65)/7);const charge=p===4?0:q;
+ for(let i=0;i<7;i++)v+='<g opacity="'+charge+'">'+sign(285,184+i*24,'+',h)+sign(475,184+i*24,'−',e)+'</g>';
+ for(let i=0;i<4;i++)v+='<g opacity="'+charge+'">'+fieldArrow(318,210+i*33,440,210+i*33,g)+'</g>';
+ s+=stroke('M270 260H210V365H550V260H490','#9db3be',3);s+=rect(310,354,70,22,'#384e58','stroke="#a8bdc8"');s+=rect(417,351,82,28,'#20343f','rx="4"');l+=label(324,350,'外部 R','svg-small')+label(425,371,p<3?'电源接入':'负载回路','svg-small');l+=label(300,405,'电子不穿过介质','svg-small');
+ if(p===1||p===3)v+=fieldArrow(p===1?390:270,365,p===1?410:250,365,e);
+ legend='极板 +/−：净电荷；绿箭头：电场；底部蓝箭头：外部电子流';
+}else if(type==='inductor'||type==='transformer'||type==='relay'){
+ if(type==='transformer'){
+  s=block(215,160,330,190,'#4c626b')+rect(283,210,194,90,'#192d36','stroke="#a3b6bd"');
+  for(let j=0;j<2;j++)for(let i=0;i<(j?6:12);i++){const y=190+i*(j?23:11.5);s+=stroke('M'+(j?490:224)+' '+y+'q-16 -8 -16 3v8q0 10 16 5h38q16 -2 16 -11t-16 -10Z','#c79a70',5);}
+  const flux=m.flux,volt=m.voltage;v+=stroke('M251 192H510V323H251Z',g,3,'opacity="'+(.15+.8*Math.abs(flux))+'"');v+=fieldArrow(flux>=0?335:405,192,flux>=0?405:335,192,g);l=label(174,144,'原边 N₁ = 12')+label(455,144,'副边 N₂ = 6')+label(286,255,'相互绝缘')+label(290,281,'铁芯磁通 Φ')+label(160,385,'交流源 → 原边     副边 → 电阻负载','svg-small');l+=label(218,111,'Φ = '+flux.toFixed(2)+'     dΦ/dt ∝ '+volt.toFixed(2),'svg-small');legend='绿色闭合线：磁通；箭头：磁通正负方向；匝数为示例';
+ }else{
+  s=block(224,240,310,54,'#4c626b');for(let i=0;i<13;i++)s+=stroke('M'+(245+i*20)+' 224q-13 -9 -13 4v69q0 14 12 8l12 -9v-67q0 -11 -11 -5Z','#c79a70',5);
+  const coil=type==='relay'?a:a;v+=stroke('M220 267H535Q650 270 555 320Q380 410 215 320Q120 270 220 267',g,2,'opacity="'+coil+'"');if(coil>.02)v+=fieldArrow(348,267,410,267,g);
+  if(type==='relay'){
+   s+=block(216,326,50,39,'#4c626b');v+='<g transform="rotate('+(-12*(1-a))+' 242 206)">'+rect(242,197,320,14,'url(#metal)')+rect(544,211,8,15,'url(#metal)')+circ(548,233,7,'#d5cdb5')+'</g>';s+=rect(537,240,21,11,'#b6b3a4');l=label(265,180,'活动衔铁 / 弹簧复位')+label(540,277,'常开触点')+label(280,345,'线圈与铁芯')+label(185,110,'线圈电路 ≠ 触点负载电路','svg-small');v+=stroke('M255 185l8 -12l8 24l8 -24l8 24l8 -12','#b4c3c9',2);l+=label(445,316,a>.98?'触点：闭合':'触点：分离','svg-small');
+  }else{l=label(286,190,'连续绝缘铜线绕组')+label(264,345,'B 随电流建立与衰减')+label(193,120,p===3?'电源断开；二极管 + R 闭路续流':'外部供电 / 串联 R 限流','svg-small');v+='<g opacity="'+a+'">'+fieldArrow(192,359,260,359,e)+'</g>';l+=label(279,363,p===3?'i 保持原方向；vL 反向':'常规电流方向 i','svg-small');}
+  legend='铜色：绕线；绿色：磁场示意（不是电流轨迹）';
+ }
+}else if(type==='crystal'){
+ const amp=p===0||p===4?0:a;const shift=Math.sin(time*.9)*amp*11;s='<path d="M'+(235+shift)+' 215H'+(525+shift)+'L525 315H235Z" fill="#64818b" stroke="#bad2dc66"/>';v='<g transform="translate('+shift+' 0)">'+block(235,190,290,25,'#a4b8bb')+rect(250,185,260,5,'#869ea9')+'</g>';s+=rect(250,315,260,6,'#869ea9');l=label(260,166,'上表面电极')+label(258,349,'下表面电极')+label(290,270,'石英薄片')+label(185,119,'厚度剪切形变 · 振幅大幅夸张','svg-small');v+='<g opacity="'+amp+'">'+fieldArrow(290,232,340,232,g)+fieldArrow(465,296,415,296,g)+'</g>';legend='上下片层相对横移：剪切模态；金属面：电极';
+}else if(type==='scr'){
+ const cols=['#795a48','#335f70','#795a48','#335f70'];for(let i=0;i<4;i++)s+=block(175+i*100,193,100,153,cols[i]);l=label(145,163,'A 阳极 +')+label(520,163,'K 阴极 −')+label(392,160,'G 门极');s+=rect(408,167,30,26,'url(#metal)');for(let i=0;i<4;i++)l+=label(216+i*100,276,i%2?'N':'P');
+ if(p===0||p===4)v+=rect(362,193,25,153,'url(#hatch)');else{for(let i=0;i<12;i++){const x=190+((i*31+motionClock*60)%365);v+=circ(x,305,4,g);}if(p===1)v+=fieldArrow(423,173,423,221,h);}
+ l+=label(195,370,p===3?'IG = 0，但 IA > IH：保持导通':p===4?'外部使 IA < IH，并留足恢复时间':'常规主电流：A → K','svg-small');legend='绿色点：常规主电流示意；橙色箭头：门极注入；斜线：阻断结';
+}else if(type==='opamp'){
+ s=block(165,195,430,150,'#304954');const names=['差分输入级','高增益级','输出级'];for(let i=0;i<3;i++){s+=rect(185+i*135,235,115,55,'#4d626b','rx="5" stroke="#adc0c8"');l+=label(193+i*135,265,names[i]);if(i<2)s+=fieldArrow(301+i*135,260,317+i*135,260,e);}
+ s+=stroke('M125 245H185M125 283H185M570 260H625V323H140V283',h,2);s+=stroke('M380 155V195M380 345V360','#a9bdc9',2);l+=label(117,232,'Vin → +')+label(152,302,'−')+label(558,237,'Vout')+label(368,143,'VCC+')+label(362,377,'VCC−')+label(224,319,'负反馈：Vout 回到反相端','svg-small');l+=label(182,115,'功能结构图 / 并非芯片物理剖面','svg-small');v+=label(210,220,'Vin: '+(p===0||p>=3?'0':'↑')+'       Vout: '+a.toFixed(2)+'（归一化）','svg-small');legend='蓝色箭头：信号处理；橙色线：负反馈；上下端：持续供电';
+}
+$('structure').innerHTML=s;$('channel').innerHTML=v;$('labels').innerHTML=l;document.querySelector('.legend').textContent=legend;
+}
+
+let type='bjt',time=0,playing=false,raf=0,last=0,visible=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+function phase(t){return t<10?0:t<38?1:t<65?2:t<97?3:4;}
+function model(kind,t){let gate=t<10?0:t<38?clamp((t-10)/20):t<65?1:clamp(1-(t-65)/9);let stored=t<10?0:t<38?clamp((t-17)/21):t<65?1:clamp(1-(t-65)/(kind==='igbt'?32:kind==='bjt'?24:9));let flow=kind==='mos'?gate:Math.max(gate,stored);return {gate,stored,flow,phase:phase(t)};}
+window.transistorModel=model;
+function setup(){if(extra[type])return extraSetup();resetLabels();const d=info[type];$('deviceName').textContent=d.name;$('deviceSub').textContent=d.sub;$('architecture').textContent=d.architecture;$('figure').textContent='FIG 0'+(['bjt','mos','igbt'].indexOf(type)+1);$('svgtitle').textContent=d.name+'内部剖面';$('svgdesc').textContent=d.architecture+'。电子用蓝色负号表示，空穴用橙色正号表示。';let s='',l='';
+if(type==='bjt'){s+=block(160,180,145,165,'#286371');s+=block(305,180,68,165,'#795a48');s+=block(373,180,208,165,'#335767');for(const [x,n] of [[175,'E 发射极'],[313,'B 基极'],[484,'C 集电极']]){s+=rect(x,143,48,37,'url(#metal)','rx="2"');l+=label(x-3,130,n);}l+=label(190,274,'N+ 发射区')+label(313,239,'P')+label(308,266,'薄基区')+label(438,274,'N 集电区');}
+else{s+=block(175,185,395,150,'#335767');s+=rect(175,185,170,76,'#795a48','class="region"');s+=rect(213,185,70,28,'#286371','class="region"');s+=rect(175,185,28,28,'#a5785b','class="region"');s+=rect(267,174,135,11,'#aab9be','class="region"');s+=block(267,154,135,20,'#556d64');s+=rect(171,163,85,22,'url(#metal)');s+=rect(171,175,24,12,'url(#metal)');s+=block(175,335,395,20,type==='igbt'?'#976c50':'#286371');s+=rect(175,355,395,10,'url(#metal)');l+=label(171,139,type==='igbt'?'E 发射极（接 P 体区）':'S 源极（接 P 体区）')+label(310,125,'G 栅极')+label(415,174,'栅氧化层')+label(218,205,'N+')+label(195,243,'P 体区')+label(391,281,'N− 漂移区')+label(382,351,type==='igbt'?'P+ 集电区':'N+ 漏区')+label(345,398,type==='igbt'?'C 集电极':'D 漏极');}
+$('structure').innerHTML=s;$('labels').innerHTML=l;
+// Paths lie on the exposed cut face, not through oxide or gate.
+const paths=type==='bjt'?[{d:'M179 295L302 295L355 295L555 295',kind:'e'},{d:'M285 309L333 309L339 205',kind:'base'}]:[{d:'M237 199L270 199L280 188L339 188L351 216L351 322L351 350',kind:'e'},...(type==='igbt'?[{d:'M465 348L465 305L433 252L318 231L198 199',kind:'h'}]:[])];
+$('tracks').innerHTML=paths.map(p=>'<path class="path" d="'+p.d+'" stroke="'+(p.kind==='h'?'#ffc38e':'#86e0f0')+'"/>').join('');
+$('particles').innerHTML=paths.map((p,j)=>Array.from({length:p.kind==='base'?3:12},(_,i)=>'<g class="moving" data-route="'+j+'" data-i="'+i+'"><circle r="4.4" fill="'+(p.kind==='h'?'#ffc38e':'#86e0f0')+'" class="carrier"/><path d="M-2 0h4'+(p.kind==='h'?'M0 -2v4':'')+'" stroke="#14313b" stroke-width="1"/></g>').join('')).join('');
+const pop=[];for(let i=0;i<24;i++){const x=type==='bjt'?311+(i%4)*14:207+(i%8)*45,y=type==='bjt'?195+Math.floor(i/4)*25:276+Math.floor(i/8)*24;pop.push('<g class="charge" data-i="'+i+'"><circle cx="'+x+'" cy="'+y+'" r="3.5" fill="'+(i%2?'#ffc38e':'#86e0f0')+'"/>'+ (type==='igbt'?'<circle cx="'+(x+9)+'" cy="'+(y+7)+'" r="3" fill="'+(i%2?'#86e0f0':'#ffc38e')+'"/>':'')+'</g>');}$('population').innerHTML=type==='mos'?'':pop.join('');render();}
+function render(){if(extra[type])return extraRender();const m=model(type,time),d=info[type],p=m.phase;const step=d.steps[p];$('phase').textContent='STAGE 0'+(p+1)+' / 05';$('phaseName').textContent=step[0];$('explanation').textContent=step[1];$('look').textContent=step[2];$('timeline').value=time;$('timeValue').textContent=Math.round(time)+'%';$('readout').textContent=['截止','导通建立','稳态导通','电荷清除','截止'][p];document.querySelectorAll('[data-step]').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===p)));
+const gate=m.gate,store=m.stored;
+if(type==='bjt'){$('depletion').innerHTML=rect(368-22*(1-gate),180,14+45*(1-gate),165,'url(#hatch)')+rect(300-5*(1-gate),180,10*(1-gate),165,'url(#hatch)');$('channel').innerHTML='';}
+else{$('depletion').innerHTML=rect(175,261,170,Math.max(4,65*(1-store)), 'url(#hatch)');$('channel').innerHTML=rect(276,186,72,5,'#cce9a3','opacity="'+gate+'"')+label(415,211,gate>.05?'栅下沟道':'通道中断','svg-small');}
+const trackEls=[...$('tracks').querySelectorAll('path')];trackEls.forEach((el,i)=>el.style.opacity=(type==='bjt'||i===0?m.flow:store)*.4);
+$('particles').querySelectorAll('.moving').forEach(el=>{const r=+el.dataset.route,i=+el.dataset.i,path=trackEls[r],len=path.getTotalLength();const u=((i/(type==='bjt'&&r===1?3:12)+motionClock*.23)%1);const pt=path.getPointAtLength(u*len);el.setAttribute('transform','translate('+pt.x+' '+pt.y+')');let amount=type==='mos'?gate:type==='igbt'&&r===0?gate:type==='bjt'&&r===1?(p===3?store:gate*.7):m.flow;el.style.opacity=amount;});
+$('population').querySelectorAll('.charge').forEach(el=>{el.style.opacity=store*(.4+.6*((+el.dataset.i%5)/4));});
+$('electrical').textContent=type==='bjt'?(p===3?'基极抽取电荷；集电极电流在存储期可能仍存在。':'基极控制注入；常规主电流 C → E，与电子运动相反。'):(p===3?(type==='igbt'?'栅压已下降；存储电荷使 IC 仍有拖尾。':'栅极放电；沟道消退，ID 迅速减小。'):'栅极只控制电场；电子不穿过氧化层。常规主电流由下向上。');}
+function stop(){playing=false;$('play').textContent='▶ 播放全过程';$('play').setAttribute('aria-pressed','false');if(raf)cancelAnimationFrame(raf);raf=0;last=0;}
+function tick(now){raf=0;if(!playing||!visible||document.hidden)return;const dt=last?Math.min((now-last)/1000,.05):0;last=now;time=Math.min(100,time+dt*7);render();if(time>=100)stop();else raf=requestAnimationFrame(tick);}
+function start(){if(reduced.matches){time=48;render();$('readout').textContent='减少动态模式 · 请用步骤按钮';return;}if(time>=100)time=0;playing=true;$('play').textContent='Ⅱ 暂停';$('play').setAttribute('aria-pressed','true');last=0;if(visible&&!document.hidden&&!raf)raf=requestAnimationFrame(tick);}
+// Audited scientific corrections and an accessible, narrated teaching layer.
+let motionClock=0, dwell=0, narration=true, resistorOffset=0;
+const childStories={
+bjt:['小开关还没打开。先看中间很薄的基区。','基极得到驱动，电子从左边出发，穿过薄薄的基区。','大部分电子到达右边；少部分在基区与空穴复合。','先把里面多出来的电荷清掉，开关才会关好。','电荷清完，电子不再持续从左穿到右。'],
+mos:['栅极下面还没有连起来的小路。','栅极的电场改变硅表面，建立一条很薄的通道。','电子沿通道进入芯片，再向下到漏极。它们不穿过栅极的绝缘层。','栅极放电，通道消失，新的电子进不来了。','通道关好，器件重新阻挡电压。'],
+igbt:['现在没有通道，开关关着。','上面送来电子，下面注入空穴，两种载流子一起导电。','漂移区多了电子和空穴，这一大块硅变得更容易导电。','通道先关了，可里面还有存下来的电荷，要慢慢清掉。','存下来的电荷清完，拖着的小电流也结束了。'],
+resistor:['电子仍在乱动，但还没有往某个方向的净移动。','加上电压后，电子一边乱动，一边整体向右漂移。','电子把电源给的能量传给材料，电阻变热。','电压撤掉了，净漂移停止，可余热还在。','余热散去，电阻接近原来的温度。'],
+capacitor:['中间是绝缘层，电子不能直接穿过去。','电源从左板拿走电子，送到右板；两边电荷分开了。','两边留下了电荷和电场，现在几乎不再有充电电流。','改接电阻负载，右边多出的电子沿外部导线回到左边。','电荷差越来越小，储存的能量在电阻里变成热。'],
+inductor:['线圈里还没有电流，也没有它产生的磁场。','电流慢慢长起来，磁场也跟着增强。','电流保持时，磁场还在，能量存在磁场里。','电源撤掉，电流沿续流回路继续走，方向没有翻转。','磁场里的能量释放完，电流逐渐停下来。'],
+transformer:['磁通刚经过零，但正在变化，所以电压并不为零。','第一组线圈使磁通变化，第二组线圈就产生感应电压。','磁通最强的这一瞬间，变化率是零，感应电压也过零。','看磁通怎样来回变化；电压取决于变化快慢，不只看强弱。','回到周期起点，接着重复。两组导线始终没有电连接。'],
+relay:['弹簧让两个触点分开，负载回路断着。','线圈变成电磁铁，吸动上面的衔铁。','两个金属触点碰到了，另一套电路就接通了。','线圈磁力减小，弹簧把衔铁和触点拉回去。','两个触点又分开了。线圈没有和负载电路连在一起。'],
+crystal:['石英片没有持续的外部激励，不会自己不停振动。','交流电场让石英片发生很小的剪切形变。','节奏合适时，振动变明显。图里把形变放大了很多。','激励撤掉后，它还会振一会儿，振幅慢慢变小。','振动衰减到很小。要持续计时，还需要外部电路补充能量。'],
+diode:['P 和 N 之间本来就有一层势垒。','正向加电压，势垒变低，两种载流子向对面注入。','电子向左，空穴向右；常规电流都算向右。','改成反向电压，先把刚才存进去的电荷扫回来。','电荷清完，反向电流只剩很小的漏电流，图中省略了。'],
+zener:['现在是反向接电，电压还没达到击穿工作区。','反向电压升高，结里的电场增强。','进入规定的击穿区后，电流变化很明显，电压变化相对小。','电源减小，反向电流也变小。','回到击穿以下。串联电阻一直负责限流。'],
+led:['还没有持续注入载流子，所以没有明显发光。','电子和空穴从两边靠近发光区。','它们在同一处复合，部分能量变成向外传播的光。','停止送入新电荷，剩下的载流子复合后，光变弱。','明显发光结束。它不是靠一根灯丝烧热来发光的。'],
+photodiode:['没有光，但反向电压和结里的电场已经存在。','光子到达吸收点，产生一对电子和空穴。','电场把它们分开：电子向右，空穴向左。','遮住光，新的载流子不再产生，已有的被收集或复合。','回到暗态。电场仍在，只剩小暗电流。'],
+scr:['中央的结挡住电流，主开关还没打开。','门极给一个合适的触发，让内部的正反馈开始。','主电流达到锁定条件后，它能自己维持导通。','把门极触发撤掉，它仍然开着！普通 SCR 不能这样关。','要让外部主电路把电流降下来，并等它恢复，才能关好。'],
+opamp:['电路一直通电，输出反馈回来，输入两端接近平衡。','输入升高，电路发现两端有差，就把输出往上调。','输出反馈回来，让差变小，输出接近输入。','输入回到零，输出也往零调整。电源并没有关掉。','重新接近平衡。这些箭头表示信号，不是小电子走过盒子。']};
+const teaching=document.createElement('section');teaching.className='teaching';teaching.innerHTML='<div><strong>先认清图里的记号</strong><p>蓝色 − 是电子；橙色 + 是空穴（缺少电子的位置，不是一颗小正电球）。紫色箭头表示<b>常规电流</b>；浅蓝 E 表示电场；绿色 B 表示磁场。场线不是流动的粒子。</p></div><div><strong>怎么一起看</strong><p>先选元件 → 点“播放” → 跟着每一步短句看。动画会在关键位置停留；也能点步骤或拖动时间轴。</p></div>';
+nav.before(teaching);
+teaching.querySelector('p').innerHTML='先看每张图的图例。<b>带 − 的移动圆点</b>是电子；<b>带 + 的移动圆点</b>是空穴（缺少电子的位置）。电容极板上的 ± 只表示净电荷。标 E 的箭头是电场，标 B 的是磁场；运放箭头表示信号，石英箭头表示位移。';
+const terms=document.createElement('details');terms.innerHTML='<summary>给第一次接触电路的小朋友</summary><p>电场 E 的方向按正电荷受力方向定义；电子带负电，电场力方向相反，但扩散等机制也会影响运动。P、N 是半导体的掺杂类型，不代表整块材料分别带正电、负电。紫色 I 箭头表示常规电流，它与电子净移动方向相反。动画中的空穴是有效载流子的示意，不是一颗独立的小正电球。</p>';teaching.append(terms);
+const story=document.createElement('div');story.className='child-story';story.innerHTML='<span class="eyebrow">这一刻，发生了什么？</span><p id="child-text" aria-live="polite"></p><div id="direction-text"></div>';$('phase').before(story);
+const professional=document.createElement('details');professional.className='professional';professional.innerHTML='<summary>展开专业解释与电路条件</summary><p id="pro-explain"></p><p id="pro-look"></p><p id="pro-condition"></p>';document.querySelector('aside').append(professional);
+$('explanation').removeAttribute('aria-live');
+const player=document.createElement('div');player.className='learning-tools';player.innerHTML='<label>速度 <select id="speed"><option value="2.5">慢慢看</option><option value="5">正常</option><option value="8">快速回顾</option></select></label><label><input id="narration" type="checkbox" checked> 每步停留讲解</label><button id="kid-mode" aria-pressed="true">儿童讲解：开</button><button id="zoom-diagram" aria-pressed="false">放大结构图</button><button id="next-stage">下一步 →</button>';document.querySelector('.playrow').after(player);
+document.body.classList.add('kid-mode');
+const css=document.createElement('style');css.textContent='.teaching{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;padding:20px 24px;margin:15px 0 25px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.teaching p{color:var(--muted);font-size:14px;margin-bottom:0}.child-story{border-left:3px solid var(--accent);padding:13px 15px;background:#25342c55;margin:16px 0}.child-story p{font-size:21px;line-height:1.65;margin:10px 0}.child-story #direction-text{font-size:13px;color:var(--muted)}.learning-tools{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:20px 0}.learning-tools label{font-size:14px}.learning-tools input{accent-color:var(--accent)}select{font:inherit;border:1px solid var(--line);color:var(--ink);background:var(--card);padding:7px;border-radius:6px}.professional{margin-top:18px;color:var(--muted);font-size:14px}.professional summary{cursor:pointer;color:var(--accent)}.kid-mode aside>.lead,.kid-mode aside>.explain,.kid-mode aside>.fact{display:none}body:not(.kid-mode) .child-story,body:not(.kid-mode) .professional{display:none}.kid-mode aside h2#phaseName{font-size:20px}.kid-mode .mono#phase{margin-top:16px}.zoomed #specimen{min-height:300px}.teaching b{color:var(--ink)}@media(max-width:780px){.teaching{grid-template-columns:1fr;padding:17px;gap:12px}.child-story p{font-size:20px}.learning-tools{gap:12px}.legend{font-size:13px}.stages{grid-template-columns:1fr 1fr}.stages button{font-size:13px;padding:10px}.stages button:last-child{grid-column:1/-1}}';document.head.append(css);
+const currentColor='#d3a8ff', electricColor='#8cdcf4', magneticColor='#cce9a3';
+extra.resistor.electrical='假定本次温升对电阻值的影响可忽略；电子净漂移与常规电流反向。';
+const pack=(opacity,markup)=>'<g opacity="'+clamp(opacity)+'">'+markup+'</g>';
+const pathsAt=(start,end,count,progress,signText,color,y=275)=>Array.from({length:count},(_,i)=>{const u=(i/count+progress)%1;return sign(start+(end-start)*u,y,signText,color);}).join('');
+const auditOriginalRender=render;
+render=function(){auditOriginalRender();correctDiagram();updateTeaching();};
+const auditOriginalSetup=setup;
+setup=function(){if(type==='resistor')resistorOffset=0;auditOriginalSetup();render();};
+function updateTeaching(){const p=extra[type]?extraModel(type,time).p:phase(time);const values={'child-text':type==='igbt'&&p===3?(time<74?'先让栅极放电，小路逐渐消失。接着才清掉里面存着的电荷。':'小路已经关好；现在只清除里面存下来的电荷。'):type==='mos'&&p===3?'栅极开始放电，小路逐渐消失，新的电子越来越难进来。':childStories[type][p],'pro-explain':$('explanation').textContent,'pro-look':'观察：'+$('look').textContent,'pro-condition':'条件：'+$('electrical').textContent,'direction-text':directionSummary(type,p)};for(const [id,value] of Object.entries(values))if($(id).textContent!==value)$(id).textContent=value;}
+function directionSummary(k,p){if(k==='bjt')return '电子：E → C；常规电流：C → E。';if(k==='mos')return '电子：S → D；常规电流：D → S。';if(k==='igbt')return p===3&&time<74?'栅极放电阶段：沟道正在消退。':p===3?'拖尾：只清除漂移区已有电荷，不再经关闭的沟道补充电子。':'电子向下、空穴向上；常规电流：C → E。';if(k==='diode')return p>=3?'反向恢复时清除旧电荷；恢复后阻断。':'电子 N → P，空穴 P → N；结电场方向 N → P。';if(k==='photodiode'||k==='zener')return '结电场：N → P；收集电子向 N，空穴向 P。';if(k==='capacitor')return '电场：左 + → 右 −；电子只经外部回路。';if(k==='inductor')return '绕组正面电流向下；右手规则给出轴向磁场向右。';if(k==='transformer')return '磁通 Φ 与感应电压不是同一个量：电压取决于 dΦ/dt。';if(k==='scr')return '紫色是常规主电流 A → K；不是载流子轨迹。';if(k==='opamp')return '蓝色是输入信号；橙色是反馈；电源轨始终通电。';if(k==='crystal')return '上下表面向相反方向位移；形变大幅放大。';if(k==='relay')return '电磁吸力带动机械触点；线圈与负载回路绝缘。';return k==='resistor'?'电子净漂移与电场、常规电流反向。':'电子与空穴在发光区复合；黄色波纹是光。';}
+function correctDiagram(){const m=extra[type]?extraModel(type,time):model(type,time),p=extra[type]?m.p:m.phase;const a=extra[type]?m.level:m.gate,e='#86e0f0',h='#ffc38e';let overlay='';
+if(type==='bjt'){
+ $('particles').querySelectorAll('[data-route="1"]').forEach(el=>el.style.opacity=0);const baseDrive=p===1||p===2;overlay+=pack(baseDrive?m.gate:0,fieldArrow(339,149,339,205,currentColor)+label(350,164,'基极补入空穴','svg-small'));
+ const misleadingTrack=$('tracks').querySelectorAll('path')[1];if(misleadingTrack)misleadingTrack.style.opacity=0;
+ if(p===3)overlay+=pack(m.stored,fieldArrow(339,225,339,178,currentColor)+label(350,200,'基极抽取电荷','svg-small'));
+ if(baseDrive){for(let i=0;i<3;i++){const u=(motionClock*.22+i/3)%1;overlay+=pack((1-u)*m.gate,sign(318+u*22,291,'−',e));}}
+ $('look').textContent=p===3?'清除基区等处的存储电荷，集电结再恢复阻断。':'发射区注入电子；少部分在基区与空穴复合，大部分被集电区收集。';
+}else if(type==='igbt'&&p===3){
+ if(m.gate>0){
+  // First discharge the gate; only after the channel closes show pure stored-charge tail.
+  $('particles').querySelectorAll('.moving').forEach(el=>el.style.opacity=m.gate);
+  overlay+=pack(m.gate,fieldArrow(301,168,301,186,electricColor));
+  $('phaseName').textContent='先放栅电荷，沟道正在消退';$('explanation').textContent='栅极正在放电，沟道逐渐消退；电子供给随之减小。沟道完全关闭后，漂移区存储电荷仍需清除，进入拖尾。';$('look').textContent='先看栅下绿色通道变弱；再看漂移区电荷清除。';
+ }else{
+ // No continuous fresh injection during the tail: a finite stored packet clears.
+ $('particles').querySelectorAll('.moving').forEach(el=>el.style.opacity=0);
+ $('tracks').querySelectorAll('path').forEach(el=>el.style.opacity=0);
+ const u=clamp((time-74)/23);for(let i=0;i<12;i++){const x=220+(i%6)*53,y=275+Math.floor(i/6)*34;overlay+=pack(m.stored,sign(x,mix(y,351,u),'−',e)+sign(mix(x,198,u),mix(y,220,u),'+',h));}overlay+=label(395,311,'已有电荷 → 清除','svg-small');
+ }
+}else if(type==='mos'||type==='igbt'){
+ overlay+=pack(m.gate,fieldArrow(301,168,301,186,electricColor)+fieldArrow(325,168,325,186,electricColor)+label(420,152,'栅电场穿过氧化层','svg-small'));
+}else if(['diode','zener','led','photodiode'].includes(type)){
+ // Field arrow always goes from N (right) to P (left), distinct from carrier flow.
+ overlay+=fieldArrow(414,243,347,243,electricColor)+label(349,232,'结电场 E ←','svg-small');
+ if(type==='led'&&p>=3){const texts=$('labels').querySelectorAll('text');for(const t of texts)if(t.textContent.includes('外加正向偏置'))t.textContent='外部驱动撤去；剩余注入电荷复合';}
+ if(type==='diode'&&p===3){
+  const u=clamp((time-65)/32);$('channel').innerHTML=rect(380-(15+50*u),188,30+100*u,158,'url(#hatch)');
+  for(let i=0;i<6;i++){overlay+=pack(1-u,sign(mix(260+i*16,430+i*10,u),271,'−',e)+sign(mix(415+i*16,285+i*10,u),307,'+',h));}
+  overlay+=label(225,330,'旧电荷被扫回，数量逐渐减少','svg-small');
+ }
+ if(type==='zener'){
+  const current=p===2?1:p===3?clamp((90-time)/25):0;
+  $('channel').innerHTML=rect(335,188,90,158,'url(#hatch)');overlay+=pack(current,pathsAt(380,560,5,motionClock*.2,'−',e,270)+pathsAt(380,200,5,motionClock*.2,'+',h,302));
+  overlay+=label(205,329,p===1?'接近击穿：此处不画大电流':p===2?'额定击穿区：外部 R 限流':'反向偏置，非正向导通','svg-small');
+ }
+ if(type==='led'&&(p===1||p===2)){
+  // One visible pair first converges; only then does a photon leave.
+  const cycle=(motionClock*.28)%1,u=clamp(cycle/.6);$('channel').innerHTML=rect(366,188,28,158,'url(#hatch)');
+  if(cycle<.6)overlay+=pack(a,sign(mix(558,380,u),mix(252,272,u),'−',e)+sign(mix(202,380,u),mix(300,272,u),'+',h));
+  else{const f=(cycle-.6)/.4;overlay+=pack(a*(1-f*.6),circ(380+f*90,272-f*136,5,'#f5db7e')+stroke('M380 272L'+(380+f*90)+' '+(272-f*136),'#f5db7e',2));}
+  overlay+=label(420,157,'光向外传播','svg-small');
+ }
+ if(type==='led'&&p>=3){
+  const u=clamp((time-65)/32),remain=1-u;$('channel').innerHTML=rect(345,188,70,158,'url(#hatch)');
+  for(let i=0;i<5;i++)overlay+=pack(remain,sign(mix(420+i*10,380,u),mix(260+i*4,272,u),'−',e)+sign(mix(340-i*10,380,u),mix(288+i*4,272,u),'+',h));
+  overlay+=pack(remain,stroke('M380 262l18 -14l-4 -18l18 -14l-4 -18l18 -14','#f5db7e',3));
+ }
+ if(type==='photodiode'){
+  $('channel').innerHTML=rect(325,188,110,158,'url(#hatch)');const amount=m.level;
+  const cycle=(motionClock*.28)%1,photonU=clamp(cycle/.4),origin=[365,270];
+  overlay+=pack((p===1||p===2)&&cycle<.4?amount:0,stroke('M325 104L'+mix(325,365,photonU)+' '+mix(104,270,photonU),'#f5db7e',2)+circ(mix(325,365,photonU),mix(104,270,photonU),4,'#f5db7e'));
+  overlay+=pack(amount,circ(...origin,10,'none','stroke="#f5db7e"')+label(392,292,'在同一处吸收、生成','svg-small'));
+  if((p===1||p===2)&&cycle>=.4){const u=(cycle-.4)/.6;overlay+=pack(amount,sign(mix(365,555,u),270,'−',e)+sign(mix(365,200,u),270,'+',h));}
+  if(p===3){for(let i=0;i<4;i++){const u=clamp((time-65)/32+i*.07);overlay+=pack(amount,sign(mix(365,555,u),270,'−',e)+sign(mix(365,200,u),270,'+',h));}}
+  overlay+=pack(amount,fieldArrow(456,305,416,305,electricColor));
+ }
+}else if(type==='resistor'){
+ // Keep nonzero baseline thermal motion. The inset alone contains mobile carriers.
+ const heat=p===0||p===4?.2:p===1?.2+a*.5:p===2?1:.2+a*.8;
+ $('channel').innerHTML='';for(let i=0;i<24;i++){const x=405+(i%6)*33,y=227+Math.floor(i/6)*30;overlay+=circ(x+Math.sin(motionClock*5+i)*heat*2.5,y+Math.cos(motionClock*4+i)*heat*2.5,4,h);}
+ for(let i=0;i<12;i++){const x=400+((i*17+resistorOffset)%178)+Math.sin(motionClock*7+i)*4,y=235+(i%3)*40+Math.cos(motionClock*6+i*2)*5;overlay+=sign(x,y,'−',e);}
+ if(p===1||p===2)overlay+=fieldArrow(525,214,465,214,electricColor);
+}else if(type==='capacitor'){
+ $('channel').querySelectorAll('path[stroke="#cce9a3"]').forEach(el=>el.setAttribute('stroke',electricColor));
+ const texts=$('labels').querySelectorAll('text');for(const t of texts)if(t.textContent==='电源接入'||t.textContent==='负载回路')t.textContent=p===0?'电源未接':p<=2?'经 R 接电源':'电源断开 → 接 R';
+ // Separate charge polarity from moving particle traffic; never cross dielectric.
+ const q=p===0||p===4?0:time<38?1-Math.exp(-(time-10)/7):time<65?1:Math.exp(-(time-65)/7);
+ const sourceVoltage=p<=2?1:0;overlay+=label(170,123,p===0?'开关未接通':p<=2?'左板接电源 +，右板接 −':'电源隔离，接到放电电阻','svg-small');
+ if(p===1||p===3){const flow=p===1?Math.exp(-(time-10)/7):q;for(let i=0;i<5;i++){const u=(motionClock*.2+i/5)%1;overlay+=pack(flow,sign(p===1?mix(220,540,u):mix(540,220,u),365,'−',e));}}
+}else if(type==='inductor'){
+ // The front segments carry conventional current down: right-hand rule gives B right.
+ $('channel').innerHTML=pack(a,stroke('M220 267H535Q650 270 555 320Q380 410 215 320Q120 270 220 267',magneticColor,2)+fieldArrow(350,267,410,267,magneticColor)+fieldArrow(400,350,340,350,magneticColor)+fieldArrow(345,230,345,291,currentColor));
+ overlay+=label(270,212,'正面绕组 i ↓','svg-small')+label(264,339,'轴向 B →；外部磁场返回','svg-small')+label(185,360,p===3?'电流原方向续流；绕组电压极性反转':'电流增长后趋近稳态','svg-small');
+}else if(type==='transformer'){
+ $('labels').querySelectorAll('text').forEach(el=>{if(el.textContent.startsWith('Φ ='))el.remove();});
+ const flux=m.flux,volt=m.voltage,weight=Math.abs(flux);$('channel').innerHTML=pack(weight,stroke('M251 192H510V323H251Z',magneticColor,3)+fieldArrow(flux>=0?335:405,192,flux>=0?405:335,192,magneticColor));
+ // Signed bars make the quadrature explicit. Values are normalized, not measurements.
+ overlay+=label(160,108,'磁通 Φ','svg-small')+label(160,133,'电压 ∝ dΦ/dt','svg-small');overlay+=stroke('M385 92V139','#adc0c8',1)+rect(Math.min(385,385+flux*95),96,Math.abs(flux)*95,10,magneticColor)+rect(Math.min(385,385+volt*95),122,Math.abs(volt)*95,10,electricColor);
+ if(p===3){$('phaseName').textContent=time<75?'磁通下降，电压为负':'磁通回升，电压转正';$('explanation').textContent=time<75?'磁通从正峰值下降，穿过零到负峰值，变化率为负；到负峰值瞬间感应电压再次过零。':'磁通从负峰值回升到零，变化率为正，感应电压随之转正。磁通的正负与变化率的正负要分开看。';}
+}else if(type==='relay'){
+ // A hinged armature over a U-yoke; the air gap closes at the right pole.
+ const coil=a,position=p===0||p===4?0:p===1?clamp((time-15)/17):p===2?1:time<70?1:clamp((87-time)/17);const angle=-13*(1-position);
+ let s=block(225,306,325,28,'#4c626b')+block(225,212,25,94,'#4c626b')+block(519,218,31,88,'#4c626b');
+ for(let i=0;i<10;i++)s+=stroke('M'+(270+i*20)+' 292q-9 -6 -9 3v44q0 10 9 6l10 -6v-44q0 -8 -10 -3Z','#c79a70',4);
+ s+=circ(238,211,9,'#9aafb8')+rect(562,248,28,11,'#beb49b');
+ $('structure').innerHTML=s;$('channel').innerHTML=pack(coil,stroke('M238 218V320H535V218H238',magneticColor,3));overlay+='<g transform="rotate('+angle+' 238 211)">'+rect(238,204,344,14,'url(#metal)')+rect(572,218,8,23,'url(#metal)')+circ(576,241,7,'#e1d2b0')+'</g>';
+ // Spring has a real fixed bracket and a moving endpoint on the armature.
+ const rad=angle*Math.PI/180,anchor=[238+66*Math.cos(rad),211+66*Math.sin(rad)];
+ overlay+=rect(226,157,16,48,'#627b88')+rect(242,157,16,12,'#627b88');
+ let spring='M250 165';for(let i=1;i<=8;i++){const u=i/8;spring+='L'+mix(250,anchor[0],u)+' '+(mix(165,anchor[1],u)+(i===8?0:i%2?4:-4));}
+ overlay+=stroke(spring,'#b4c3c9',2)+label(281,170,'复位弹簧','svg-small');
+ $('labels').innerHTML=label(176,125,'机械位移和接触间隙均放大','svg-small')+label(180,198,'铰链')+label(540,287,'负载触点')+label(320,283,'衔铁')+label(313,365,'线圈绕在铁轭上')+label(160,394,'线圈与负载回路电气隔离','svg-small');
+ overlay+=label(421,149,position===1?'触点接触：负载接通':'触点分开：负载断开','svg-small');
+}else if(type==='crystal'){
+ const amp=p===0||p===4?0:a,shift=Math.sin(motionClock*3)*amp*10;
+ // Fundamental thickness-shear: opposite faces, stationary central plane.
+ const top=shift,bottom=-shift;
+ const profile=Array.from({length:21},(_,i)=>({y:215+i*5,x:shift*Math.cos(i*Math.PI/20)}));
+ const outline='M'+(235+top)+' 215H'+(525+top)+profile.slice(1).map(q=>'L'+(525+q.x)+' '+q.y).join('')+profile.slice().reverse().map(q=>'L'+(235+q.x)+' '+q.y).join('')+'Z';
+ $('structure').innerHTML='<path d="'+outline+'" fill="#64818b" stroke="#bad2dc66"/>'+stroke('M235 265H525','#adbfca',1,'stroke-dasharray="4 5"');
+ $('channel').innerHTML=rect(235+top,207,290,8,'#a4b8bb')+rect(235+bottom,315,290,8,'#a4b8bb');overlay+=label(285,285,'中面近似不动','svg-small');
+ if(Math.abs(shift)>.4)overlay+=pack(amp,fieldArrow(370,235,370+shift*4,235,'#e5edf0')+fieldArrow(390,300,390-shift*4,300,'#e5edf0'));
+ document.querySelector('.legend').textContent='白箭头：相对中面的表面位移（不是速度、电流或磁场）；形变夸张放大';
+}else if(type==='scr'){
+ $('channel').querySelectorAll('circle').forEach(el=>el.setAttribute('fill',currentColor));
+ document.querySelector('.legend').textContent='紫色点：常规主电流 A → K 的示意；橙箭头：门极驱动；斜线：阻断结';
+ if(p===3)overlay+=label(180,113,'门极已撤去；主回路仍供电','svg-small');
+ if(p===4)overlay+=label(175,113,'外部换流：IA < IH → 清荷恢复 → 阻断','svg-small');
+}else if(type==='opamp'){
+ $('channel').querySelectorAll('text').forEach(el=>{if(el.textContent.startsWith('Vin:'))el.textContent='Vin = '+(p===0||p>=3?'0':'1')+'；Vout ≈ '+a.toFixed(2)+'（归一化）';});
+ overlay+=stroke('M125 245H185',e,3)+label(225,184,'电源始终接通','svg-small');
+}
+// A separate overlay keeps fixed structure and carrier-motion semantics distinct.
+let correction=$('audited-overlay');if(!correction){correction=document.createElementNS(NS,'g');correction.id='audited-overlay';$('labels').before(correction);}correction.innerHTML=overlay;
+}
+$('speed').addEventListener('change',()=>{last=0;});$('narration').addEventListener('change',()=>{narration=$('narration').checked;dwell=0;});
+$('kid-mode').addEventListener('click',()=>{const on=document.body.classList.toggle('kid-mode');$('kid-mode').textContent='儿童讲解：'+(on?'开':'关');$('kid-mode').setAttribute('aria-pressed',String(on));});
+$('zoom-diagram').addEventListener('click',()=>{const on=$('zoom-diagram').getAttribute('aria-pressed')!=='true';$('zoom-diagram').setAttribute('aria-pressed',String(on));$('zoom-diagram').textContent=on?'恢复全图':'放大结构图';$('specimen').setAttribute('viewBox',on?'140 90 490 320':'0 0 760 490');document.body.classList.toggle('zoomed',on);});
+$('next-stage').addEventListener('click',()=>{stop();dwell=0;const steps=[...document.querySelectorAll('[data-step]')].map(b=>+b.dataset.step);time=steps.find(t=>t>time+.05)??0;render();});
+const auditStart=start;
+start=function(){dwell=0;auditStart();};
+tick=function(now){raf=0;if(!playing||!visible||document.hidden)return;const dt=last?Math.min((now-last)/1000,.05):0;last=now;motionClock+=dt;if(type==='resistor'&&(phase(time)===1||phase(time)===2))resistorOffset+=dt*15;if(dwell>0)dwell=Math.max(0,dwell-dt);else{const speed=+$('speed').value,next=[...document.querySelectorAll('[data-step]')].map(b=>+b.dataset.step).find(t=>t>time+.001);const advance=Math.min(100,time+dt*speed);if(narration&&next!==undefined&&advance>=next){time=next;dwell=2.3;}else time=advance;}render();if(time>=100&&dwell<=0)stop();else raf=requestAnimationFrame(tick);};
+
+document.querySelectorAll('[data-device]').forEach(b=>b.addEventListener('click',()=>{stop();type=b.dataset.device;time=0;document.querySelectorAll('[data-device]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setup();}));document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>{stop();time=+b.dataset.step;render();}));$('timeline').addEventListener('input',()=>{stop();time=+$('timeline').value;render();});$('play').addEventListener('click',()=>playing?stop():start());$('replay').addEventListener('click',()=>{stop();time=0;render();});$('theme').addEventListener('click',()=>{const light=document.body.classList.toggle('light');$('theme').textContent=light?'深色':'浅色';$('theme').setAttribute('aria-pressed',String(light));});new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(!visible){if(raf)cancelAnimationFrame(raf);raf=0;last=0;}else if(playing&&!raf){last=0;raf=requestAnimationFrame(tick);}}).observe($('specimen'));document.addEventListener('visibilitychange',()=>{if(document.hidden){if(raf)cancelAnimationFrame(raf);raf=0;last=0;}else if(playing&&visible&&!raf)raf=requestAnimationFrame(tick);});reduced.addEventListener('change',()=>{if(reduced.matches)stop();});setup();
+</script></body></html>
